@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.idea/
+.vscode/
+frontend/node_modules/
+frontend/.turbo/
+backend/.pytest_cache/
