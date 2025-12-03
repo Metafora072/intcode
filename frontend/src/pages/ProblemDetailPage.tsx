@@ -58,7 +58,11 @@ if __name__ == "__main__":
 `
 };
 
-const ProblemDetailPage = () => {
+interface Props {
+  theme: "vs-light" | "vs-dark";
+}
+
+const ProblemDetailPage = ({ theme }: Props) => {
   const { id } = useParams();
   const [problem, setProblem] = useState<Problem | null>(null);
   const [language, setLanguage] = useState<"cpp17" | "python3">("cpp17");
@@ -84,13 +88,13 @@ const ProblemDetailPage = () => {
     if (!problem) return;
     setLoading(true);
     try {
-        const res = await submitCode({
-            problem_id: problem.id,
-            language,
-            code,
-            mode
-        });
-        setResult(res);
+      const res = await submitCode({
+        problem_id: problem.id,
+        language,
+        code,
+        mode
+      });
+      setResult(res);
     } catch (err: any) {
         setResult({
             status: "ERROR",
@@ -100,7 +104,7 @@ const ProblemDetailPage = () => {
             cases: []
         });
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -173,7 +177,13 @@ const ProblemDetailPage = () => {
             </select>
             <div className="text-sm text-slate-500">在线编辑代码，支持基础高亮</div>
           </div>
-          <CodeEditor language={language === "cpp17" ? "cpp" : "python"} value={code} onChange={setCode} />
+          <CodeEditor
+            language={language === "cpp17" ? "cpp" : "python"}
+            value={code}
+            onChange={setCode}
+            theme={theme}
+            onRunShortcut={() => handleRun("run_sample")}
+          />
           <div className="flex gap-3">
             <button
               className="btn bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50"

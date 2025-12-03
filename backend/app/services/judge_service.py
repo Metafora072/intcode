@@ -5,7 +5,7 @@ import shutil
 import tempfile
 import time
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 from sqlalchemy.orm import Session
 
@@ -15,6 +15,7 @@ from app.models.submission import Submission
 from app.schemas.submission import CaseResult, SubmissionCreate, SubmissionResult
 from app.services import problem_service
 from app.runner import cpp_runner, py_runner, sandbox
+from app.utils.logger import logger
 
 
 def _prepare_workdir() -> Path:
@@ -28,7 +29,7 @@ def _select_cases(problem: Problem, mode: str):
     return problem.testcases
 
 
-def _compile_code(language: str, code: str, workdir: Path) -> Tuple[List[str] | None, str | None]:
+def _compile_code(language: str, code: str, workdir: Path) -> Tuple[Optional[List[str]], Optional[str]]:
     if language == "cpp17":
         return cpp_runner.compile_code(code, workdir)
     if language == "python3":
@@ -42,6 +43,7 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
         return SubmissionResult(status="NOT_FOUND", runtime_ms=0.0, runtime_error="题目不存在")
 
     workdir = _prepare_workdir()
+    logger.info("开始评测: problem=%s language=%s mode=%s", payload.problem_id, payload.language, payload.mode)
     exec_cmd, compile_err = _compile_code(payload.language, payload.code, workdir)
     if compile_err:
         shutil.rmtree(workdir, ignore_errors=True)
@@ -60,6 +62,7 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
             tc.input_text,
             timeout=settings.case_timeout,
             output_limit=settings.output_limit,
+            memory_limit_mb=settings.memory_limit_mb,
         )
         elapsed = (time.perf_counter() - start) * 1000
         max_runtime = max(max_runtime, elapsed)
@@ -119,4 +122,5 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
         detail.submission_id = db_submission.id
 
     shutil.rmtree(workdir, ignore_errors=True)
+    logger.info("评测结束: problem=%s status=%s time=%.2fms", payload.problem_id, overall_status, max_runtime)
     return detail

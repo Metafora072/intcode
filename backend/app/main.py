@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import admin, problems, submissions
 from app.models import base, problem, submission, testcase  # noqa: F401
+from app.utils.logger import init_logging, logger
 
 app = FastAPI(title="intcode OJ")
 
@@ -17,6 +18,8 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup():
+    init_logging()
+    logger.info("启动服务，初始化数据库...")
     base.Base.metadata.create_all(bind=base.engine)
 
 

@@ -1,13 +1,11 @@
-from __future__ import annotations
-
 import subprocess
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 from app.config import settings
 
 
-def compile_code(code: str, workdir: Path) -> Tuple[List[str] | None, str | None]:
+def compile_code(code: str, workdir: Path) -> Tuple[Optional[List[str]], Optional[str]]:
     """编译 C++17 代码."""
     source_path = workdir / "Main.cpp"
     binary_path = workdir / "main.out"

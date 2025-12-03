@@ -17,14 +17,18 @@ def _tags_from_str(tags: str) -> List[str]:
 
 
 def list_problems(
-    db: Session, keyword: Optional[str] = None, difficulty: Optional[Difficulty] = None
+    db: Session,
+    keyword: Optional[str] = None,
+    difficulty: Optional[Difficulty] = None,
+    limit: int = 20,
+    offset: int = 0,
 ) -> List[Problem]:
     query = db.query(Problem)
     if keyword:
         query = query.filter(Problem.title.ilike(f"%{keyword}%"))
     if difficulty:
         query = query.filter(Problem.difficulty == difficulty)
-    return query.order_by(Problem.updated_at.desc()).all()
+    return query.order_by(Problem.updated_at.desc()).offset(offset).limit(limit).all()
 
 
 def get_problem(db: Session, problem_id: int) -> Optional[Problem]:

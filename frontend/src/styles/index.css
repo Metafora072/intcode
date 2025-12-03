@@ -13,7 +13,7 @@ body {
 }
 
 .card {
-  @apply bg-white shadow-sm rounded-xl border border-slate-200;
+  @apply bg-white shadow-sm rounded-xl border border-slate-200 dark:bg-slate-900 dark:border-slate-700;
 }
 
 .btn {
@@ -21,5 +21,5 @@ body {
 }
 
 .input {
-  @apply px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm;
+  @apply px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100;
 }

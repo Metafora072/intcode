@@ -22,6 +22,10 @@ cd frontend
 npm install
 npm run dev -- --host --port 5173
 # 打开 http://localhost:5173
+
+# 一键启动前后端（包含依赖与初始化）
+cd intcode
+./scripts/dev_start.sh
 ```
 
 ## 目录结构

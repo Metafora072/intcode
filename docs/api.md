@@ -4,7 +4,7 @@
 
 ## Problem
 - `GET /problems`
-  - Query：`keyword`(可选)、`difficulty` = EASY/MEDIUM/HARD
+  - Query：`keyword`(可选)、`difficulty` = EASY/MEDIUM/HARD、`limit`(默认20，<=100)、`offset`(默认0)
   - 返回：题目数组（含 tags、created_at、updated_at、testcases）
 - `GET /problems/{id}`
   - 返回：题目详情与全部用例（包含样例标记）

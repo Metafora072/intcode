@@ -1,10 +1,8 @@
-from __future__ import annotations
-
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 
-def prepare_script(code: str, workdir: Path) -> Tuple[List[str] | None, str | None]:
+def prepare_script(code: str, workdir: Path) -> Tuple[Optional[List[str]], Optional[str]]:
     """准备 Python 脚本."""
     script_path = workdir / "main.py"
     script_path.write_text(code)

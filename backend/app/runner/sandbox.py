@@ -1,7 +1,26 @@
 from __future__ import annotations
 
+import os
+import resource
 import subprocess
-from typing import List, Tuple
+from typing import List, Optional, Tuple
+
+
+def _resource_limiter(timeout: int, memory_limit_mb: int):
+    """预执行钩子：限制 CPU 时间、内存、禁用 core dump."""
+
+    def _set_limits():
+        cpu_time = max(1, timeout + 1)
+        resource.setrlimit(resource.RLIMIT_CPU, (cpu_time, cpu_time))
+        mem_bytes = memory_limit_mb * 1024 * 1024
+        resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
+        resource.setrlimit(resource.RLIMIT_DATA, (mem_bytes, mem_bytes))
+        resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+        # 适当收缩文件句柄数量，降低滥用风险
+        resource.setrlimit(resource.RLIMIT_NOFILE, (64, 64))
+        os.setsid()
+
+    return _set_limits
 
 
 def run_process(
@@ -9,8 +28,9 @@ def run_process(
     input_text: str,
     timeout: int = 2,
     output_limit: int = 20000,
-) -> Tuple[str, str, str | None]:
-    """执行子进程，限制时间和输出."""
+    memory_limit_mb: int = 256,
+) -> Tuple[str, str, Optional[str]]:
+    """执行子进程，限制时间、内存与输出."""
     try:
         proc = subprocess.Popen(
             exec_cmd,
@@ -18,6 +38,7 @@ def run_process(
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
+            preexec_fn=_resource_limiter(timeout, memory_limit_mb),
         )
         out, err = proc.communicate(input=input_text, timeout=timeout)
     except subprocess.TimeoutExpired:

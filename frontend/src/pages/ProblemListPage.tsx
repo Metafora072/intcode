@@ -7,18 +7,25 @@ const ProblemListPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [keyword, setKeyword] = useState("");
   const [difficulty, setDifficulty] = useState<string>("");
+  const [page, setPage] = useState(0);
+  const pageSize = 10;
+  const [hasMore, setHasMore] = useState(true);
 
   const load = async () => {
     const data = await fetchProblems({
       keyword: keyword || undefined,
-      difficulty: difficulty || undefined
+      difficulty: difficulty || undefined,
+      limit: pageSize,
+      offset: page * pageSize
     });
     setProblems(data);
+    setHasMore(data.length === pageSize);
   };
 
   useEffect(() => {
     load();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <div className="space-y-4">
@@ -41,6 +48,23 @@ const ProblemListPage = () => {
         </select>
         <button onClick={load} className="btn bg-slate-900 text-white hover:bg-slate-800">
           搜索
+        </button>
+      </div>
+      <div className="flex items-center gap-2 text-sm text-slate-600">
+        <button
+          className="btn border border-slate-200 hover:bg-slate-100 disabled:opacity-50"
+          onClick={() => setPage((p) => Math.max(0, p - 1))}
+          disabled={page === 0}
+        >
+          上一页
+        </button>
+        <span>第 {page + 1} 页</span>
+        <button
+          className="btn border border-slate-200 hover:bg-slate-100 disabled:opacity-50"
+          onClick={() => setPage((p) => p + 1)}
+          disabled={!hasMore}
+        >
+          下一页
         </button>
       </div>
       {problems.length === 0 ? (
