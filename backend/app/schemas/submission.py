@@ -14,13 +14,15 @@ class CaseResult(BaseModel):
     output_preview: Optional[str] = None
     runtime_ms: Optional[float] = None
     error: Optional[str] = None
+    full_output: Optional[str] = None
 
 
 class SubmissionCreate(BaseModel):
     problem_id: int
     language: str
     code: str
-    mode: str = "submit"  # submit | run_sample
+    mode: str = "submit"  # submit | run_sample | custom
+    custom_input: Optional[str] = None
 
 
 class SubmissionOut(BaseModel):

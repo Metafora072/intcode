@@ -45,7 +45,7 @@ const RunResultCard = ({ result }: { result: SubmissionResult | null }) => {
               <div>
                 <p className="text-slate-500">输出</p>
                 <pre className="whitespace-pre-wrap bg-white p-2 rounded border border-slate-200 h-24 overflow-auto">
-                  {c.output_preview}
+                  {c.full_output ?? c.output_preview}
                 </pre>
               </div>
             </div>

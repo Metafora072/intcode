@@ -45,7 +45,7 @@ const App = () => {
           </button>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto px-4 py-6">
+      <main className="h-[calc(100vh-64px)] px-4 py-4">
         <Routes>
           <Route path="/" element={<ProblemListPage />} />
           <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />

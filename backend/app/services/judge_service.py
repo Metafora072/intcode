@@ -5,6 +5,7 @@ import shutil
 import tempfile
 import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import List, Optional, Tuple
 
 from sqlalchemy.orm import Session
@@ -24,6 +25,8 @@ def _prepare_workdir() -> Path:
 
 
 def _select_cases(problem: Problem, mode: str):
+    if mode == "custom":
+        return []
     if mode == "run_sample":
         return [tc for tc in problem.testcases if tc.is_sample]
     return problem.testcases
@@ -50,8 +53,12 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
         return SubmissionResult(status="CE", runtime_ms=0.0, compile_error=compile_err)
 
     cases = _select_cases(problem, payload.mode)
+    if payload.mode == "custom":
+        cases = [
+            SimpleNamespace(id=0, input_text=payload.custom_input or "", output_text="", is_sample=True)  # type: ignore[arg-type]
+        ]
     results: List[CaseResult] = []
-    overall_status = "AC"
+    overall_status = "AC" if payload.mode != "custom" else "CUSTOM"
     max_runtime = 0.0
     runtime_error = None
 
@@ -66,7 +73,7 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
         )
         elapsed = (time.perf_counter() - start) * 1000
         max_runtime = max(max_runtime, elapsed)
-        case_status = "AC"
+        case_status = "AC" if payload.mode != "custom" else "OK"
         case_error = None
         if status == "TLE":
             case_status = "TLE"
@@ -79,7 +86,9 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
             case_error = err or "运行时错误"
             runtime_error = case_error
         else:
-            if output.strip() != tc.output_text.strip():
+            if payload.mode == "custom":
+                overall_status = "CUSTOM"
+            elif output.strip() != tc.output_text.strip():
                 case_status = "WA"
                 overall_status = "WA"
                 case_error = "输出不一致"
@@ -92,6 +101,7 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
                 output_preview=output[:200] if output else "",
                 runtime_ms=elapsed,
                 error=case_error,
+                full_output=output,
             )
         )
         if overall_status != "AC":

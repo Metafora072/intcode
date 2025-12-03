@@ -34,7 +34,8 @@ export const submitCode = async (payload: {
   problem_id: number;
   language: string;
   code: string;
-  mode: "run_sample" | "submit";
+  mode: "run_sample" | "submit" | "custom";
+  custom_input?: string;
 }) => {
   const res = await api.post<SubmissionResult>("/submissions", payload);
   return res.data;
