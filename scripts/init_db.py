@@ -7,6 +7,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1] / "backend"))
 from app.models.base import Base, SessionLocal, engine  # noqa: E402
 from app.models.problem import Difficulty, Problem  # noqa: E402
 from app.models.testcase import TestCase  # noqa: E402
+from app.models.submission import Submission  # noqa: E402,F401
 
 
 def seed_sample():

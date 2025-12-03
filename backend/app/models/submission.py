@@ -1,12 +1,15 @@
+from __future__ import annotations
+
 from datetime import datetime
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, relationship
 
 from app.models.base import Base
 
 
 class Submission(Base):
     __tablename__ = "submissions"
+    __allow_unmapped__ = True
 
     id = Column(Integer, primary_key=True, index=True)
     problem_id = Column(Integer, ForeignKey("problems.id"), nullable=False, index=True)
@@ -18,4 +21,4 @@ class Submission(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     detail_json = Column(Text, nullable=True)
 
-    problem = relationship("Problem", back_populates="submissions")
+    problem: Mapped["Problem"] = relationship("Problem", back_populates="submissions")

@@ -1,5 +1,7 @@
 import json
 
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
@@ -13,7 +15,7 @@ router = APIRouter(prefix="/submissions", tags=["submissions"])
 
 @router.get("")
 def list_submissions(
-    problem_id: int | None = Query(default=None),
+    problem_id: Optional[int] = Query(default=None),
     limit: int = Query(default=20, le=100),
     db: Session = Depends(get_db),
 ):

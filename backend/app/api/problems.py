@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
@@ -10,8 +12,8 @@ router = APIRouter(prefix="/problems", tags=["problems"])
 
 @router.get("")
 def list_problems(
-    keyword: str | None = Query(default=None),
-    difficulty: Difficulty | None = Query(default=None),
+    keyword: Optional[str] = Query(default=None),
+    difficulty: Optional[Difficulty] = Query(default=None),
     db: Session = Depends(get_db),
 ):
     problems = problem_service.list_problems(db, keyword=keyword, difficulty=difficulty)
