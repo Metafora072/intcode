@@ -17,6 +17,8 @@ export interface Problem {
   input_description: string;
   output_description: string;
   constraints: string;
+  is_spj?: boolean;
+  spj_code?: string | null;
   created_at: string;
   updated_at: string;
   testcases: TestCase[];

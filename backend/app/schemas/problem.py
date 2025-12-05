@@ -16,6 +16,8 @@ class ProblemBase(BaseModel):
     input_description: str = ""
     output_description: str = ""
     constraints: str = ""
+    is_spj: bool = False
+    spj_code: Optional[str] = None
 
 
 class ProblemCreate(ProblemBase):
@@ -30,6 +32,8 @@ class ProblemUpdate(BaseModel):
     input_description: Optional[str] = None
     output_description: Optional[str] = None
     constraints: Optional[str] = None
+    is_spj: Optional[bool] = None
+    spj_code: Optional[str] = None
 
 
 class ProblemOut(ProblemBase):
@@ -37,6 +41,8 @@ class ProblemOut(ProblemBase):
     created_at: datetime
     updated_at: datetime
     testcases: List[TestCaseBase] = Field(default_factory=list)
+    is_spj: bool = False
+    spj_code: Optional[str] = None
 
     class Config:
         from_attributes = True

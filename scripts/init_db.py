@@ -10,6 +10,22 @@ from app.models.problem import Difficulty, Problem  # noqa: E402
 from app.models.testcase import TestCase  # noqa: E402
 from app.models.submission import Submission  # noqa: E402,F401
 
+DEFAULT_SPJ = """def check(input_str, user_output_str):
+    try:
+        lines = input_str.strip().split('\\n')
+        n = int(lines[0])
+        nums = list(map(int, lines[1].split()))
+        target = int(lines[2])
+        user_indices = list(map(int, user_output_str.strip().split()))
+        if len(user_indices) != 2:
+            return False
+        i, j = user_indices
+        if i < 0 or i >= n or j < 0 or j >= n or i == j:
+            return False
+        return nums[i] + nums[j] == target
+    except Exception:
+        return False
+"""
 
 def seed_sample():
     db = SessionLocal()
@@ -30,6 +46,8 @@ def seed_sample():
         input_description="第一行 n，第二行 n 个整数，第三行 target。",
         output_description="输出两个下标，升序。",
         constraints=r"$2 \le n \le 10^{5},\;-10^{9} \le \text{nums}[i] \le 10^{9}$",
+        is_spj=True,
+        spj_code=DEFAULT_SPJ,
     )
     db.add(problem)
     db.commit()

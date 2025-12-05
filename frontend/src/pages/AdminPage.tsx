@@ -1,6 +1,24 @@
 import { useEffect, useState } from "react";
 import { addTestcase, createProblem, fetchProblems } from "../api";
+import CodeEditor from "../components/CodeEditor";
 import { Problem } from "../types";
+
+const defaultSpj = `def check(input_str, user_output_str):
+    try:
+        lines = input_str.strip().split('\\n')
+        n = int(lines[0])
+        nums = list(map(int, lines[1].split()))
+        target = int(lines[2])
+        user_indices = list(map(int, user_output_str.strip().split()))
+        if len(user_indices) != 2:
+            return False
+        i, j = user_indices
+        if i < 0 or i >= n or j < 0 or j >= n or i == j:
+            return False
+        return nums[i] + nums[j] == target
+    except Exception:
+        return False
+`;
 
 const AdminPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
@@ -13,7 +31,9 @@ const AdminPage = () => {
     content: "",
     input_description: "",
     output_description: "",
-    constraints: ""
+    constraints: "",
+    is_spj: false,
+    spj_code: ""
   });
   const [caseForm, setCaseForm] = useState({ input_text: "", output_text: "", is_sample: true });
   const [msg, setMsg] = useState("");
@@ -33,7 +53,18 @@ const AdminPage = () => {
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean)
     });
     setMsg("题目创建成功");
-    setForm({ slug: "", title: "", difficulty: "EASY", tags: "", content: "", input_description: "", output_description: "", constraints: "" });
+    setForm({
+      slug: "",
+      title: "",
+      difficulty: "EASY",
+      tags: "",
+      content: "",
+      input_description: "",
+      output_description: "",
+      constraints: "",
+      is_spj: false,
+      spj_code: ""
+    });
     loadProblems();
   };
 
@@ -61,6 +92,34 @@ const AdminPage = () => {
         <textarea className="input" placeholder="输入说明" value={form.input_description} onChange={(e) => setForm({ ...form, input_description: e.target.value })} />
         <textarea className="input" placeholder="输出说明" value={form.output_description} onChange={(e) => setForm({ ...form, output_description: e.target.value })} />
         <textarea className="input" placeholder="约束" value={form.constraints} onChange={(e) => setForm({ ...form, constraints: e.target.value })} />
+        <label className="text-sm text-slate-600 inline-flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={form.is_spj}
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                is_spj: e.target.checked,
+                spj_code: e.target.checked && !prev.spj_code ? defaultSpj : prev.spj_code
+              }))
+            }
+          />
+          启用特殊判题（SPJ）
+        </label>
+        {form.is_spj && (
+          <div className="space-y-2">
+            <p className="text-sm text-slate-600">SPJ 代码（Python，需实现 check(input_str, user_output_str)）</p>
+            <div className="h-64">
+              <CodeEditor
+                language="python"
+                value={form.spj_code || ""}
+                onChange={(code) => setForm((prev) => ({ ...prev, spj_code: code }))}
+                theme="vs-light"
+                height="100%"
+              />
+            </div>
+          </div>
+        )}
         <button className="btn bg-indigo-600 text-white hover:bg-indigo-500" onClick={handleCreate}>
           保存
         </button>

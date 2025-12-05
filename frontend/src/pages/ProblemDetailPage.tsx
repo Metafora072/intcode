@@ -145,12 +145,17 @@ const ProblemDetailPage = ({ theme }: Props) => {
                 </div>
                 <DifficultyBadge level={problem.difficulty} />
               </div>
-              <div className="flex gap-2 flex-wrap text-xs">
-                {problem.tags.map((tag) => (
-                  <span key={tag} className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-                    {tag}
-                  </span>
-                ))}
+            <div className="flex gap-2 flex-wrap text-xs">
+              {problem.is_spj && (
+                <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-100">
+                  SPJ
+                </span>
+              )}
+              {problem.tags.map((tag) => (
+                <span key={tag} className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                  {tag}
+                </span>
+              ))}
               </div>
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>

@@ -15,7 +15,7 @@ from app.models.problem import Problem
 from app.models.submission import Submission
 from app.schemas.submission import CaseResult, SubmissionCreate, SubmissionResult
 from app.services import problem_service
-from app.runner import cpp_runner, py_runner, sandbox
+from app.runner import checker, cpp_runner, py_runner, sandbox
 from app.utils.logger import logger
 
 
@@ -93,9 +93,15 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
             case_error = "内存超限"
             runtime_error = runtime_error or "存在内存超限用例"
         else:
-            if payload.mode != "custom" and output.strip() != tc.output_text.strip():
-                case_status = "WA"
-                case_error = "输出不一致"
+            if payload.mode != "custom":
+                if problem.is_spj and problem.spj_code:
+                    ok, spj_err = checker.run_checker(problem.spj_code, tc.input_text, output)
+                    if not ok:
+                        case_status = "WA"
+                        case_error = spj_err or "答案未通过特殊判题"
+                elif output.strip() != tc.output_text.strip():
+                    case_status = "WA"
+                    case_error = "输出不一致"
         results.append(
             CaseResult(
                 case_id=tc.id,

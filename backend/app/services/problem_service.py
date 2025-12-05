@@ -96,6 +96,8 @@ def serialize_problem(problem: Problem):
         "input_description": problem.input_description,
         "output_description": problem.output_description,
         "constraints": problem.constraints,
+        "is_spj": getattr(problem, "is_spj", False),
+        "spj_code": getattr(problem, "spj_code", None),
         "created_at": problem.created_at,
         "updated_at": problem.updated_at,
         "testcases": [

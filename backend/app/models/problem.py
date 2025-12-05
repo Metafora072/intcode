@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import List
 
-from sqlalchemy import Column, DateTime, Enum, Integer, String, Text
+from sqlalchemy import Boolean, Column, DateTime, Enum, Integer, String, Text
 from sqlalchemy.orm import Mapped, relationship
 
 from app.models.base import Base
@@ -29,6 +29,8 @@ class Problem(Base):
     input_description = Column(Text, default="", nullable=False)
     output_description = Column(Text, default="", nullable=False)
     constraints = Column(Text, default="", nullable=False)
+    is_spj = Column(Boolean, default=False, nullable=False)
+    spj_code = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
