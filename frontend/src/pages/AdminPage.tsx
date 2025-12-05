@@ -40,7 +40,7 @@ const AdminPage = () => {
 
   const loadProblems = async () => {
     const data = await fetchProblems();
-    setProblems(data);
+    setProblems(data.items);
   };
 
   useEffect(() => {

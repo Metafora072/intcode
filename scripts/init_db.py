@@ -32,6 +32,7 @@ def seed_sample():
     try:
         ensure_two_sum(db)
         load_hot100(db)
+        refresh_hot100(db)
         print("示例题目插入完成")
     finally:
         db.close()
@@ -72,6 +73,41 @@ def ensure_two_sum(db: SessionLocal) -> None:
         for item in fixtures
     ]
     db.add_all(testcases)
+    db.commit()
+
+
+def refresh_hot100(db: SessionLocal) -> None:
+    """使用夹具内容刷新已有 hot100 题目（更新题面、清空并重建用例）."""
+    fixture_path = Path(__file__).resolve().parents[1] / "backend" / "app" / "fixtures" / "leetcode_hot100.json"
+    if not fixture_path.exists():
+        return
+    data = json.loads(fixture_path.read_text(encoding="utf-8"))
+    for item in data:
+        problem = db.query(Problem).filter(Problem.slug == item["slug"]).first()
+        if not problem:
+            continue
+        tags = ",".join(item.get("tags", []))
+        problem.title = item.get("title", problem.title)
+        problem.difficulty = Difficulty(item.get("difficulty", problem.difficulty))
+        problem.tags = tags
+        problem.content = item.get("content", problem.content)
+        problem.input_description = item.get("input_description", problem.input_description)
+        problem.output_description = item.get("output_description", problem.output_description)
+        problem.constraints = item.get("constraints", problem.constraints)
+        problem.is_spj = item.get("is_spj", problem.is_spj)
+        problem.spj_code = item.get("spj_code", problem.spj_code)
+        # 重建用例
+        db.query(TestCase).filter(TestCase.problem_id == problem.id).delete()
+        tcs = [
+            TestCase(
+                problem_id=problem.id,
+                input_text=tc["input_text"],
+                output_text=tc["output_text"],
+                is_sample=tc.get("is_sample", False),
+            )
+            for tc in item.get("testcases", [])
+        ]
+        db.add_all(tcs)
     db.commit()
 
 

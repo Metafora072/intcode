@@ -5,8 +5,14 @@ const api = axios.create({
   baseURL: "/api"
 });
 
-export const fetchProblems = async (params?: { keyword?: string; difficulty?: string; tag?: string; limit?: number; offset?: number }) => {
-  const res = await api.get<Problem[]>("/problems", { params });
+export const fetchProblems = async (params?: {
+  keyword?: string;
+  difficulty?: string;
+  tag?: string;
+  limit?: number;
+  offset?: number;
+}): Promise<{ items: Problem[]; total: number }> => {
+  const res = await api.get<{ items: Problem[]; total: number }>("/problems", { params });
   return res.data;
 };
 

@@ -19,10 +19,10 @@ def list_problems(
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ):
-    problems = problem_service.list_problems(
+    problems, total = problem_service.list_problems(
         db, keyword=keyword, difficulty=difficulty, tag=tag, limit=limit, offset=offset
     )
-    return [problem_service.serialize_problem(p) for p in problems]
+    return {"items": [problem_service.serialize_problem(p) for p in problems], "total": total}
 
 
 @router.get("/{problem_id}")

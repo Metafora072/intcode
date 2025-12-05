@@ -14,6 +14,7 @@ const ProblemListPage = () => {
   const [page, setPage] = useState(0);
   const pageSize = 12;
   const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
   const load = async (targetPage = page) => {
     const data = await fetchProblems({
@@ -23,8 +24,9 @@ const ProblemListPage = () => {
       limit: pageSize,
       offset: targetPage * pageSize
     });
-    setProblems(data);
-    setHasMore(data.length === pageSize);
+    setProblems(data.items);
+    setTotalCount(data.total);
+    setHasMore((targetPage + 1) * pageSize < data.total);
   };
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const ProblemListPage = () => {
   }, [page, tag, difficulty]);
 
   const solved = useMemo(() => Math.min(10, problems.length), [problems.length]);
-  const total = useMemo(() => Math.max(20, problems.length + 10), [problems.length]);
+  const progressTotal = useMemo(() => Math.max(20, problems.length + 10), [problems.length]);
   const trendingTags = useMemo(() => {
     const tagCount: Record<string, number> = {};
     problems.forEach((p) => p.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
@@ -156,7 +158,7 @@ const ProblemListPage = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-3">
           <button
             className="btn border border-slate-200 hover:bg-slate-100 disabled:opacity-50 text-sm"
             onClick={() => setPage((p) => Math.max(0, p - 1))}
@@ -164,7 +166,9 @@ const ProblemListPage = () => {
           >
             上一页
           </button>
-          <span className="text-sm text-slate-600">第 {page + 1} 页</span>
+          <span className="text-sm text-slate-600">
+            第 {page + 1} / {Math.max(1, Math.ceil(totalCount / pageSize) || 1)} 页
+          </span>
           <button
             className="btn border border-slate-200 hover:bg-slate-100 disabled:opacity-50 text-sm"
             onClick={() => setPage((p) => p + 1)}
@@ -200,11 +204,11 @@ const ProblemListPage = () => {
             <div className="flex justify-between text-sm text-slate-600">
               <span>已解决</span>
               <span className="font-semibold text-slate-800">
-                {solved}/{total}
+                {solved}/{progressTotal}
               </span>
             </div>
             <div className="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden">
-              <div className="h-full bg-indigo-500" style={{ width: `${Math.min(100, (solved / total) * 100)}%` }} />
+              <div className="h-full bg-indigo-500" style={{ width: `${Math.min(100, (solved / progressTotal) * 100)}%` }} />
             </div>
           </div>
           <div className="mt-3 text-xs text-slate-500">保持每日 1 题，轻松冲击目标。</div>

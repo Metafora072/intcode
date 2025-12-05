@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from sqlalchemy.orm import Session
 
@@ -23,7 +23,7 @@ def list_problems(
     tag: Optional[str] = None,
     limit: int = 20,
     offset: int = 0,
-) -> List[Problem]:
+) -> Tuple[List[Problem], int]:
     query = db.query(Problem)
     if keyword:
         query = query.filter(Problem.title.ilike(f"%{keyword}%"))
@@ -31,7 +31,9 @@ def list_problems(
         query = query.filter(Problem.difficulty == difficulty)
     if tag:
         query = query.filter(Problem.tags.ilike(f"%{tag}%"))
-    return query.order_by(Problem.updated_at.desc()).offset(offset).limit(limit).all()
+    total = query.count()
+    items = query.order_by(Problem.updated_at.desc()).offset(offset).limit(limit).all()
+    return items, total
 
 
 def get_problem(db: Session, problem_id: int) -> Optional[Problem]:
