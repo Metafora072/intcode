@@ -4,9 +4,13 @@ import ProblemListPage from "./ProblemListPage";
 import ProblemDetailPage from "./ProblemDetailPage";
 import AdminPage from "./AdminPage";
 import SubmissionsPage from "./SubmissionsPage";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import { useAuth } from "../context/AuthContext";
 
 const App = () => {
   const [dark, setDark] = useState<boolean>(() => window.localStorage.getItem("intcode-theme") === "dark");
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -30,19 +34,49 @@ const App = () => {
             <Link to="/" className="hover:text-slate-900 dark:hover:text-white">
               题库
             </Link>
-            <Link to="/admin" className="hover:text-slate-900 dark:hover:text-white">
-              题目管理
-            </Link>
+            {user?.is_admin && (
+              <Link to="/admin" className="hover:text-slate-900 dark:hover:text-white">
+                题目管理
+              </Link>
+            )}
             <Link to="/submissions" className="hover:text-slate-900 dark:hover:text-white">
               提交记录
             </Link>
           </nav>
-          <button
-            className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-            onClick={() => setDark((v) => !v)}
-          >
-            {dark ? "浅色" : "深色"}
-          </button>
+          <div className="flex items-center gap-3">
+            {user ? (
+              <>
+                <span className="text-sm text-slate-700 dark:text-slate-100">你好，{user.username}</span>
+                <button
+                  className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={logout}
+                >
+                  退出
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                >
+                  登录
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-3 py-2 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-500"
+                >
+                  注册
+                </Link>
+              </>
+            )}
+            <button
+              className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+              onClick={() => setDark((v) => !v)}
+            >
+              {dark ? "浅色" : "深色"}
+            </button>
+          </div>
         </div>
       </header>
       <main className="h-[calc(100vh-64px)] px-4 py-4">
@@ -51,6 +85,8 @@ const App = () => {
           <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/submissions" element={<SubmissionsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </main>
     </div>

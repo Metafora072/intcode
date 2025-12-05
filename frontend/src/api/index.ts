@@ -1,9 +1,29 @@
 import axios from "axios";
-import { Problem, SubmissionResult, SubmissionSummary } from "../types";
+import { Problem, SubmissionResult, SubmissionSummary, User } from "../types";
 
 const api = axios.create({
   baseURL: "/api"
 });
+
+api.interceptors.request.use((config) => {
+  const token = window.localStorage.getItem("intcode_token");
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (resp) => resp,
+  (error) => {
+    if (error.response?.status === 401) {
+      window.localStorage.removeItem("intcode_token");
+      window.dispatchEvent(new Event("intcode_logout"));
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const fetchProblems = async (params?: {
   keyword?: string;
@@ -47,8 +67,8 @@ export const submitCode = async (payload: {
   return res.data;
 };
 
-export const listSubmissions = async (problemId?: number) => {
-  const res = await api.get<SubmissionSummary[]>("/submissions", { params: { problem_id: problemId } });
+export const listSubmissions = async (params?: { problem_id?: number; user_id?: number; limit?: number }) => {
+  const res = await api.get<SubmissionSummary[]>("/submissions", { params });
   return res.data;
 };
 
@@ -56,3 +76,25 @@ export const getSubmission = async (id: number) => {
   const res = await api.get(`/submissions/${id}`);
   return res.data;
 };
+
+export const loginApi = async (username: string, password: string) => {
+  const form = new URLSearchParams();
+  form.append("username", username);
+  form.append("password", password);
+  const res = await api.post<{ access_token: string; token_type: string }>("/auth/token", form, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+  });
+  return res.data;
+};
+
+export const registerApi = async (payload: { username: string; email: string; password: string }) => {
+  const res = await api.post<User>("/auth/register", payload);
+  return res.data;
+};
+
+export const fetchMe = async () => {
+  const res = await api.get<User>("/auth/users/me");
+  return res.data;
+};
+
+export default api;

@@ -23,6 +23,7 @@ class SubmissionCreate(BaseModel):
     code: str
     mode: str = "submit"  # submit | run_sample | custom
     custom_input: Optional[str] = None
+    user_id: Optional[int] = None
 
 
 class SubmissionOut(BaseModel):

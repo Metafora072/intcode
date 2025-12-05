@@ -2,6 +2,15 @@
 
 所有接口默认前缀 `/api`，返回 JSON。
 
+## Authentication
+- `POST /auth/register`
+  - Body: `username`, `email`, `password`
+- `POST /auth/token`
+  - Form: `username`, `password`（`application/x-www-form-urlencoded`）
+  - 返回：`{ access_token, token_type }`
+- `GET /auth/users/me`（需要登录）
+  - 返回：当前用户信息
+
 ## Problem
 - `GET /problems`
   - Query：`keyword`(可选)、`difficulty` = EASY/MEDIUM/HARD、`limit`(默认20，<=100)、`offset`(默认0)
@@ -10,6 +19,7 @@
   - 返回：题目详情与全部用例（包含样例标记）
 
 ## Admin（本地管理员使用）
+> 需要管理员 Bearer Token
 - `POST /admin/problems`
   - Body：`slug`, `title`, `difficulty`, `tags`(数组), `content`, `input_description`, `output_description`, `constraints`
   - 返回：创建后的题目
@@ -24,7 +34,7 @@
   - 返回：提交摘要列表
 - `GET /submissions/{id}`
   - 返回：单次提交详情（源代码、用例结果）
-- `POST /submissions`
+- `POST /submissions`（需要登录）
   - Body：
     ```json
     {

@@ -9,6 +9,7 @@ import { Problem, SubmissionResult } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
 import CodeEditor from "../components/CodeEditor";
 import RunResultCard from "../components/RunResultCard";
+import { useAuth } from "../context/AuthContext";
 
 const templates: Record<string, string> = {
   cpp17: `#include <bits/stdc++.h>
@@ -46,6 +47,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [bottomTab, setBottomTab] = useState<"custom" | "result">("result");
   const [viewMode, setViewMode] = useState<"problem" | "result">("problem");
   const [runMode, setRunMode] = useState<"run_sample" | "submit" | "custom">("run_sample");
+  const { user } = useAuth();
 
   useEffect(() => {
     if (id) {
@@ -63,6 +65,17 @@ const ProblemDetailPage = ({ theme }: Props) => {
 
   const handleRun = async (mode: "run_sample" | "submit" | "custom") => {
     if (!problem) return;
+    if (!user) {
+      setResult({
+        status: "ERROR",
+        runtime_ms: 0,
+        compile_error: null,
+        runtime_error: "请先登录后再运行/提交代码",
+        cases: []
+      });
+      setBottomTab("result");
+      return;
+    }
     setRunMode(mode);
     if (mode === "submit") {
       setViewMode("result");

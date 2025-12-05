@@ -139,6 +139,7 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
             score=100 if overall_status == "AC" else 0,
             runtime_ms=max_runtime,
             detail_json=json.dumps([c.model_dump() for c in results], ensure_ascii=False),
+            user_id=payload.user_id,
         )
         db.add(db_submission)
         db.commit()

@@ -1,24 +1,36 @@
 import { useEffect, useState } from "react";
 import { getSubmission, listSubmissions } from "../api";
 import { SubmissionCaseResult, SubmissionSummary } from "../types";
+import { useAuth } from "../context/AuthContext";
 
 const SubmissionsPage = () => {
   const [subs, setSubs] = useState<SubmissionSummary[]>([]);
   const [selected, setSelected] = useState<any>(null);
+  const { user } = useAuth();
 
   const load = async () => {
-    const data = await listSubmissions();
+    const params: Record<string, any> = {};
+    if (user && !user.is_admin) {
+      params.user_id = user.id;
+    }
+    const data = await listSubmissions(params);
     setSubs(data);
   };
 
   useEffect(() => {
-    load();
-  }, []);
+    if (user) {
+      load();
+    }
+  }, [user]);
 
   const showDetail = async (id: number) => {
     const data = await getSubmission(id);
     setSelected(data);
   };
+
+  if (!user) {
+    return <p className="text-sm text-slate-600">请先登录后查看提交记录。</p>;
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-4">

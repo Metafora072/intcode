@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { addTestcase, createProblem, fetchProblems } from "../api";
 import CodeEditor from "../components/CodeEditor";
 import { Problem } from "../types";
+import { useAuth } from "../context/AuthContext";
 
 const defaultSpj = `def check(input_str, user_output_str):
     try:
@@ -37,6 +38,7 @@ const AdminPage = () => {
   });
   const [caseForm, setCaseForm] = useState({ input_text: "", output_text: "", is_sample: true });
   const [msg, setMsg] = useState("");
+  const { user } = useAuth();
 
   const loadProblems = async () => {
     const data = await fetchProblems();
@@ -44,8 +46,18 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    loadProblems();
-  }, []);
+    if (user?.is_admin) {
+      loadProblems();
+    }
+  }, [user]);
+
+  if (!user) {
+    return <p className="text-sm text-slate-600">请先登录管理员账号。</p>;
+  }
+
+  if (!user.is_admin) {
+    return <p className="text-sm text-slate-600">当前账号没有管理员权限。</p>;
+  }
 
   const handleCreate = async () => {
     await createProblem({

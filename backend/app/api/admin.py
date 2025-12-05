@@ -5,8 +5,9 @@ from app.models.base import get_db
 from app.schemas.problem import ProblemCreate, ProblemUpdate
 from app.schemas.testcase import TestCaseCreate
 from app.services import problem_service
+from app.api.deps import get_current_admin
 
-router = APIRouter(prefix="/admin", tags=["admin"])
+router = APIRouter(prefix="/admin", tags=["admin"], dependencies=[Depends(get_current_admin)])
 
 
 @router.post("/problems")

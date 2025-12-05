@@ -9,6 +9,8 @@ from app.models.base import Base, SessionLocal, engine  # noqa: E402
 from app.models.problem import Difficulty, Problem  # noqa: E402
 from app.models.testcase import TestCase  # noqa: E402
 from app.models.submission import Submission  # noqa: E402,F401
+from app.models.user import User  # noqa: E402
+from app.core.security import get_password_hash  # noqa: E402
 
 DEFAULT_SPJ = """def check(input_str, user_output_str):
     try:
@@ -30,12 +32,26 @@ DEFAULT_SPJ = """def check(input_str, user_output_str):
 def seed_sample():
     db = SessionLocal()
     try:
+        ensure_admin(db)
         ensure_two_sum(db)
         load_hot100(db)
         refresh_hot100(db)
         print("示例题目插入完成")
     finally:
         db.close()
+
+
+def ensure_admin(db: SessionLocal) -> None:
+    if db.query(User).filter(User.username == "admin").first():
+        return
+    admin_user = User(
+        username="admin",
+        email="admin@example.com",
+        hashed_password=get_password_hash("admin"),
+        is_admin=True,
+    )
+    db.add(admin_user)
+    db.commit()
 
 
 def ensure_two_sum(db: SessionLocal) -> None:
