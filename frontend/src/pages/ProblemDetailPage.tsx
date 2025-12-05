@@ -149,7 +149,9 @@ const ProblemDetailPage = ({ theme }: Props) => {
               {problem.constraints && (
                 <>
                   <h4>约束</h4>
-                  <p>{problem.constraints}</p>
+                  <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                    {problem.constraints}
+                  </ReactMarkdown>
                 </>
               )}
               {sampleCases.length > 0 && (

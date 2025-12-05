@@ -24,7 +24,7 @@ def seed_sample():
         content="给定整数数组 nums 和目标值 target，请返回两数之和等于 target 的任意一组下标。",
         input_description="第一行 n，第二行 n 个整数，第三行 target。",
         output_description="输出两个下标，升序。",
-        constraints="2 <= n <= 1e5, -1e9 <= nums[i] <= 1e9",
+        constraints=r"$2 \\le n \\le 10^{5},\\;-10^{9} \\le \\text{nums}[i] \\le 10^{9}$",
     )
     db.add(problem)
     db.commit()
