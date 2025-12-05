@@ -15,6 +15,15 @@ const ProblemListPage = () => {
   const pageSize = 12;
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+  const [allTags, setAllTags] = useState<string[]>([]);
+
+  const mergeTags = (items: Problem[]) => {
+    setAllTags((prev) => {
+      const next = new Set(prev);
+      items.forEach((p) => p.tags.forEach((t) => next.add(t)));
+      return Array.from(next).sort();
+    });
+  };
 
   const load = async (targetPage = page) => {
     const data = await fetchProblems({
@@ -27,12 +36,22 @@ const ProblemListPage = () => {
     setProblems(data.items);
     setTotalCount(data.total);
     setHasMore((targetPage + 1) * pageSize < data.total);
+    mergeTags(data.items);
   };
 
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, tag, difficulty]);
+
+  useEffect(() => {
+    const loadAllTags = async () => {
+      const data = await fetchProblems({ limit: 100, offset: 0 });
+      mergeTags(data.items);
+    };
+    loadAllTags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const solved = useMemo(() => Math.min(10, problems.length), [problems.length]);
   const progressTotal = useMemo(() => Math.max(20, problems.length + 10), [problems.length]);
@@ -83,9 +102,9 @@ const ProblemListPage = () => {
               onChange={(e) => setTag(e.target.value)}
             >
               <option value="">全部标签</option>
-              {trendingTags.map((t) => (
-                <option key={t.tag} value={t.tag}>
-                  {t.tag}
+              {allTags.map((tagName) => (
+                <option key={tagName} value={tagName}>
+                  {tagName}
                 </option>
               ))}
             </select>

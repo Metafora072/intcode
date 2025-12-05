@@ -149,10 +149,10 @@ const ProblemDetailPage = ({ theme }: Props) => {
                   <>
                     <h4>样例</h4>
                     <div className="space-y-3">
-                      {sampleCases.map((tc) => (
+                      {sampleCases.map((tc, idx) => (
                         <div key={tc.id} className="border border-slate-200 dark:border-slate-700 rounded-lg p-3 bg-slate-50 dark:bg-slate-800">
                           <div className="flex justify-between items-center">
-                            <span className="text-sm font-medium text-slate-700 dark:text-slate-100">样例 #{tc.id}</span>
+                            <span className="text-sm font-medium text-slate-700 dark:text-slate-100">样例 #{idx + 1}</span>
                             <div className="flex gap-2">
                               <button
                                 className="btn border border-slate-200 dark:border-slate-600 text-xs hover:bg-slate-100 dark:hover:bg-slate-700"
