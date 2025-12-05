@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 import { fetchProblem, submitCode } from "../api";
 import { Problem, SubmissionResult } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
@@ -99,14 +101,15 @@ const ProblemDetailPage = ({ theme }: Props) => {
         custom_input: mode === "custom" ? customInput : undefined
       });
       setResult(res);
+      setBottomTab("result");
     } catch (err: any) {
-        setResult({
-            status: "ERROR",
-            runtime_ms: 0,
-            runtime_error: err?.message ?? "运行失败",
-            compile_error: null,
-            cases: []
-        });
+      setResult({
+        status: "ERROR",
+        runtime_ms: 0,
+        runtime_error: err?.message ?? "运行失败",
+        compile_error: null,
+        cases: []
+      });
     } finally {
       setLoading(false);
     }
@@ -136,7 +139,9 @@ const ProblemDetailPage = ({ theme }: Props) => {
               ))}
             </div>
             <div className="prose prose-slate dark:prose-invert max-w-none">
-              <ReactMarkdown>{problem.content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                {problem.content}
+              </ReactMarkdown>
               <h4>输入说明</h4>
               <p>{problem.input_description}</p>
               <h4>输出说明</h4>
@@ -173,13 +178,13 @@ const ProblemDetailPage = ({ theme }: Props) => {
                         <div className="mt-2 grid md:grid-cols-2 gap-3">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">输入</p>
-                            <pre className="bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
+                            <pre className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-mono font-medium p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
                               {tc.input_text}
                             </pre>
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">输出</p>
-                            <pre className="bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
+                            <pre className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-mono font-medium p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
                               {tc.output_text}
                             </pre>
                           </div>
