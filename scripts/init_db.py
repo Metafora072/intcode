@@ -1,4 +1,5 @@
 """初始化数据库并插入示例数据."""
+import json
 import sys
 from pathlib import Path
 
@@ -16,6 +17,10 @@ def seed_sample():
         db.close()
         print("数据库已存在数据，跳过示例插入")
         return
+    fixture_path = Path(__file__).resolve().parents[1] / "backend" / "app" / "fixtures" / "two_sum.json"
+    if not fixture_path.exists():
+        print("未找到 two_sum.json 夹具文件，无法插入示例数据")
+        return
     problem = Problem(
         slug="two-sum",
         title="Two Sum",
@@ -24,35 +29,23 @@ def seed_sample():
         content="给定整数数组 nums 和目标值 target，请返回两数之和等于 target 的任意一组下标。",
         input_description="第一行 n，第二行 n 个整数，第三行 target。",
         output_description="输出两个下标，升序。",
-        constraints=r"$2 \\le n \\le 10^{5},\\;-10^{9} \\le \\text{nums}[i] \\le 10^{9}$",
+        constraints=r"$2 \le n \le 10^{5},\;-10^{9} \le \text{nums}[i] \le 10^{9}$",
     )
     db.add(problem)
     db.commit()
     db.refresh(problem)
 
-    samples = [
+    fixtures = json.loads(fixture_path.read_text(encoding="utf-8"))
+    testcases = [
         TestCase(
             problem_id=problem.id,
-            input_text="4\n2 7 11 15\n9\n",
-            output_text="0 1\n",
-            is_sample=True,
-        ),
-        TestCase(
-            problem_id=problem.id,
-            input_text="3\n3 2 4\n6\n",
-            output_text="1 2\n",
-            is_sample=True,
-        ),
-    ]
-    hidden = [
-        TestCase(
-            problem_id=problem.id,
-            input_text="5\n1 5 3 7 9\n10\n",
-            output_text="1 3\n",
-            is_sample=False,
+            input_text=item["input_text"],
+            output_text=item["output_text"],
+            is_sample=item.get("is_sample", False),
         )
+        for item in fixtures
     ]
-    db.add_all(samples + hidden)
+    db.add_all(testcases)
     db.commit()
     db.close()
     print("示例题目插入完成")

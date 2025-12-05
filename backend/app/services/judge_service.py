@@ -58,7 +58,6 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
             SimpleNamespace(id=0, input_text=payload.custom_input or "", output_text="", is_sample=True)  # type: ignore[arg-type]
         ]
     results: List[CaseResult] = []
-    overall_status = "AC" if payload.mode != "custom" else "CUSTOM"
     max_runtime = 0.0
     runtime_error = None
 
@@ -77,20 +76,25 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
         case_error = None
         if status == "TLE":
             case_status = "TLE"
-            overall_status = "TLE"
             case_error = "超时"
-            runtime_error = "存在超时用例"
+            runtime_error = runtime_error or "存在超时用例"
         elif status == "RE":
-            case_status = "RE"
-            overall_status = "RE"
-            case_error = err or "运行时错误"
-            runtime_error = case_error
+            err_lower = (err or "").lower()
+            if "memory" in err_lower or "内存" in err_lower or "cannot allocate memory" in err_lower:
+                case_status = "MLE"
+                case_error = err or "内存超限"
+                runtime_error = runtime_error or "存在内存超限用例"
+            else:
+                case_status = "RE"
+                case_error = err or "运行时错误"
+                runtime_error = runtime_error or case_error
+        elif status == "MLE":
+            case_status = "MLE"
+            case_error = "内存超限"
+            runtime_error = runtime_error or "存在内存超限用例"
         else:
-            if payload.mode == "custom":
-                overall_status = "CUSTOM"
-            elif output.strip() != tc.output_text.strip():
+            if payload.mode != "custom" and output.strip() != tc.output_text.strip():
                 case_status = "WA"
-                overall_status = "WA"
                 case_error = "输出不一致"
         results.append(
             CaseResult(
@@ -104,9 +108,13 @@ def judge(db: Session, payload: SubmissionCreate) -> SubmissionResult:
                 full_output=output,
             )
         )
-        if overall_status != "AC":
-            # 简化：发现第一个失败即可停止
-            break
+    overall_status = "CUSTOM" if payload.mode == "custom" else "AC"
+    if payload.mode != "custom":
+        statuses = {c.status for c in results}
+        for label in ["RE", "MLE", "TLE", "WA"]:
+            if label in statuses:
+                overall_status = label
+                break
 
     detail = SubmissionResult(
         status=overall_status,
