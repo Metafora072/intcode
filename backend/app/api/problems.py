@@ -14,12 +14,13 @@ router = APIRouter(prefix="/problems", tags=["problems"])
 def list_problems(
     keyword: Optional[str] = Query(default=None),
     difficulty: Optional[Difficulty] = Query(default=None),
+    tag: Optional[str] = Query(default=None),
     limit: int = Query(default=20, le=100),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ):
     problems = problem_service.list_problems(
-        db, keyword=keyword, difficulty=difficulty, limit=limit, offset=offset
+        db, keyword=keyword, difficulty=difficulty, tag=tag, limit=limit, offset=offset
     )
     return [problem_service.serialize_problem(p) for p in problems]
 

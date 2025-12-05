@@ -20,6 +20,7 @@ def list_problems(
     db: Session,
     keyword: Optional[str] = None,
     difficulty: Optional[Difficulty] = None,
+    tag: Optional[str] = None,
     limit: int = 20,
     offset: int = 0,
 ) -> List[Problem]:
@@ -28,6 +29,8 @@ def list_problems(
         query = query.filter(Problem.title.ilike(f"%{keyword}%"))
     if difficulty:
         query = query.filter(Problem.difficulty == difficulty)
+    if tag:
+        query = query.filter(Problem.tags.ilike(f"%{tag}%"))
     return query.order_by(Problem.updated_at.desc()).offset(offset).limit(limit).all()
 
 
@@ -86,12 +89,15 @@ def add_testcase(db: Session, problem: Problem, payload: TestCaseCreate) -> Test
 
 
 def serialize_problem(problem: Problem):
+    tags = _tags_from_str(problem.tags)
+    if getattr(problem, "is_spj", False) and "SPJ" not in tags:
+        tags.append("SPJ")
     data = {
         "id": problem.id,
         "slug": problem.slug,
         "title": problem.title,
         "difficulty": problem.difficulty,
-        "tags": _tags_from_str(problem.tags),
+        "tags": tags,
         "content": problem.content,
         "input_description": problem.input_description,
         "output_description": problem.output_description,

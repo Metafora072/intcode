@@ -75,6 +75,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [customInput, setCustomInput] = useState("");
   const [bottomTab, setBottomTab] = useState<"custom" | "result">("result");
   const [viewMode, setViewMode] = useState<"problem" | "result">("problem");
+  const [runMode, setRunMode] = useState<"run_sample" | "submit" | "custom">("run_sample");
 
   useEffect(() => {
     if (id) {
@@ -92,6 +93,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
 
   const handleRun = async (mode: "run_sample" | "submit" | "custom") => {
     if (!problem) return;
+    setRunMode(mode);
     if (mode === "submit") {
       setViewMode("result");
       setResult(null);
@@ -232,7 +234,11 @@ const ProblemDetailPage = ({ theme }: Props) => {
                   返回题面
                 </button>
               </div>
-              <RunResultCard result={result} loading={loading} expectedCaseCount={problem.testcases.length} />
+              <RunResultCard
+                result={result}
+                loading={runMode === "submit" && loading}
+                expectedCaseCount={problem.testcases.length}
+              />
             </div>
           </div>
         </Panel>
@@ -315,7 +321,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
                       </div>
                     ) : (
                       <div className="h-full overflow-auto">
-                        <RunResultCard result={result} loading={loading} />
+                        <RunResultCard result={result} loading={runMode === "submit" && loading} />
                       </div>
                     )}
                   </div>

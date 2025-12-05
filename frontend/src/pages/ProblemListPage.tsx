@@ -10,16 +10,18 @@ const ProblemListPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [keyword, setKeyword] = useState("");
   const [difficulty, setDifficulty] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
   const [page, setPage] = useState(0);
   const pageSize = 12;
   const [hasMore, setHasMore] = useState(true);
 
-  const load = async () => {
+  const load = async (targetPage = page) => {
     const data = await fetchProblems({
       keyword: keyword || undefined,
       difficulty: difficulty || undefined,
+      tag: tag || undefined,
       limit: pageSize,
-      offset: page * pageSize
+      offset: targetPage * pageSize
     });
     setProblems(data);
     setHasMore(data.length === pageSize);
@@ -28,7 +30,7 @@ const ProblemListPage = () => {
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, tag, difficulty]);
 
   const solved = useMemo(() => Math.min(10, problems.length), [problems.length]);
   const total = useMemo(() => Math.max(20, problems.length + 10), [problems.length]);
@@ -73,7 +75,25 @@ const ProblemListPage = () => {
               <option value="MEDIUM">MEDIUM</option>
               <option value="HARD">HARD</option>
             </select>
-            <button onClick={load} className="btn bg-slate-900 text-white hover:bg-slate-800 text-sm px-3">
+            <select
+              className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+            >
+              <option value="">全部标签</option>
+              {trendingTags.map((t) => (
+                <option key={t.tag} value={t.tag}>
+                  {t.tag}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => {
+                setPage(0);
+                load(0);
+              }}
+              className="btn bg-slate-900 text-white hover:bg-slate-800 text-sm px-3"
+            >
               搜索
             </button>
           </div>
@@ -84,11 +104,12 @@ const ProblemListPage = () => {
         </div>
 
         <div className="card overflow-hidden">
-          <div className="grid grid-cols-5 px-4 py-3 text-xs font-semibold text-slate-500 bg-slate-50 border-b border-slate-200">
+          <div className="grid grid-cols-6 px-4 py-3 text-xs font-semibold text-slate-500 bg-slate-50 border-b border-slate-200">
             <div>状态</div>
-            <div className="col-span-2">标题</div>
+            <div>标题</div>
+            <div>标签</div>
             <div>难度</div>
-            <div className="text-right">通过率</div>
+            <div className="text-right col-span-2">通过率</div>
           </div>
           <div>
             {problems.length === 0 ? (
@@ -96,26 +117,39 @@ const ProblemListPage = () => {
             ) : (
               <div>
                 {problems.map((p, idx) => (
-                  <div
+                  <a
                     key={p.id}
-                    className={`grid grid-cols-5 px-4 py-3 text-sm items-center ${
+                    href={`/problems/${p.id}`}
+                    className={`grid grid-cols-6 px-4 py-3 text-sm items-center ${
                       idx % 2 === 0 ? "bg-white" : "bg-slate-50"
                     } hover:bg-slate-100 transition-colors`}
                   >
                     <div className="flex items-center gap-2 text-slate-500">
                       <Target size={16} />
                     </div>
-                    <div className="col-span-2">
-                      <a href={`/problems/${p.id}`} className="font-semibold text-slate-800 hover:text-indigo-600">
-                        {p.title}
-                      </a>
+                    <div>
+                      <div className="font-semibold text-slate-800 hover:text-indigo-600">{p.title}</div>
                       <p className="text-xs text-slate-500">{p.slug}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {p.tags.length === 0 ? (
+                        <span className="text-slate-400">无</span>
+                      ) : (
+                        p.tags.map((tagName) => (
+                          <span
+                            key={tagName}
+                            className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
+                          >
+                            {tagName}
+                          </span>
+                        ))
+                      )}
                     </div>
                     <div>
                       <DifficultyBadge level={p.difficulty} />
                     </div>
-                    <div className="text-right text-slate-600">{mockAcceptance()}</div>
-                  </div>
+                    <div className="text-right text-slate-600 col-span-2">{mockAcceptance()}</div>
+                  </a>
                 ))}
               </div>
             )}
