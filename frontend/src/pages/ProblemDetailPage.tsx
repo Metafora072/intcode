@@ -17,44 +17,14 @@ using namespace std;
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n;
-    if(!(cin>>n)) return 0;
-    vector<int> nums(n);
-    for(int i = 0; i < n; i++){
-        cin>>nums[i];
-    }
-    int target;
-    cin>>target;
-    unordered_map<int,int> mp;
-    for(int i = 0; i < n; i++){
-        int need = target - nums[i];
-        if(mp.count(need)){
-            cout<<mp[need]<<" "<<i<<"\\n";
-            return 0;
-        }
-        mp[nums[i]] = i;
-    }
+    // TODO: 读取输入并完成题解
     return 0;
 }
 `,
-  python3: `from collections import defaultdict
-
-def main():
+  python3: `def main():
     import sys
     data = sys.stdin.read().strip().split()
-    if not data:
-        return
-    it = iter(data)
-    n = int(next(it))
-    nums = [int(next(it)) for _ in range(n)]
-    target = int(next(it))
-    pos = {}
-    for idx, v in enumerate(nums):
-        need = target - v
-        if need in pos:
-            print(pos[need], idx)
-            return
-        pos[v] = idx
+    # TODO: 读取输入并完成题解
 
 if __name__ == "__main__":
     main()

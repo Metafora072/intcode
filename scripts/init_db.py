@@ -29,13 +29,21 @@ DEFAULT_SPJ = """def check(input_str, user_output_str):
 
 def seed_sample():
     db = SessionLocal()
-    if db.query(Problem).count() > 0:
+    try:
+        ensure_two_sum(db)
+        load_hot100(db)
+        print("示例题目插入完成")
+    finally:
         db.close()
-        print("数据库已存在数据，跳过示例插入")
+
+
+def ensure_two_sum(db: SessionLocal) -> None:
+    exists = db.query(Problem).filter(Problem.slug == "two-sum").first()
+    if exists:
         return
     fixture_path = Path(__file__).resolve().parents[1] / "backend" / "app" / "fixtures" / "two_sum.json"
     if not fixture_path.exists():
-        print("未找到 two_sum.json 夹具文件，无法插入示例数据")
+        print("未找到 two_sum.json 夹具文件，无法插入 two-sum")
         return
     problem = Problem(
         slug="two-sum",
@@ -65,8 +73,44 @@ def seed_sample():
     ]
     db.add_all(testcases)
     db.commit()
-    db.close()
-    print("示例题目插入完成")
+
+
+def load_hot100(db: SessionLocal) -> None:
+    fixture_path = Path(__file__).resolve().parents[1] / "backend" / "app" / "fixtures" / "leetcode_hot100.json"
+    if not fixture_path.exists():
+        print("未找到 leetcode_hot100.json 夹具文件，跳过")
+        return
+    data = json.loads(fixture_path.read_text(encoding="utf-8"))
+    for item in data:
+        if db.query(Problem).filter(Problem.slug == item["slug"]).first():
+            continue
+        tags = ",".join(item.get("tags", []))
+        problem = Problem(
+            slug=item["slug"],
+            title=item["title"],
+            difficulty=Difficulty(item.get("difficulty", "EASY")),
+            tags=tags,
+            content=item.get("content", ""),
+            input_description=item.get("input_description", ""),
+            output_description=item.get("output_description", ""),
+            constraints=item.get("constraints", ""),
+            is_spj=item.get("is_spj", False),
+            spj_code=item.get("spj_code"),
+        )
+        db.add(problem)
+        db.commit()
+        db.refresh(problem)
+        tcs = [
+            TestCase(
+                problem_id=problem.id,
+                input_text=tc["input_text"],
+                output_text=tc["output_text"],
+                is_sample=tc.get("is_sample", False),
+            )
+            for tc in item.get("testcases", [])
+        ]
+        db.add_all(tcs)
+        db.commit()
 
 
 def main():
