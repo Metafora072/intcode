@@ -1,4 +1,4 @@
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProblemListPage from "./ProblemListPage";
 import ProblemDetailPage from "./ProblemDetailPage";
@@ -7,10 +7,14 @@ import SubmissionsPage from "./SubmissionsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import { useAuth } from "../context/AuthContext";
+import ProfilePage from "./ProfilePage";
+import { Toaster, toast } from "react-hot-toast";
 
 const App = () => {
   const [dark, setDark] = useState<boolean>(() => window.localStorage.getItem("intcode-theme") === "dark");
   const { user, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -43,17 +47,60 @@ const App = () => {
               提交记录
             </Link>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 relative">
             {user ? (
-              <>
-                <span className="text-sm text-slate-700 dark:text-slate-100">你好，{user.username}</span>
+              <div className="relative flex items-center gap-2">
                 <button
-                  className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  onClick={logout}
+                  onClick={() => navigate("/profile")}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  title="个人主页"
                 >
-                  退出
+                  <span className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex items-center justify-center text-xs font-semibold">
+                    {user.username[0].toUpperCase()}
+                  </span>
+                  {user.username}
                 </button>
-              </>
+                <button
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className="px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  aria-label="用户菜单"
+                >
+                  ▾
+                </button>
+                {menuOpen && (
+                  <div className="absolute right-0 mt-12 w-40 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg z-20">
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate("/profile");
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                    >
+                      我的主页
+                    </button>
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate("/submissions");
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                    >
+                      我的提交
+                    </button>
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        logout();
+                        toast("已退出登录");
+                        navigate("/");
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                    >
+                      退出
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <Link
@@ -79,7 +126,7 @@ const App = () => {
           </div>
         </div>
       </header>
-      <main className="h-[calc(100vh-64px)] px-4 py-4">
+      <main className="h-[calc(100vh-64px)] px-4 py-4" onClick={() => setMenuOpen(false)}>
         <Routes>
           <Route path="/" element={<ProblemListPage />} />
           <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />
@@ -87,8 +134,10 @@ const App = () => {
           <Route path="/submissions" element={<SubmissionsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </main>
+      <Toaster position="top-center" />
     </div>
   );
 };

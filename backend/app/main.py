@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import admin, auth, problems, submissions
+from app.api import admin, auth, problems, submissions, users
 from app.models import base, problem, submission, testcase, user  # noqa: F401
 from app.utils.logger import init_logging, logger
 
@@ -27,6 +27,7 @@ app.include_router(problems.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
 app.include_router(submissions.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
+app.include_router(users.router, prefix="/api")
 
 
 @app.get("/")

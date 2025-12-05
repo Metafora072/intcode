@@ -23,3 +23,18 @@ body {
 .input {
   @apply px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100;
 }
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Problem, SubmissionResult, SubmissionSummary, User } from "../types";
+import { Problem, SubmissionResult, SubmissionSummary, UserProfile, User } from "../types";
 
 const api = axios.create({
   baseURL: "/api"
@@ -93,7 +93,7 @@ export const registerApi = async (payload: { username: string; email: string; pa
 };
 
 export const fetchMe = async () => {
-  const res = await api.get<User>("/auth/users/me");
+  const res = await api.get<UserProfile>("/users/me");
   return res.data;
 };
 

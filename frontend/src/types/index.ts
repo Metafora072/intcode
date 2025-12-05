@@ -59,4 +59,22 @@ export interface User {
   email: string;
   is_admin: boolean;
   created_at: string;
+  avatar_url?: string | null;
+}
+
+export interface RecentSubmission {
+  id: number;
+  problem_id: number;
+  problem_title: string;
+  status: string;
+  runtime_ms: number;
+  created_at: string;
+}
+
+export interface UserProfile extends User {
+  solved_count: number;
+  submission_count: number;
+  acceptance_rate: number;
+  rank: number;
+  recent_submissions: RecentSubmission[];
 }

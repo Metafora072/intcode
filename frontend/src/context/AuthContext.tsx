@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { fetchMe, loginApi, registerApi } from "../api";
-import { User } from "../types";
+import { UserProfile } from "../types";
 
 interface AuthContextValue {
-  user: User | null;
+  user: UserProfile | null;
   token: string | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;

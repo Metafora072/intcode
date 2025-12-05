@@ -11,6 +11,7 @@ from app.models.testcase import TestCase  # noqa: E402
 from app.models.submission import Submission  # noqa: E402,F401
 from app.models.user import User  # noqa: E402
 from app.core.security import get_password_hash  # noqa: E402
+from sqlalchemy import text  # noqa: E402
 
 DEFAULT_SPJ = """def check(input_str, user_output_str):
     try:
@@ -32,6 +33,7 @@ DEFAULT_SPJ = """def check(input_str, user_output_str):
 def seed_sample():
     db = SessionLocal()
     try:
+        ensure_user_columns()
         ensure_admin(db)
         ensure_two_sum(db)
         load_hot100(db)
@@ -42,16 +44,33 @@ def seed_sample():
 
 
 def ensure_admin(db: SessionLocal) -> None:
-    if db.query(User).filter(User.username == "admin").first():
-        return
-    admin_user = User(
-        username="admin",
-        email="admin@example.com",
-        hashed_password=get_password_hash("admin"),
-        is_admin=True,
-    )
-    db.add(admin_user)
+    if not db.query(User).filter(User.username == "admin").first():
+        admin_user = User(
+            username="admin",
+            email="admin@example.com",
+            hashed_password=get_password_hash("admin"),
+            is_admin=True,
+            avatar_url=None,
+        )
+        db.add(admin_user)
+    if not db.query(User).filter(User.username == "user").first():
+        normal_user = User(
+            username="user",
+            email="user@example.com",
+            hashed_password=get_password_hash("user"),
+            is_admin=False,
+            avatar_url=None,
+        )
+        db.add(normal_user)
     db.commit()
+
+
+def ensure_user_columns() -> None:
+    """在 SQLite 环境下确保新增列存在，避免旧库缺列报错。"""
+    with engine.begin() as conn:
+        cols = [row[1] for row in conn.execute(text("PRAGMA table_info(users);")).fetchall()]
+        if "avatar_url" not in cols:
+            conn.execute(text("ALTER TABLE users ADD COLUMN avatar_url VARCHAR(255);"))
 
 
 def ensure_two_sum(db: SessionLocal) -> None:
