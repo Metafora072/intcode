@@ -29,7 +29,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     )
     try:
         payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
-        user_id: Optional[int] = payload.get("sub")
+        sub_val = payload.get("sub")
+        user_id: Optional[int] = int(sub_val) if sub_val is not None else None
         exp: Optional[int] = payload.get("exp")
         if user_id is None or exp is None:
             raise credentials_exception

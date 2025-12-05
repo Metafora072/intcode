@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Optional, List
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 
 class UserBase(BaseModel):
     username: str
-    email: EmailStr
+    email: str
     avatar_url: Optional[str] = None
 
 

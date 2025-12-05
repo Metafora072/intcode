@@ -18,11 +18,12 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 def register_user(payload: UserCreate, db: Session = Depends(get_db)):
     if db.query(User).filter(User.username == payload.username).first():
         raise HTTPException(status_code=400, detail="用户名已存在")
-    if db.query(User).filter(User.email == payload.email).first():
+    email_to_use = payload.email or f"{payload.username}@example.com"
+    if db.query(User).filter(User.email == email_to_use).first():
         raise HTTPException(status_code=400, detail="邮箱已注册")
     user = User(
         username=payload.username,
-        email=payload.email,
+        email=email_to_use,
         hashed_password=get_password_hash(payload.password),
         is_admin=False,
     )
@@ -44,7 +45,7 @@ def login_for_access_token(
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
-    access_token = create_access_token(data={"sub": user.id}, expires_delta=access_token_expires)
+    access_token = create_access_token(data={"sub": str(user.id)}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
 
 

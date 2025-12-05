@@ -39,7 +39,7 @@ const RegisterPage = () => {
               <User className="w-4 h-4" />
             </span>
             <input
-              className="input w-full pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               placeholder="用户名"
               value={form.username}
               onChange={(e) => setForm({ ...form, username: e.target.value })}
@@ -50,7 +50,7 @@ const RegisterPage = () => {
               <Mail className="w-4 h-4" />
             </span>
             <input
-              className="input w-full pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               placeholder="邮箱"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -61,7 +61,7 @@ const RegisterPage = () => {
               <Lock className="w-4 h-4" />
             </span>
             <input
-              className="input w-full pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               type="password"
               placeholder="密码"
               value={form.password}

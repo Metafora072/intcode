@@ -1,14 +1,14 @@
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast"; // Ensure Toaster is here
 import ProblemListPage from "./ProblemListPage";
 import ProblemDetailPage from "./ProblemDetailPage";
 import AdminPage from "./AdminPage";
 import SubmissionsPage from "./SubmissionsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
-import { useAuth } from "../context/AuthContext";
 import ProfilePage from "./ProfilePage";
-import { Toaster, toast } from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 const App = () => {
   const [dark, setDark] = useState<boolean>(() => window.localStorage.getItem("intcode-theme") === "dark");
@@ -27,8 +27,15 @@ const App = () => {
     }
   }, [dark]);
 
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen">
+      <Toaster position="top-center" />
       <header className="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 z-10">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="text-xl font-bold text-slate-800 dark:text-white">
@@ -47,86 +54,67 @@ const App = () => {
               提交记录
             </Link>
           </nav>
-          <div className="flex items-center gap-3 relative">
-            {user ? (
-              <div className="relative flex items-center gap-2">
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  title="个人主页"
-                >
-                  <span className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white flex items-center justify-center text-xs font-semibold">
-                    {user.username[0].toUpperCase()}
-                  </span>
-                  {user.username}
-                </button>
-                <button
-                  onClick={() => setMenuOpen((v) => !v)}
-                  className="px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  aria-label="用户菜单"
-                >
-                  ▾
-                </button>
-                {menuOpen && (
-                  <div className="absolute right-0 mt-12 w-40 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg z-20">
-                    <button
-                      onClick={() => {
-                        setMenuOpen(false);
-                        navigate("/profile");
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
-                    >
-                      我的主页
-                    </button>
-                    <button
-                      onClick={() => {
-                        setMenuOpen(false);
-                        navigate("/submissions");
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
-                    >
-                      我的提交
-                    </button>
-                    <button
-                      onClick={() => {
-                        setMenuOpen(false);
-                        logout();
-                        toast("已退出登录");
-                        navigate("/");
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
-                    >
-                      退出
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-                >
-                  登录
-                </Link>
-                <Link
-                  to="/register"
-                  className="px-3 py-2 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-500"
-                >
-                  注册
-                </Link>
-              </>
-            )}
+          
+          <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
               onClick={() => setDark((v) => !v)}
             >
               {dark ? "浅色" : "深色"}
             </button>
+
+            {user ? (
+              <div className="relative">
+                <button
+                  className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  {user.avatar_url ? (
+                    <img src={user.avatar_url} className="w-8 h-8 rounded-full border border-slate-200" alt="avatar" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                      {user.username[0].toUpperCase()}
+                    </div>
+                  )}
+                  <span>{user.username}</span>
+                </button>
+                {menuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl z-20 py-1 overflow-hidden">
+                    <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                      <p className="text-xs text-slate-500">已登录为</p>
+                      <p className="text-sm font-semibold truncate">{user.email}</p>
+                    </div>
+                    <Link
+                      to="/profile"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    >
+                      个人主页
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    >
+                      退出登录
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <Link to="/login" className="btn bg-transparent border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm">
+                  登录
+                </Link>
+                <Link to="/register" className="btn bg-indigo-600 text-white text-sm hover:bg-indigo-500">
+                  注册
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </header>
-      <main className="h-[calc(100vh-64px)] px-4 py-4" onClick={() => setMenuOpen(false)}>
+      
+      <main className="h-[calc(100vh-64px)] px-4 py-4 overflow-hidden">
         <Routes>
           <Route path="/" element={<ProblemListPage />} />
           <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />
@@ -137,7 +125,6 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </main>
-      <Toaster position="top-center" />
     </div>
   );
 };

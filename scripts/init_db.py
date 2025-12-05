@@ -68,9 +68,14 @@ def ensure_admin(db: SessionLocal) -> None:
 def ensure_user_columns() -> None:
     """在 SQLite 环境下确保新增列存在，避免旧库缺列报错。"""
     with engine.begin() as conn:
-        cols = [row[1] for row in conn.execute(text("PRAGMA table_info(users);")).fetchall()]
-        if "avatar_url" not in cols:
+        # users.avatar_url
+        user_cols = [row[1] for row in conn.execute(text("PRAGMA table_info(users);")).fetchall()]
+        if "avatar_url" not in user_cols:
             conn.execute(text("ALTER TABLE users ADD COLUMN avatar_url VARCHAR(255);"))
+        # submissions.user_id
+        sub_cols = [row[1] for row in conn.execute(text("PRAGMA table_info(submissions);")).fetchall()]
+        if "user_id" not in sub_cols:
+            conn.execute(text("ALTER TABLE submissions ADD COLUMN user_id INTEGER;"))
 
 
 def ensure_two_sum(db: SessionLocal) -> None:

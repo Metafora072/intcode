@@ -40,7 +40,7 @@ const LoginPage = () => {
               <User className="w-4 h-4" />
             </span>
             <input
-              className="input w-full pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               placeholder="用户名"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -51,7 +51,7 @@ const LoginPage = () => {
               <Lock className="w-4 h-4" />
             </span>
             <input
-              className="input w-full pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               type="password"
               placeholder="密码"
               value={password}
