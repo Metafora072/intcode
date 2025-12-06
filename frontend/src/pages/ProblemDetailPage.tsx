@@ -44,7 +44,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SubmissionResult | null>(null);
   const [customInput, setCustomInput] = useState("");
-  const [bottomTab, setBottomTab] = useState<"custom" | "result">("result");
+  const [bottomTab, setBottomTab] = useState<"custom" | "result">("custom");
   const [viewMode, setViewMode] = useState<"problem" | "result">("problem");
   const [runMode, setRunMode] = useState<"run_sample" | "submit" | "custom">("run_sample");
   const { user } = useAuth();
@@ -211,7 +211,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs text-slate-500">提交评测结果</p>
-                  <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Two Sum</h2>
+                  <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-100">{problem.title}</h2>
                 </div>
                 <button className="btn border border-slate-200 dark:border-slate-600 text-sm" onClick={() => setViewMode("problem")}>
                   返回题面
@@ -270,13 +270,21 @@ const ProblemDetailPage = ({ theme }: Props) => {
                 <>
                   <div className="flex items-center gap-4 px-4 py-2 text-sm">
                     <button
-                      className={`px-2 py-1 rounded ${bottomTab === "result" ? "bg-slate-200 dark:bg-slate-800" : ""}`}
+                      className={`px-2 py-1 rounded ${
+                        bottomTab === "result"
+                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                      }`}
                       onClick={() => setBottomTab("result")}
                     >
                       运行结果
                     </button>
                     <button
-                      className={`px-2 py-1 rounded ${bottomTab === "custom" ? "bg-slate-200 dark:bg-slate-800" : ""}`}
+                      className={`px-2 py-1 rounded ${
+                        bottomTab === "custom"
+                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                      }`}
                       onClick={() => setBottomTab("custom")}
                     >
                       自测输入
@@ -286,7 +294,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
                     {bottomTab === "custom" ? (
                       <div className="flex flex-col h-full gap-2">
                         <textarea
-                          className="input flex-1 w-full"
+                          className="input flex-1 w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
                           placeholder="在此粘贴你的测试输入..."
                           value={customInput}
                           onChange={(e) => setCustomInput(e.target.value)}

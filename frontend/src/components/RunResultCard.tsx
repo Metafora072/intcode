@@ -57,7 +57,7 @@ const RunResultCard = ({
   const caseList = loading ? new Array(placeholderCount).fill(null) : result?.cases ?? [];
 
   return (
-    <div className="card p-4 mt-4">
+    <div className="card p-4 mt-4 dark:text-slate-200">
       <div className="flex items-center justify-between gap-3">
         <div className={`text-lg font-semibold ${statusColor[result?.status ?? "UNKNOWN"] || "text-slate-700"}`}>
           {loading ? "评测中..." : `结果：${result?.status ?? "未知"}`}
@@ -132,7 +132,7 @@ const RunResultCard = ({
           </div>
 
           {selectedCase && (
-            <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+            <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg">
               <div className="flex justify-between text-sm">
                 <div className="font-medium">
                   用例 #{result.cases.findIndex((c) => c.case_id === selectedCase.case_id) + 1}
@@ -145,20 +145,20 @@ const RunResultCard = ({
               {selectedCase.error && <p className="text-xs text-red-600 mt-1">{selectedCase.error}</p>}
               <div className="grid md:grid-cols-3 gap-2 text-xs mt-2">
                 <div>
-                  <p className="text-slate-500">输入</p>
-                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700 h-28 overflow-auto">
+                  <p className="text-slate-500 dark:text-slate-400">输入</p>
+                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-950 p-2 rounded border border-slate-200 dark:border-slate-800 h-28 overflow-auto text-slate-800 dark:text-slate-200 font-mono text-xs">
                     {selectedCase.input_preview}
                   </pre>
                 </div>
                 <div>
-                  <p className="text-slate-500">期望</p>
-                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700 h-28 overflow-auto">
+                  <p className="text-slate-500 dark:text-slate-400">期望</p>
+                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-950 p-2 rounded border border-slate-200 dark:border-slate-800 h-28 overflow-auto text-slate-800 dark:text-slate-200 font-mono text-xs">
                     {selectedCase.expected_preview}
                   </pre>
                 </div>
                 <div>
-                  <p className="text-slate-500">输出</p>
-                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-700 h-28 overflow-auto">
+                  <p className="text-slate-500 dark:text-slate-400">输出</p>
+                  <pre className="whitespace-pre-wrap bg-white dark:bg-slate-950 p-2 rounded border border-slate-200 dark:border-slate-800 h-28 overflow-auto text-slate-800 dark:text-slate-200 font-mono text-xs">
                     {selectedCase.full_output ?? selectedCase.output_preview}
                   </pre>
                 </div>
