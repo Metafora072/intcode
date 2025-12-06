@@ -1,0 +1,36 @@
+{
+  "slug": "hamming-distance",
+  "title": "汉明距离",
+  "difficulty": "EASY",
+  "tags": [
+    "位运算"
+  ],
+  "content": "两个整数的汉明距离是其二进制对应位不同的个数，计算该值。",
+  "input_description": "一行两个整数 x y。",
+  "output_description": "输出汉明距离整数。",
+  "constraints": "$0 \\le x,y \\le 2^{31}-1$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "1 4\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3 1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7 10\n",
+      "output_text": "3\n",
+      "is_sample": false
+    }
+  ]
+}

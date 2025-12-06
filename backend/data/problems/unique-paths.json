@@ -1,0 +1,52 @@
+{
+  "slug": "unique-paths",
+  "title": "不同路径",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "组合数学"
+  ],
+  "content": "m×n 网格，机器人从左上角出发，每次只能向右或向下，问到达右下角共有多少条不同路径。可用组合公式或 DP 计算。",
+  "input_description": "一行两个整数 m n。",
+  "output_description": "输出路径数（整数）。",
+  "constraints": "$1 \\le m,n \\le 100$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3 7\n",
+      "output_text": "28\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3 2\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7 3\n",
+      "output_text": "28\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10 10\n",
+      "output_text": "48620\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

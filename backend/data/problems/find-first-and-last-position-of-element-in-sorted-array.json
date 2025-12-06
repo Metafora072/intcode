@@ -1,0 +1,57 @@
+{
+  "slug": "find-first-and-last-position-of-element-in-sorted-array",
+  "title": "在排序数组中查找元素的第一个和最后一个位置",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "二分查找"
+  ],
+  "content": "给定升序数组 nums 和目标值 target，找出 target 在数组中的起始和结束位置。若不存在，返回 -1 -1。",
+  "input_description": "第一行整数 n，第二行 n 个升序整数，第三行整数 target。",
+  "output_description": "输出两个整数 l r，空格分隔；不存在输出 -1 -1。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n5 7 7 8 8 10\n8\n",
+      "output_text": "3 4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "6\n5 7 7 8 8 10\n6\n",
+      "output_text": "-1 -1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n1\n",
+      "output_text": "0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 3 3\n3\n",
+      "output_text": "2 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n2\n",
+      "output_text": "0 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 5 7 9\n4\n",
+      "output_text": "-1 -1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 3 3 4 5\n2\n",
+      "output_text": "1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 3 3 4 5\n5\n",
+      "output_text": "6 6\n",
+      "is_sample": false
+    }
+  ]
+}

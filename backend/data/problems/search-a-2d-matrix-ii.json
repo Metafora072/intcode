@@ -1,0 +1,43 @@
+{
+  "slug": "search-a-2d-matrix-ii",
+  "title": "搜索二维矩阵 II",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "矩阵",
+    "二分",
+    "双指针"
+  ],
+  "content": "在行列均升序的矩阵中查找 target，返回 true/false。可从右上角或左下角按“折线”二分移动。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个整数；最后一行整数 target。",
+  "output_description": "找到输出 \"true\"，否则 \"false\"。",
+  "constraints": "$1 \\le m,n \\le 300$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n5\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2 2\n1 2\n3 4\n5\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n-1\n-1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 2\n1 3\n2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n1 2 3\n4 5 6\n7 8 9\n8\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

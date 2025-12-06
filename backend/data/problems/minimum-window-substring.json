@@ -1,0 +1,52 @@
+{
+  "slug": "minimum-window-substring",
+  "title": "最小覆盖子串",
+  "difficulty": "HARD",
+  "tags": [
+    "滑动窗口",
+    "字符串"
+  ],
+  "content": "给定字符串 s 和 t，求 s 中包含 t 所有字符的最短子串（大小写敏感，可含重复），若不存在返回空串。典型滑动窗口，需要维护计数与覆盖度。",
+  "input_description": "第一行字符串 s，第二行字符串 t。",
+  "output_description": "输出最小覆盖子串，若不存在输出空行。",
+  "constraints": "$1 \\le |s|,|t| \\le 10^{5}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "ADOBECODEBANC\nABC\n",
+      "output_text": "BANC\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "a\nb\n",
+      "output_text": "\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "a\na\n",
+      "output_text": "a\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aa\naa\n",
+      "output_text": "aa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aa\nab\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ab\nb\n",
+      "output_text": "b\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "thisisateststring\ntist\n",
+      "output_text": "tstri\n",
+      "is_sample": false
+    }
+  ]
+}

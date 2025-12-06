@@ -1,0 +1,41 @@
+{
+  "slug": "burst-balloons",
+  "title": "戳气球",
+  "difficulty": "HARD",
+  "tags": [
+    "区间 DP"
+  ],
+  "content": "给定气球数字数组 nums，每次戳破一个气球得分为其左右未戳气球数字与自身相乘。求最大得分。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出最大得分整数。",
+  "constraints": "$1 \\le n \\le 500$，$1 \\le nums[i] \\le 100$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n3 1 5 8\n",
+      "output_text": "167\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 5 3\n",
+      "output_text": "35\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n8 2 6 8 1\n",
+      "output_text": "560\n",
+      "is_sample": false
+    }
+  ]
+}

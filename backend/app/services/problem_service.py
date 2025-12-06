@@ -44,6 +44,24 @@ def get_problem_by_slug(db: Session, slug: str) -> Optional[Problem]:
     return db.query(Problem).filter(Problem.slug == slug).first()
 
 
+def _replace_testcases(db: Session, problem: Problem, testcases: List[TestCaseCreate]) -> None:
+    db.query(TestCase).filter(TestCase.problem_id == problem.id).delete()
+    db.flush()
+    objs = [
+        TestCase(
+            problem_id=problem.id,
+            input_text=tc.input_text,
+            output_text=tc.output_text,
+            is_sample=tc.is_sample,
+        )
+        for tc in testcases
+    ]
+    if objs:
+        db.add_all(objs)
+    db.commit()
+    db.refresh(problem)
+
+
 def create_problem(db: Session, payload: ProblemCreate) -> Problem:
     db_problem = Problem(
         slug=payload.slug,
@@ -54,10 +72,14 @@ def create_problem(db: Session, payload: ProblemCreate) -> Problem:
         input_description=payload.input_description,
         output_description=payload.output_description,
         constraints=payload.constraints,
+        is_spj=payload.is_spj,
+        spj_code=payload.spj_code,
     )
     db.add(db_problem)
     db.commit()
     db.refresh(db_problem)
+    if getattr(payload, "testcases", None) is not None:
+        _replace_testcases(db, db_problem, payload.testcases)
     return db_problem
 
 
@@ -69,6 +91,29 @@ def update_problem(db: Session, problem: Problem, payload: ProblemUpdate) -> Pro
             setattr(problem, field, value)
     db.commit()
     db.refresh(problem)
+    return problem
+
+
+def upsert_problem(db: Session, payload: ProblemCreate) -> Problem:
+    problem = get_problem_by_slug(db, payload.slug)
+    if not problem:
+        return create_problem(db, payload)
+
+    # 更新题目字段
+    problem.title = payload.title
+    problem.difficulty = payload.difficulty
+    problem.tags = _tags_to_str(payload.tags)
+    problem.content = payload.content
+    problem.input_description = payload.input_description
+    problem.output_description = payload.output_description
+    problem.constraints = payload.constraints
+    problem.is_spj = payload.is_spj
+    problem.spj_code = payload.spj_code
+    db.commit()
+    db.refresh(problem)
+
+    # 全量替换测试用例
+    _replace_testcases(db, problem, payload.testcases or [])
     return problem
 
 

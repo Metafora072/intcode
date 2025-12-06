@@ -1,0 +1,37 @@
+{
+  "slug": "counting-bits",
+  "title": "比特位计数",
+  "difficulty": "EASY",
+  "tags": [
+    "动态规划",
+    "位运算"
+  ],
+  "content": "对于每个 0..n 的整数，求其二进制中 1 的个数，返回数组。",
+  "input_description": "一行整数 n。",
+  "output_description": "输出 0..n 的 1 数量，空格分隔。",
+  "constraints": "$0 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "2\n",
+      "output_text": "0 1 1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n",
+      "output_text": "0 1 1 2 1 2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n",
+      "output_text": "0 1\n",
+      "is_sample": false
+    }
+  ]
+}

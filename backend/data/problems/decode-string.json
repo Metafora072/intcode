@@ -1,0 +1,37 @@
+{
+  "slug": "decode-string",
+  "title": "字符串解码",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "栈",
+    "字符串"
+  ],
+  "content": "解码形如 k[encoded_string] 的嵌套重复字符串，k 为正整数。",
+  "input_description": "一行字符串 s。",
+  "output_description": "输出解码后的字符串。",
+  "constraints": "$1 \\le |s| \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3[a]2[bc]\n",
+      "output_text": "aaabcbc\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3[a2[c]]\n",
+      "output_text": "accaccacc\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2[abc]3[cd]ef\n",
+      "output_text": "abcabccdcdcdef\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc3[cd]xyz\n",
+      "output_text": "abccdcdcdxyz\n",
+      "is_sample": false
+    }
+  ]
+}

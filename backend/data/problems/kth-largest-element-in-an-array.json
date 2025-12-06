@@ -1,0 +1,42 @@
+{
+  "slug": "kth-largest-element-in-an-array",
+  "title": "数组中的第 K 个最大元素",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "堆",
+    "快选"
+  ],
+  "content": "在未排序数组中找出第 k 大的元素（1-based）。可用快速选择或小根堆。",
+  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 k。",
+  "output_description": "输出第 k 大的元素值。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n3 2 1 5 6 4\n2\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\n-1 -1 -1 -1\n1\n",
+      "output_text": "-1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n99\n1\n",
+      "output_text": "99\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n7 10 4 3 20\n4\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n7 10 4 3 20\n2\n",
+      "output_text": "10\n",
+      "is_sample": false
+    }
+  ]
+}

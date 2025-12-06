@@ -1,0 +1,41 @@
+{
+  "slug": "shortest-unsorted-continuous-subarray",
+  "title": "最短无序连续子数组",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组"
+  ],
+  "content": "找到最短的连续子数组，若将其排序则整个数组有序，输出该子数组长度。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出长度整数。",
+  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n2 6 4 8 10\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n",
+      "output_text": "0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n1 3 2 2 2\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 1 3 4\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "0\n",
+      "is_sample": false
+    }
+  ]
+}

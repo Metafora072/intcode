@@ -1,0 +1,52 @@
+{
+  "slug": "best-time-to-buy-and-sell-stock",
+  "title": "买卖股票的最佳时机",
+  "difficulty": "EASY",
+  "tags": [
+    "数组",
+    "贪心"
+  ],
+  "content": "给定每天的股价，只允许一次买入一次卖出，求最大利润（可为 0）。",
+  "input_description": "第一行整数 n，第二行 n 个整数表示股价。",
+  "output_description": "输出最大利润整数，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，股价不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n7 1 5 3 6 4\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n7 6 4 3 1\n",
+      "output_text": "0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 4 1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n3 3 3 3 3\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 5 6\n",
+      "output_text": "5\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "course-schedule",
+  "title": "课程表",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "图",
+    "拓扑排序"
+  ],
+  "content": "给定课程总数 numCourses 和若干先修依赖 [a,b]（完成 b 才能修 a），判断是否可以完成所有课程。等价于判定有向图是否有环，可用拓扑排序（入度 BFS）或 DFS 检测环。",
+  "input_description": "第一行整数 numCourses，第二行整数 m；接下来 m 行每行两个整数 a b 表示依赖。",
+  "output_description": "若可以完成输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$1 \\le numCourses \\le 10^{5}$，$0 \\le m \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "2\n1\n1 0\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n2\n1 0\n0 1\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n2\n1 0\n2 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n3\n1 0\n0 2\n2 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "subsets",
+  "title": "子集",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "回溯",
+    "位运算"
+  ],
+  "content": "给定一组不重复的整数，返回所有子集（幂集）。可用回溯/位运算生成。输出按子集长度升序，再按字典序，空集也需输出。",
+  "input_description": "第一行整数 n，第二行 n 个互不相同的整数。",
+  "output_description": "每行一个子集，元素空格分隔；空集输出空行。",
+  "constraints": "$1 \\le n \\le 15$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "\n1\n2\n3\n1 2\n1 3\n2 3\n1 2 3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n5\n",
+      "output_text": "\n5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n0 1\n",
+      "output_text": "\n0\n1\n0 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-1 0 1\n",
+      "output_text": "\n-1\n0\n1\n-1 0\n-1 1\n0 1\n-1 0 1\n",
+      "is_sample": false
+    }
+  ]
+}

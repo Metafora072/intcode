@@ -1,0 +1,42 @@
+{
+  "slug": "binary-tree-level-order-traversal",
+  "title": "二叉树的层序遍历",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "树",
+    "BFS"
+  ],
+  "content": "返回二叉树的层序遍历结果。输入层序数组表示树，null 表示空指针。可用队列按层遍历并输出每层节点值。",
+  "input_description": "第一行整数 m；第二行 m 个字符串（整数或 null）。",
+  "output_description": "按层输出节点值，每层一行，节点间空格分隔；空树输出空行。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n3 9 20 null null 15 7\n",
+      "output_text": "3\n9 20\n15 7\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "1\n2 3\n4 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n",
+      "output_text": "1\n2\n",
+      "is_sample": false
+    }
+  ]
+}

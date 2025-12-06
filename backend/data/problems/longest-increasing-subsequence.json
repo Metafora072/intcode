@@ -1,0 +1,42 @@
+{
+  "slug": "longest-increasing-subsequence",
+  "title": "最长递增子序列",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "二分"
+  ],
+  "content": "给定整数数组，求最长严格递增子序列长度。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出 LIS 长度，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "8\n10 9 2 5 3 7 101 18\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "6\n0 1 0 3 2 3\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    }
+  ]
+}

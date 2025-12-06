@@ -1,0 +1,47 @@
+{
+  "slug": "rotate-image",
+  "title": "旋转图像",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "原地操作"
+  ],
+  "content": "给定一个 n×n 的矩阵，原地顺时针旋转 90 度。输入输出均为矩阵，旋转后输出每行。",
+  "input_description": "第一行整数 n；接下来 n 行，每行 n 个整数表示矩阵。",
+  "output_description": "输出旋转后的矩阵，每行 n 个整数，行尾换行。",
+  "constraints": "$1 \\le n \\le 200$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n1 2 3\n4 5 6\n7 8 9\n",
+      "output_text": "7 4 1\n8 5 2\n9 6 3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n3 4\n",
+      "output_text": "3 1\n4 2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16\n",
+      "output_text": "13 9 5 1\n14 10 6 2\n15 11 7 3\n16 12 8 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 1 1\n1 1 1\n1 1 1\n",
+      "output_text": "1 1 1\n1 1 1\n1 1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 -1 -2\n-3 -4 -5\n-6 -7 -8\n",
+      "output_text": "-6 -3 0\n-7 -4 -1\n-8 -5 -2\n",
+      "is_sample": false
+    }
+  ]
+}

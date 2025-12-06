@@ -1,0 +1,117 @@
+{
+  "slug": "move-zeroes",
+  "title": "Move Zeroes",
+  "difficulty": "EASY",
+  "tags": [
+    "数组",
+    "双指针"
+  ],
+  "content": "给定整数数组 nums，请将数组中的所有 0 挪到末尾，保持非零元素的相对顺序不变，并且在原地完成，不得使用额外数组。需要输出调整后的数组内容。常见做法是双指针或覆盖写入，最后把剩余位置补 0。",
+  "input_description": "第一行一个整数 n，表示数组长度。第二行包含 n 个整数，为数组元素，可以为负数或 0。",
+  "output_description": "输出一行 n 个整数，表示移动零后的数组，元素之间用空格分隔，行尾换行，无多余空格。",
+  "constraints": "$1 \\le n \\le 10^{5},\\ |nums[i]| \\le 10^{9}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n0 1 0 3 12\n",
+      "output_text": "1 3 12 0 0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\n1 0 2 3\n",
+      "output_text": "1 2 3 0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n0 0 0\n",
+      "output_text": "0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "1 2 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n0 1 0 0 2 3\n",
+      "output_text": "1 2 3 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n4 5 6 0 0 0\n",
+      "output_text": "4 5 6 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 0 -2 0 -3\n",
+      "output_text": "-1 -2 -3 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n0 0 1 0 3 0 5\n",
+      "output_text": "1 3 5 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n0 5\n",
+      "output_text": "5 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n9 8 0 7 6 0 5 0\n",
+      "output_text": "9 8 7 6 5 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n0 0 1 0 0 3\n",
+      "output_text": "1 3 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n4 0 5 0 6\n",
+      "output_text": "4 5 6 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 -1 -2\n",
+      "output_text": "-1 -2 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 0 0 0 2 0 3\n",
+      "output_text": "1 2 3 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n9 8 7 6\n",
+      "output_text": "9 8 7 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n0 1\n",
+      "output_text": "1 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n0 1 0 0 0 2 0 3 0 4\n",
+      "output_text": "1 2 3 4 0 0 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 0 0 1 2\n",
+      "output_text": "1 2 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n7\n",
+      "output_text": "7\n",
+      "is_sample": false
+    }
+  ]
+}

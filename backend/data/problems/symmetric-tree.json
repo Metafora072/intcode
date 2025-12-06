@@ -1,0 +1,43 @@
+{
+  "slug": "symmetric-tree",
+  "title": "对称二叉树",
+  "difficulty": "EASY",
+  "tags": [
+    "树",
+    "递归",
+    "BFS"
+  ],
+  "content": "判断二叉树是否关于根节点左右对称。输入层序序列，null 表示空。",
+  "input_description": "第一行整数 m，第二行 m 个字符串（整数或 null）。",
+  "output_description": "对称输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n1 2 2 3 4 4 3\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n1 2 2 null 3 null 3\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "false\n",
+      "is_sample": false
+    }
+  ]
+}

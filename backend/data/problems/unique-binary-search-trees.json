@@ -1,0 +1,52 @@
+{
+  "slug": "unique-binary-search-trees",
+  "title": "不同的二叉搜索树",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "数学"
+  ],
+  "content": "给定 n，问用值 1..n 能构成多少种不同结构的二叉搜索树。",
+  "input_description": "一行整数 n。",
+  "output_description": "输出方案数（卡特兰数），行尾换行。",
+  "constraints": "$0 \\le n \\le 19$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n",
+      "output_text": "42\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n",
+      "output_text": "1430\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n",
+      "output_text": "16796\n",
+      "is_sample": false
+    }
+  ]
+}

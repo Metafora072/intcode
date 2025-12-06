@@ -1,0 +1,37 @@
+{
+  "slug": "subarray-sum-equals-k",
+  "title": "和为 K 的子数组",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "前缀和",
+    "哈希表"
+  ],
+  "content": "给定整数数组和整数 k，统计和为 k 的连续子数组个数。",
+  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 k。",
+  "output_description": "输出子数组个数。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n1 1 1\n2\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\n1 2 3\n3\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 -1 0\n0\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 1 2 1\n3\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

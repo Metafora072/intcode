@@ -1,0 +1,57 @@
+{
+  "slug": "word-search",
+  "title": "单词搜索",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "回溯",
+    "网格"
+  ],
+  "content": "给定字符网格和单词，判断是否存在一条路径可拼出该单词。路径从任意格开始，按上下左右相邻移动，同一格只能使用一次。典型回溯 + 剪枝。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个字符（不含空格）；最后一行为目标单词。",
+  "output_description": "若可以拼出输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$1 \\le m,n \\le 6$，单词长度不超过 15。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3 4\nABCE\nSFCS\nADEE\nABCCED\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3 4\nABCE\nSFCS\nADEE\nSEE\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3 4\nABCE\nSFCS\nADEE\nABCB\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\nA\nA\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 2\nAB\nBA\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\nAA\nAA\nAAAA\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\nABC\nDEF\nADB\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\nCAA\nAAA\nAAA\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

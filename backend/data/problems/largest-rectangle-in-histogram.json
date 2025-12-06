@@ -1,0 +1,62 @@
+{
+  "slug": "largest-rectangle-in-histogram",
+  "title": "柱状图中最大的矩形",
+  "difficulty": "HARD",
+  "tags": [
+    "单调栈",
+    "数组"
+  ],
+  "content": "给定非负整数数组表示柱状图高度，求能勾勒出的最大矩形面积。",
+  "input_description": "第一行整数 n，第二行 n 个非负整数表示高度。",
+  "output_description": "输出最大面积整数，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，高度不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n2 1 5 6 2 3\n",
+      "output_text": "10\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n2\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n5 5 5\n",
+      "output_text": "15\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 4\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n4 2 0 3 2 5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n100000\n",
+      "output_text": "100000\n",
+      "is_sample": false
+    }
+  ]
+}

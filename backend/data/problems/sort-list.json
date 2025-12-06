@@ -1,0 +1,42 @@
+{
+  "slug": "sort-list",
+  "title": "排序链表",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "链表",
+    "归并排序"
+  ],
+  "content": "对单链表进行 O(n log n) 排序（升序），要求常数额外空间。需自行定义链表结构、读入并输出。",
+  "input_description": "第一行整数 n，第二行 n 个整数为链表节点值。",
+  "output_description": "输出排序后的链表节点值，空格分隔，行尾换行。",
+  "constraints": "$0 \\le n \\le 10^{5}$，节点值绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n4 2 1 3\n",
+      "output_text": "1 2 3 4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n-1\n",
+      "output_text": "-1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 5 3 4 0\n",
+      "output_text": "-1 0 3 4 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 2 1\n",
+      "output_text": "1 2 2\n",
+      "is_sample": false
+    }
+  ]
+}

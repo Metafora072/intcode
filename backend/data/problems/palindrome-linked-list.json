@@ -1,0 +1,42 @@
+{
+  "slug": "palindrome-linked-list",
+  "title": "回文链表",
+  "difficulty": "EASY",
+  "tags": [
+    "链表",
+    "双指针"
+  ],
+  "content": "判断单链表的值序列是否为回文。可用快慢指针+反转后半段或栈。需自行定义链表、读入并输出 true/false。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "回文输出 \"true\"，否则 \"false\"。",
+  "constraints": "$0 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n1 2 3 2 1\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\n1 2 2 1\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 0 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

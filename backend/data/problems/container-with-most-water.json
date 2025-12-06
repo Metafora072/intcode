@@ -1,0 +1,117 @@
+{
+  "slug": "container-with-most-water",
+  "title": "盛最多水的容器",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "双指针",
+    "贪心"
+  ],
+  "content": "给定长度为 n 的数组 height，其中第 i 条线段高度为 height[i]（坐标为 i）。选择两条线与 x 轴组成容器，容积为横距乘以较短的高度，求能盛水的最大容积（整数）。常用双指针从两端向中间收敛。",
+  "input_description": "第一行整数 n，第二行 n 个非负整数表示各位置高度。",
+  "output_description": "输出一个整数，为最大容积，行尾换行。",
+  "constraints": "$2 \\le n \\le 10^{5},\\ 0 \\le height[i] \\le 10^{9}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "9\n1 8 6 2 5 4 8 3 7\n",
+      "output_text": "49\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 0 0 0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n2 3 10 5 7 8 9 1\n",
+      "output_text": "36\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 2 2\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 3 2 5 25 24\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 1 2 1 2\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n6 4 3 1 4 6 99\n",
+      "output_text": "36\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 3 2 5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n4 3 2 1 4 5 6 2\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n10 9 8 7 6\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 1 1 1 50 1 1 1 1\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 3 4 5 18 17 6\n",
+      "output_text": "17\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 8 3 7 9\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n0 2 4 0 0 4 2 0 2 0\n",
+      "output_text": "14\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 2 1\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n9 8 7 6 5 4\n",
+      "output_text": "20\n",
+      "is_sample": false
+    }
+  ]
+}

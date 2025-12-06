@@ -1,0 +1,57 @@
+{
+  "slug": "jump-game",
+  "title": "跳跃游戏",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "贪心",
+    "数组"
+  ],
+  "content": "给定非负整数数组，每个元素代表从该位置最多能跳的步数。判断能否从下标 0 跳到最后一个下标。常用贪心维护当前能到的最远位置。",
+  "input_description": "第一行整数 n，第二行 n 个非负整数。",
+  "output_description": "能到达输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n2 3 1 1 4\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n3 2 1 0 4\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n0 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 0 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 1 1 1 1 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n5 4 3 2 1 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 0 2 0 0 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    }
+  ]
+}

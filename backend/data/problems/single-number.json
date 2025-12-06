@@ -1,0 +1,47 @@
+{
+  "slug": "single-number",
+  "title": "只出现一次的数字",
+  "difficulty": "EASY",
+  "tags": [
+    "位运算",
+    "哈希表"
+  ],
+  "content": "数组中其他元素都出现两次，只有一个元素出现一次，找出该元素。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出只出现一次的数字，行尾换行。",
+  "constraints": "$1 \\le n \\le 3\\times10^{5}$，保证答案存在且唯一。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n2 2 1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n4 1 2 1 2\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n7\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n0 0 1 1 2 2 3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 -1 -2 -2 -3\n",
+      "output_text": "-3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1000000000 2 2 3 3\n",
+      "output_text": "1000000000\n",
+      "is_sample": false
+    }
+  ]
+}

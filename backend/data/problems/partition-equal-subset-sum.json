@@ -1,0 +1,37 @@
+{
+  "slug": "partition-equal-subset-sum",
+  "title": "分割等和子集",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "背包"
+  ],
+  "content": "判断是否可将数组分为两个子集使元素和相等。",
+  "input_description": "第一行整数 n，第二行 n 个正整数。",
+  "output_description": "可分割输出 \"true\"，否则 \"false\"。",
+  "constraints": "$1 \\le n \\le 200$，元素不超过 100。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n1 5 11 5\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n2 2 3 5 5\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 3 5 4\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

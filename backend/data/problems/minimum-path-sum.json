@@ -1,0 +1,52 @@
+{
+  "slug": "minimum-path-sum",
+  "title": "最小路径和",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "网格"
+  ],
+  "content": "给定非负权值网格，从左上到右下，只能向右或向下，求路径的最小权值和。典型网格 DP。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个非负整数。",
+  "output_description": "输出最小路径和，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 200$，单元格值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3 3\n1 3 1\n1 5 1\n4 2 1\n",
+      "output_text": "7\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 2\n1 2\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2 2\n1 1\n1 1\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\n1 2 3\n4 5 6\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 2\n1 2\n1 1\n4 2\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n5 4 2\n1 9 1\n0 2 1\n",
+      "output_text": "9\n",
+      "is_sample": false
+    }
+  ]
+}

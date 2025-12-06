@@ -1,0 +1,41 @@
+{
+  "slug": "coin-change",
+  "title": "零钱兑换",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划"
+  ],
+  "content": "给定硬币面额和总金额，求组成该金额所需最少硬币数；无法组成返回 -1。典型完全背包 DP。",
+  "input_description": "第一行整数 n，第二行 n 个正整数表示面额；第三行整数 amount。",
+  "output_description": "输出最少硬币数或 -1。",
+  "constraints": "$1 \\le n \\le 50$，$1 \\le amount \\le 10^{4}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n1 2 5\n11\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n2 5\n3\n",
+      "output_text": "-1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n2\n3\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n100\n",
+      "output_text": "50\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "linked-list-cycle-ii",
+  "title": "环形链表 II",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "链表",
+    "双指针"
+  ],
+  "content": "在存在环的单链表中，返回环的入口节点值；若无环输出 \"null\"。输入提供节点值及尾指向位置。可用快慢指针相遇后再找入口。",
+  "input_description": "第一行整数 n；第二行 n 个整数为节点值；第三行整数 pos（0-based，-1 表示无环）。",
+  "output_description": "输出入口节点的值；无环输出 \"null\"。",
+  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n3 2 0\n1\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n0\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n3\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    }
+  ]
+}

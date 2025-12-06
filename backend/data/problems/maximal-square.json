@@ -1,0 +1,42 @@
+{
+  "slug": "maximal-square",
+  "title": "最大正方形",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "矩阵"
+  ],
+  "content": "给定 0/1 矩阵，找出只包含 1 的最大正方形的面积。可用 DP 记录以该点为右下角的最大边长。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行一个长度为 n 的 0/1 字符串。",
+  "output_description": "输出最大正方形面积。",
+  "constraints": "$1 \\le m,n \\le 300$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4 5\n10100\n10111\n11111\n10010\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 4\n0000\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n11\n11\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n101\n111\n111\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "convert-bst-to-greater-tree",
+  "title": "把二叉搜索树转换为累加树",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "树",
+    "DFS"
+  ],
+  "content": "将 BST 每个节点值替换为原树中所有大于等于它的节点值之和，输出转换后的层序。",
+  "input_description": "第一行整数 m；第二行 m 个字符串为层序（整数或 null）。",
+  "output_description": "输出转换后的层序，空格分隔，null 表示空。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n2 1 3\n",
+      "output_text": "5 6 3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "7\n5 2 13 1 3 null 15\n",
+      "output_text": "33 36 15 37 35 null 15\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

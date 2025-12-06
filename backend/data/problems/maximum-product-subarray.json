@@ -1,0 +1,47 @@
+{
+  "slug": "maximum-product-subarray",
+  "title": "乘积最大子数组",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "动态规划"
+  ],
+  "content": "给定整数数组，找出乘积最大的连续子数组的乘积（可为负）。需要同时维护当前最大/最小积以应对负数翻转。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出最大乘积，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n2 3 -2 4\n",
+      "output_text": "6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n-2 0 -1\n",
+      "output_text": "0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n-3\n",
+      "output_text": "-3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-2 -3 -4\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 -2 -3 4 -1\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 2 -3 0 4\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

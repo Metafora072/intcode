@@ -1,0 +1,58 @@
+{
+  "slug": "longest-valid-parentheses",
+  "title": "最长有效括号",
+  "difficulty": "HARD",
+  "tags": [
+    "栈",
+    "动态规划",
+    "双指针"
+  ],
+  "content": "给定只含 '(' 和 ')' 的字符串，求最长的合法括号连续子串长度。可用栈、双向扫描或 DP 维护。",
+  "input_description": "一行括号字符串 s，长度可为 0。",
+  "output_description": "输出一个整数，表示最长有效括号子串长度。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "(()\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": ")()())\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": ")\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "()()()\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "()(())\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "())((())\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "((())())\n",
+      "output_text": "8\n",
+      "is_sample": false
+    }
+  ]
+}

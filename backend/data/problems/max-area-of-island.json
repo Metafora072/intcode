@@ -1,0 +1,42 @@
+{
+  "slug": "max-area-of-island",
+  "title": "岛屿的最大面积",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "DFS",
+    "BFS"
+  ],
+  "content": "给定 0/1 网格，求最大连通陆地块的格子数（面积）。上下左右为邻接，可用 DFS/BFS 遍历并计数。",
+  "input_description": "第一行两个整数 m n；接下来 m 行 n 个 0/1（无空格）。",
+  "output_description": "输出最大岛屿面积，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 50$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3 3\n000\n010\n000\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3 3\n111\n010\n111\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n11\n11\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1100\n1100\n0011\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

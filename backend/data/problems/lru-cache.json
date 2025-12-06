@@ -1,0 +1,33 @@
+{
+  "slug": "lru-cache",
+  "title": "LRU 缓存",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "设计",
+    "链表",
+    "哈希表"
+  ],
+  "content": "设计实现 LRU 缓存，支持 O(1) 的 get 和 put，容量固定。输入给出容量和操作序列，输出每次 get 的结果。",
+  "input_description": "第一行整数 capacity；第二行整数 q 表示操作数；接下来 q 行操作，格式为 \"get key\" 或 \"put key value\"。",
+  "output_description": "对每个 get 输出结果（未命中输出 -1），按出现顺序每行一个。put 无输出。",
+  "constraints": "$1 \\le capacity,q \\le 10^{5}$，键值范围 |key|,|value| \\le 10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "2\n7\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\n",
+      "output_text": "1\n-1\n-1\n3\n4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n3\nput 1 1\nput 2 2\nget 1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n4\nput 1 1\nput 2 2\nput 3 3\nget 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    }
+  ]
+}

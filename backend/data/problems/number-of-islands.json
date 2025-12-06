@@ -1,0 +1,48 @@
+{
+  "slug": "number-of-islands",
+  "title": "岛屿数量",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "DFS",
+    "BFS",
+    "并查集"
+  ],
+  "content": "给定 0/1 网格，1 表示陆地，0 表示水，统计岛屿个数。岛屿由上下左右相邻的 1 连接而成，可用 DFS/BFS 或并查集。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个字符 0 或 1（无空格）。",
+  "output_description": "输出岛屿数量，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 300$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4 5\n11110\n11010\n11000\n00000\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4 5\n11000\n11000\n00100\n00011\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n10\n01\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n111\n101\n111\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

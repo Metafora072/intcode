@@ -1,0 +1,42 @@
+{
+  "slug": "lowest-common-ancestor-of-a-binary-tree",
+  "title": "二叉树的最近公共祖先",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "树",
+    "DFS"
+  ],
+  "content": "在普通二叉树中，给定两节点值 p、q，求它们的最近公共祖先节点值（节点值唯一）。可用递归自底向上判断。",
+  "input_description": "第一行整数 m；第二行 m 个字符串为层序（整数或 null）；第三行两个整数 p q。",
+  "output_description": "输出最近公共祖先的节点值，若不存在输出 \"null\"。",
+  "constraints": "$1 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n3 5 1 6 2 0 8 null null 7 4\n5 1\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "7\n3 5 1 6 2 0 8 null null 7 4\n5 4\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 2 3\n2 3\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n1 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

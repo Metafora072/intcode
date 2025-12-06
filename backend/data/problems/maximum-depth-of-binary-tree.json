@@ -1,0 +1,42 @@
+{
+  "slug": "maximum-depth-of-binary-tree",
+  "title": "二叉树的最大深度",
+  "difficulty": "EASY",
+  "tags": [
+    "树",
+    "DFS"
+  ],
+  "content": "给定二叉树，返回从根到最深叶子的节点数（深度）。可用 DFS 或 BFS。",
+  "input_description": "第一行整数 m；第二行 m 个字符串（整数或 null）为层序序列。",
+  "output_description": "输出最大深度整数，空树输出 0。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n3 9 20 null null 15 7\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    }
+  ]
+}

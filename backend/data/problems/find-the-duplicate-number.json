@@ -1,0 +1,43 @@
+{
+  "slug": "find-the-duplicate-number",
+  "title": "寻找重复数",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "快慢指针",
+    "二分"
+  ],
+  "content": "给定包含 n+1 个整数的数组 nums，取值范围 1..n，至少有一个重复数，找出任意一个重复数，不允许修改数组。",
+  "input_description": "第一行整数 n（实际数组长度为 n+1），第二行 n+1 个整数。",
+  "output_description": "输出任意一个重复的数字。",
+  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n1 3 4 2 2\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n3 1 3 4 2 3\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 1 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 2 2 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 3 4 2\n",
+      "output_text": "NONE\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "implement-trie-prefix-tree",
+  "title": "实现 Trie (前缀树)",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "设计",
+    "字典树"
+  ],
+  "content": "实现字典树，支持插入单词、完整单词查找、前缀查找。输入操作序列，输出 search / startsWith 结果。",
+  "input_description": "第一行整数 q；之后 q 行操作：\"insert word\"、\"search word\"、\"startsWith prefix\"。",
+  "output_description": "对每个 search/startsWith 输出 true/false，按顺序每行输出。",
+  "constraints": "$1 \\le q \\le 10^{5}$，单词长度不超过 100。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\ninsert apple\nsearch apple\nsearch app\nstartsWith app\ninsert app\nsearch app\nstartsWith ap\n",
+      "output_text": "true\nfalse\ntrue\ntrue\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\ninsert a\nsearch a\nstartsWith b\n",
+      "output_text": "true\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert hello\ninsert he\nsearch he\nstartsWith hel\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    }
+  ]
+}

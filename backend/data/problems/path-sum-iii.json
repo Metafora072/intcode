@@ -1,0 +1,37 @@
+{
+  "slug": "path-sum-iii",
+  "title": "路径总和 III",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "树",
+    "前缀和"
+  ],
+  "content": "给定二叉树和整数 target，统计路径和等于 target 的路径数。路径需向下但可从任意节点开始。",
+  "input_description": "第一行整数 m；第二行 m 个字符串为层序（整数或 null）；第三行整数 target。",
+  "output_description": "输出路径数量，行尾换行。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "11\n10 5 -3 3 2 null 11 3 -2 null 1\n8\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 -2 -3\n-1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

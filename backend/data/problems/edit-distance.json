@@ -1,0 +1,57 @@
+{
+  "slug": "edit-distance",
+  "title": "编辑距离",
+  "difficulty": "HARD",
+  "tags": [
+    "动态规划",
+    "字符串"
+  ],
+  "content": "给定两个字符串，允许插入、删除、替换字符，求将一个变成另一个的最少操作次数（经典 Levenshtein 距离）。可用 DP，转移考虑三种操作。",
+  "input_description": "第一行字符串 word1，第二行字符串 word2。",
+  "output_description": "输出最少操作数，行尾换行。",
+  "constraints": "$0 \\le |word1|,|word2| \\le 500$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "horse\nros\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "intention\nexecution\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "a\nb\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\n\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\nabc\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "kitten\nsitting\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdef\nazced\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "pneumonoultramicroscopicsilicovolcanoconiosis\nultramicroscopicsilicovolcanoconiosis\n",
+      "output_text": "11\n",
+      "is_sample": false
+    }
+  ]
+}

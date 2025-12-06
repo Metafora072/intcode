@@ -1,0 +1,42 @@
+{
+  "slug": "product-of-array-except-self",
+  "title": "除自身以外数组的乘积",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "前后缀"
+  ],
+  "content": "返回数组 output，其中 output[i] 为除 nums[i] 外所有元素乘积，要求 O(n) 时间且不用除法，可用前后缀积。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出结果数组，空格分隔。",
+  "constraints": "$2 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n1 2 3 4\n",
+      "output_text": "24 12 8 6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n-1 1 0 -3 3\n",
+      "output_text": "0 0 9 0 0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n0 0 3\n",
+      "output_text": "0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 -1 1\n",
+      "output_text": "-1 1 -1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 3\n",
+      "output_text": "3 2\n",
+      "is_sample": false
+    }
+  ]
+}

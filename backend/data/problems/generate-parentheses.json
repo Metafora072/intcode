@@ -1,0 +1,42 @@
+{
+  "slug": "generate-parentheses",
+  "title": "括号生成",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "回溯",
+    "字符串"
+  ],
+  "content": "给定 n，生成所有由 n 对括号组成且合法的括号序列。可用回溯记录已用左右括号数量，确保任意前缀左括号不少于右括号。",
+  "input_description": "一行整数 n。",
+  "output_description": "按字典序输出所有合法括号序列，每行一个；若 n=0 输出空行。",
+  "constraints": "$0 \\le n \\le 10$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "1\n",
+      "output_text": "()\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n",
+      "output_text": "((()))\n(()())\n(())()\n()(())\n()()()\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n",
+      "output_text": "(())\n()()\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n",
+      "output_text": "(((())))\n((()()))\n((())())\n((()))()\n(()(()))\n(()()())\n(()())()\n(())(())\n(())()()\n()((()))\n()(()())\n()(())()\n()()(())\n()()()()\n",
+      "is_sample": false
+    }
+  ]
+}

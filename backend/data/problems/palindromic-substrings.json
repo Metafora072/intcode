@@ -1,0 +1,42 @@
+{
+  "slug": "palindromic-substrings",
+  "title": "回文子串",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "中心扩展"
+  ],
+  "content": "计算字符串中回文子串的数量（不同位置视为不同子串）。可用中心扩展或 DP 统计所有回文中心。",
+  "input_description": "一行字符串 s。",
+  "output_description": "输出回文子串总数，行尾换行。",
+  "constraints": "$0 \\le |s| \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "abc\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "aaa\n",
+      "output_text": "6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ababa\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abca\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

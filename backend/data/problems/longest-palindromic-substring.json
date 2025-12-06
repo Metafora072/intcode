@@ -1,0 +1,117 @@
+{
+  "slug": "longest-palindromic-substring",
+  "title": "最长回文子串",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "字符串",
+    "中心扩展"
+  ],
+  "content": "给定字符串 s，找到其中最长的回文子串（需连续），并输出该子串本身。可使用中心扩展或动态规划。若存在多个长度相同的最长回文，返回任意一个即可；空串返回空行。",
+  "input_description": "一行字符串 s，可为空，字符范围为可见 ASCII。",
+  "output_description": "输出一行，为 s 的最长回文子串。若 s 为空则输出空行。",
+  "constraints": "$0 \\le |s| \\le 10^{4}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "cbbd\n",
+      "output_text": "bb\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "babad\n",
+      "output_text": "bab\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "a\n",
+      "output_text": "a\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaa\n",
+      "output_text": "aaaa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcde\n",
+      "output_text": "a\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "racecar\n",
+      "output_text": "racecar\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abccba\n",
+      "output_text": "abccba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "forgeeksskeegfor\n",
+      "output_text": "geeksskeeg\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abacdfgdcaba\n",
+      "output_text": "aba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdedcba\n",
+      "output_text": "abcdedcba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abb\n",
+      "output_text": "bb\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bananas\n",
+      "output_text": "anana\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcbaefg\n",
+      "output_text": "abcba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aacabdkacaa\n",
+      "output_text": "aca\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "noon\n",
+      "output_text": "noon\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdcbae\n",
+      "output_text": "abcdcba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcddcbaef\n",
+      "output_text": "abcddcba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "xyzzyx\n",
+      "output_text": "xyzzyx\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ababa\n",
+      "output_text": "ababa\n",
+      "is_sample": false
+    }
+  ]
+}

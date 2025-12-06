@@ -1,0 +1,47 @@
+{
+  "slug": "word-break",
+  "title": "单词拆分",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "字符串"
+  ],
+  "content": "给定字符串 s 和字典 wordDict，判断 s 能否拆分成若干字典单词。典型解法为 DP，dp[i] 表示前 i 位可否拆分。",
+  "input_description": "第一行字符串 s；第二行整数 m；第三行 m 个字符串为字典。",
+  "output_description": "能拆分输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$1 \\le |s| \\le 10^{5}$，字典单词总长度不超过 $10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "leetcode\n2\nleet code\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "applepenapple\n2\napple pen\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "catsandog\n5\ncats dog sand and cat\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "aaaaaaa\n2\na aa\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaa\n2\naaaa aaa\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaa\n1\naaaaaaa\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

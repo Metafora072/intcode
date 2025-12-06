@@ -1,0 +1,47 @@
+{
+  "slug": "house-robber",
+  "title": "打家劫舍",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "数组"
+  ],
+  "content": "一排房子，每间有一定金额，相邻房子不能同时偷，求最大可偷金额（一次遍历 DP）。",
+  "input_description": "第一行整数 n，第二行 n 个非负整数表示金额。",
+  "output_description": "输出最大金额，行尾换行。",
+  "constraints": "$0 \\le n \\le 10^{5}$，金额不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n1 2 3 1\n",
+      "output_text": "4\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n2 7 9 3 1\n",
+      "output_text": "12\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 1 1\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n10 1 1 10 1 1\n",
+      "output_text": "20\n",
+      "is_sample": false
+    }
+  ]
+}

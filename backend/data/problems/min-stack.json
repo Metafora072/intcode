@@ -1,0 +1,32 @@
+{
+  "slug": "min-stack",
+  "title": "最小栈",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "设计",
+    "栈"
+  ],
+  "content": "设计支持 push、pop、top 和在 O(1) 时间内检索最小元素的栈。输入操作序列，输出 getMin 和 top 的结果。",
+  "input_description": "第一行整数 q 表示操作数；接下来 q 行，每行一个操作：push x、pop、top、getMin。",
+  "output_description": "对每个 top/getMin 输出结果（pop 若栈空可忽略）；各结果按出现顺序每行输出。",
+  "constraints": "$1 \\le q \\le 10^{5}$，|x| \\le 10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "8\npush -2\npush 0\npush -3\ngetMin\ntop\npop\ngetMin\npop\n",
+      "output_text": "-3\n-3\n-2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\npush 1\ngetMin\npush 2\ngetMin\n",
+      "output_text": "1\n1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\npush 2\npush 2\npop\ngetMin\ngetMin\n",
+      "output_text": "2\n2\n",
+      "is_sample": false
+    }
+  ]
+}

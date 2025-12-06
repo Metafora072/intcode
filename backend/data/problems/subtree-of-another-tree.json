@@ -1,0 +1,37 @@
+{
+  "slug": "subtree-of-another-tree",
+  "title": "另一棵树的子树",
+  "difficulty": "EASY",
+  "tags": [
+    "树",
+    "DFS"
+  ],
+  "content": "判断树 t 是否为树 s 的子树（结构和值完全相同）。",
+  "input_description": "第一行整数 m1，第二行 m1 个字符串为树 s 层序；第三行整数 m2，第四行 m2 个字符串为树 t 层序。",
+  "output_description": "是子树输出 \"true\"，否则 \"false\"。",
+  "constraints": "$0 \\le m1,m2 \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n3 4 5 1 2 null null null null null null\n3\n4 1 2\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "7\n3 4 5 1 2 null null null null 0\n3\n4 1 2\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n0\n\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n1\n1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

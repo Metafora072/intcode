@@ -1,0 +1,116 @@
+{
+  "slug": "climbing-stairs",
+  "title": "Climbing Stairs",
+  "difficulty": "EASY",
+  "tags": [
+    "动态规划"
+  ],
+  "content": "楼梯共有 n 阶，每次只能迈 1 阶或 2 阶，从地面（第 0 阶）出发恰好到达第 n 阶有多少种不同的走法。答案可用斐波那契递推求得，n=0 时结果为 0，n=1 时只有一种走法。需直接读写标准输入输出。",
+  "input_description": "输入仅一行，一个整数 n，表示楼梯阶数。",
+  "output_description": "输出一行一个整数，表示到达第 n 阶的不同走法总数，行尾换行。",
+  "constraints": "$0 \\le n \\le 45$，结果不会溢出 32 位有符号整数。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n",
+      "output_text": "13\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n",
+      "output_text": "21\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n",
+      "output_text": "34\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n",
+      "output_text": "55\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n",
+      "output_text": "89\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n",
+      "output_text": "144\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "12\n",
+      "output_text": "233\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "13\n",
+      "output_text": "377\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "14\n",
+      "output_text": "610\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15\n",
+      "output_text": "987\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "20\n",
+      "output_text": "10946\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "30\n",
+      "output_text": "1346269\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "35\n",
+      "output_text": "14930352\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "45\n",
+      "output_text": "1836311903\n",
+      "is_sample": false
+    }
+  ]
+}

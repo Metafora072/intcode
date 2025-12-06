@@ -1,0 +1,42 @@
+{
+  "slug": "task-scheduler",
+  "title": "任务调度器",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "贪心",
+    "堆"
+  ],
+  "content": "给定任务列表（字母 A-Z）和冷却时间 n，CPU 每单位时间做一个任务或空闲，求完成所有任务的最少时间单位数。典型贪心：按最高频任务填充空档，或用公式/大顶堆模拟。",
+  "input_description": "第一行整数 t，表示任务数量；第二行 t 个大写字母；第三行整数 n。",
+  "output_description": "输出最少时间单位数。",
+  "constraints": "$1 \\le t \\le 10^{5}$，$0 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\nA A A B B B\n2\n",
+      "output_text": "8\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\nA\n0\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\nA A A\n3\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nA A A A\n2\n",
+      "output_text": "13\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nA B C D\n2\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

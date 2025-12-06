@@ -1,0 +1,117 @@
+{
+  "slug": "regular-expression-matching",
+  "title": "正则表达式匹配",
+  "difficulty": "HARD",
+  "tags": [
+    "动态规划",
+    "字符串"
+  ],
+  "content": "实现支持 '' 和 '*' 的正则匹配，判断模式串 p 是否能完全匹配文本串 s。'.' 匹配任意单字符，'*' 匹配其前一个字符出现零次或多次，要求整串匹配而非子串。需处理空串、连续 *、以及多段匹配的状态转移，可用动态规划。",
+  "input_description": "第一行字符串 s（可为空），第二行字符串 p（可为空），字符范围为可见 ASCII，模式中仅 '*' 具有特殊含义且不会作为第一个字符单独出现。",
+  "output_description": "若模式能完整匹配文本输出 \"true\"，否则输出 \"false\"，均为小写，行尾换行。",
+  "constraints": "$0 \\le |s|,|p| \\le 200$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "aa\na\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "aa\na*\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "ab\n.*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aab\nc*a*b\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "mississippi\nmis*is*p*.\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aa\n.*a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\n\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\na*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\n.*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "mississippi\nmis*is*ip*.\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ab\n.*c\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaa\nab*a*c*a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\nab*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bbbba\n.*a*a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\nabc\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\nd*\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\n.*d\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\nab.*d\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaa\na*a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aa\naa\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

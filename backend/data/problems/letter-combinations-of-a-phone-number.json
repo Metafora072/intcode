@@ -1,0 +1,117 @@
+{
+  "slug": "letter-combinations-of-a-phone-number",
+  "title": "电话号码的字母组合",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "回溯",
+    "字符串"
+  ],
+  "content": "给定仅包含数字 2-9 的字符串 digits（可为空），返回所有可能的字母组合，映射规则为经典电话键盘：2->abc, 3->def, 4->ghi, 5->jkl, 6->mno, 7->pqrs, 8->tuv, 9->wxyz。需按输入顺序对每一位做笛卡尔积生成全排列，输出按字典序。",
+  "input_description": "一行字符串 digits，仅含字符 2-9，可为空字符串表示无按键。",
+  "output_description": "输出一行所有组合，单个组合之间用空格分隔，行尾换行。若输入为空字符串，输出空行。",
+  "constraints": "$0 \\le |digits| \\le 10$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "23\n",
+      "output_text": "ad ae af bd be bf cd ce cf\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n",
+      "output_text": "a b c\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n",
+      "output_text": "w x y z\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "79\n",
+      "output_text": "pw px py pz qw qx qy qz rw rx ry rz sw sx sy sz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n",
+      "output_text": "p q r s\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "234\n",
+      "output_text": "adg adh adi aeg aeh aei afg afh afi bdg bdh bdi beg beh bei bfg bfh bfi cdg cdh cdi ceg ceh cei cfg cfh cfi\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "88\n",
+      "output_text": "tt tu tv ut uu uv vt vu vv\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "222\n",
+      "output_text": "aaa aab aac aba abb abc aca acb acc baa bab bac bba bbb bbc bca bcb bcc caa cab cac cba cbb cbc cca ccb ccc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "56\n",
+      "output_text": "jm jn jo km kn ko lm ln lo\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n",
+      "output_text": "d e f\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "34\n",
+      "output_text": "dg dh di eg eh ei fg fh fi\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "59\n",
+      "output_text": "jw jx jy jz kw kx ky kz lw lx ly lz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "68\n",
+      "output_text": "mt mu mv nt nu nv ot ou ov\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "29\n",
+      "output_text": "aw ax ay az bw bx by bz cw cx cy cz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2345\n",
+      "output_text": "adgj adgk adgl adhj adhk adhl adij adik adil aegj aegk aegl aehj aehk aehl aeij aeik aeil afgj afgk afgl afhj afhk afhl afij afik afil bdgj bdgk bdgl bdhj bdhk bdhl bdij bdik bdil begj begk begl behj behk behl beij beik beil bfgj bfgk bfgl bfhj bfhk bfhl bfij bfik bfil cdgj cdgk cdgl cdhj cdhk cdhl cdij cdik cdil cegj cegk cegl cehj cehk cehl ceij ceik ceil cfgj cfgk cfgl cfhj cfhk cfhl cfij cfik cfil\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "78\n",
+      "output_text": "pt pu pv qt qu qv rt ru rv st su sv\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "266\n",
+      "output_text": "amm amn amo anm ann ano aom aon aoo bmm bmn bmo bnm bnn bno bom bon boo cmm cmn cmo cnm cnn cno com con coo\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "33\n",
+      "output_text": "dd de df ed ee ef fd fe ff\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n",
+      "output_text": "t u v\n",
+      "is_sample": false
+    }
+  ]
+}

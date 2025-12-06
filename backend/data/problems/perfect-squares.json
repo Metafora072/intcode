@@ -1,0 +1,52 @@
+{
+  "slug": "perfect-squares",
+  "title": "完全平方数",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "数论"
+  ],
+  "content": "给定正整数 n，求最少需要多少个完全平方数相加得到 n。",
+  "input_description": "一行整数 n。",
+  "output_description": "输出最少数量，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{4}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "12\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "13\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "43\n",
+      "output_text": "3\n",
+      "is_sample": false
+    }
+  ]
+}

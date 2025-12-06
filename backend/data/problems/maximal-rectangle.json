@@ -1,0 +1,52 @@
+{
+  "slug": "maximal-rectangle",
+  "title": "最大矩形",
+  "difficulty": "HARD",
+  "tags": [
+    "单调栈",
+    "动态规划"
+  ],
+  "content": "给定仅包含 0 和 1 的矩阵，求只含 1 的最大矩形面积。",
+  "input_description": "第一行两个整数 m n；接下来 m 行，每行一个由 0/1 组成且长度为 n 的字符串。",
+  "output_description": "输出最大全 1 矩形的面积。",
+  "constraints": "$1 \\le m,n \\le 200$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4 5\n10100\n10111\n11111\n10010\n",
+      "output_text": "6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1 4\n0000\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n11\n11\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n101\n111\n111\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1111\n1111\n1111\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\n010\n010\n",
+      "output_text": "2\n",
+      "is_sample": false
+    }
+  ]
+}

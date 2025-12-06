@@ -40,3 +40,9 @@ def add_testcase(problem_id: int, payload: TestCaseCreate, db: Session = Depends
         "output_text": tc.output_text,
         "is_sample": tc.is_sample,
     }
+
+
+@router.post("/problems/sync")
+def sync_problem(payload: ProblemCreate, db: Session = Depends(get_db)):
+    problem = problem_service.upsert_problem(db, payload)
+    return problem_service.serialize_problem(problem)

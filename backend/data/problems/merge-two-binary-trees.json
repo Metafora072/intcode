@@ -1,0 +1,31 @@
+{
+  "slug": "merge-two-binary-trees",
+  "title": "合并二叉树",
+  "difficulty": "EASY",
+  "tags": [
+    "树"
+  ],
+  "content": "给定两棵二叉树，将它们合并：重叠节点值相加，不重叠节点直接连接。",
+  "input_description": "第一行整数 m1，第二行 m1 个字符串为树 A 层序；第三行整数 m2，第四行 m2 个字符串为树 B 层序。",
+  "output_description": "输出合并后树的层序，空节点用 null。",
+  "constraints": "$0 \\le m1,m2 \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n1 3 2 5 null null null\n7\n2 1 3 null 4 null 7\n",
+      "output_text": "3 4 5 5 4 null 7\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n0\n\n",
+      "output_text": "\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n1\n2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    }
+  ]
+}

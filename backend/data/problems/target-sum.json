@@ -1,0 +1,37 @@
+{
+  "slug": "target-sum",
+  "title": "目标和",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "动态规划",
+    "回溯"
+  ],
+  "content": "给定数组 nums 和目标值 S，给每个数前添加 + 或 -，问有多少种方式使表达式结果等于 S。",
+  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 S。",
+  "output_description": "输出方案数，行尾换行。",
+  "constraints": "$1 \\le n \\le 20$，元素绝对值不超过 1000，确保结果在 32 位整数范围。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n1 1 1 1 1\n3\n",
+      "output_text": "5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 2 3\n-2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 0 0 0\n1\n",
+      "output_text": "4\n",
+      "is_sample": false
+    }
+  ]
+}

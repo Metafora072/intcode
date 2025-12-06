@@ -1,0 +1,42 @@
+{
+  "slug": "linked-list-cycle",
+  "title": "环形链表",
+  "difficulty": "EASY",
+  "tags": [
+    "链表",
+    "双指针"
+  ],
+  "content": "判断单链表是否存在环。输入提供链表节点值以及尾指向的环位置（pos）。可用快慢指针判环。",
+  "input_description": "第一行整数 n；第二行 n 个整数为节点值；第三行整数 pos，表示尾节点链接的下标（0-based），若为 -1 表示无环。",
+  "output_description": "有环输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$1 \\le n \\le 10^{5}$，节点值绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n3 2 0\n1\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 2\n-1\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n-1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

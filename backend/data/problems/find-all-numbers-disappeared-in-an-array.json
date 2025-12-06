@@ -1,0 +1,36 @@
+{
+  "slug": "find-all-numbers-disappeared-in-an-array",
+  "title": "找到所有数组中消失的数字",
+  "difficulty": "EASY",
+  "tags": [
+    "数组"
+  ],
+  "content": "给定 1..n 范围数组（长度 n），部分数字缺失、部分重复，找出所有未出现的数字，要求 O(1) 额外空间。",
+  "input_description": "第一行整数 n，第二行 n 个整数。",
+  "output_description": "输出缺失的数字，空格分隔，按升序；若无缺失输出空行。",
+  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "8\n4 3 2 7 8 2 3 1\n",
+      "output_text": "5 6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 1\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n",
+      "output_text": "1 3 4 5\n",
+      "is_sample": false
+    }
+  ]
+}

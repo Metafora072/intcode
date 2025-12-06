@@ -1,0 +1,117 @@
+{
+  "slug": "maximum-subarray",
+  "title": "Maximum Subarray",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "数组",
+    "动态规划"
+  ],
+  "content": "给定长度为 n 的整数数组 nums，请找到一个非空的连续子数组（至少包含一个元素），使其元素和最大，并输出这个最大和。子数组必须连续，如果数组全为负数则选取最大的那个单个元素。常用线性动态规划（Kadane）或分治求解。",
+  "input_description": "第一行一个整数 n。第二行包含 n 个整数，为数组 nums 的元素，可以为负数或零。",
+  "output_description": "输出一行一个整数，表示所有连续子数组中最大的元素和，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5},\\ |nums[i]| \\le 10^{9}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "5\n-1 -2 -3 -4 -5\n",
+      "output_text": "-1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "9\n-2 1 -3 4 -1 2 1 -5 4\n",
+      "output_text": "6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n-7\n",
+      "output_text": "-7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n-1 4 -2 5 -5 2\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n0 0 0 -1 0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n-2 -3 -1 -5 -4 -6\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n-2 -1 -3 -4 -1 -2 -1 -5\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n1 -2 3 10 -4 7 2 -5 6 1\n",
+      "output_text": "18\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1000000000 -1 1000000000 -1 1000000000\n",
+      "output_text": "2999999998\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n-2 1 -3 4 -1 2 1\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n-2 -1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 -2 5 -1\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 -1 2\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 0 -1 0 -1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n8 -9 10 -2 3\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n4 -1 -2 1 5\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n-5 4 6 -3 4 -1\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 -1 1 -1 1 -1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    }
+  ]
+}

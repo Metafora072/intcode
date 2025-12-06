@@ -1,0 +1,52 @@
+{
+  "slug": "merge-intervals",
+  "title": "合并区间",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "排序",
+    "数组"
+  ],
+  "content": "给定若干闭区间，合并所有重叠区间，输出合并后区间集合，按起点升序。可先按起点排序再线性扫描。",
+  "input_description": "第一行整数 n，接下来 n 行每行两个整数 l r 表示一个区间。",
+  "output_description": "合并后的区间逐行输出 \"l r\"。",
+  "constraints": "$1 \\le n \\le 10^{5}$，区间端点绝对值不超过 $10^{9}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "4\n1 3\n2 6\n8 10\n15 18\n",
+      "output_text": "1 6\n8 10\n15 18\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "2\n1 4\n4 5\n",
+      "output_text": "1 5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1 5\n",
+      "output_text": "1 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2\n3 4\n5 6\n",
+      "output_text": "1 2\n3 4\n5 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 10\n2 3\n4 8\n",
+      "output_text": "1 10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-5 -3\n-4 0\n1 2\n2 3\n3 4\n",
+      "output_text": "-5 0\n1 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0\n0 0\n1 1\n2 2\n",
+      "output_text": "0 0\n1 1\n2 2\n",
+      "is_sample": false
+    }
+  ]
+}

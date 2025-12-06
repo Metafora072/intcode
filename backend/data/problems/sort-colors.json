@@ -1,0 +1,47 @@
+{
+  "slug": "sort-colors",
+  "title": "颜色分类",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "双指针",
+    "排序"
+  ],
+  "content": "数组仅包含 0、1、2，要求原地排序为 0,1,2（荷兰国旗问题），需 O(n) 单趟。",
+  "input_description": "第一行整数 n，第二行 n 个整数（仅 0/1/2）。",
+  "output_description": "输出排序后的数组，空格分隔。",
+  "constraints": "$1 \\le n \\le 10^{5}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n2 0 2 1 1 0\n",
+      "output_text": "0 0 1 1 2 2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n2 0 1\n",
+      "output_text": "0 1 2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n0 0 0 0 0\n",
+      "output_text": "0 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n",
+      "output_text": "2 2 2 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 1 1 1 1\n",
+      "output_text": "1 1 1 1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 1 0 2 1 0 1\n",
+      "output_text": "0 0 1 1 1 2 2\n",
+      "is_sample": false
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "top-k-frequent-elements",
+  "title": "前 K 个高频元素",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "堆",
+    "桶排序"
+  ],
+  "content": "给定整数数组和 k，返回出现频率最高的 k 个元素，输出顺序不限。",
+  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 k。",
+  "output_description": "输出 k 个整数，空格分隔。",
+  "constraints": "$1 \\le k \\le n \\le 10^{5}$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\n1 1 1 2 2 3\n2\n",
+      "output_text": "1 2\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n1\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "5\n4 1 2 2 3\n2\n",
+      "output_text": "2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n7 7 7 8 8 9\n1\n",
+      "output_text": "7\n",
+      "is_sample": false
+    }
+  ]
+}

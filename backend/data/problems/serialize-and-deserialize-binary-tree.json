@@ -1,0 +1,42 @@
+{
+  "slug": "serialize-and-deserialize-binary-tree",
+  "title": "二叉树的序列化与反序列化",
+  "difficulty": "HARD",
+  "tags": [
+    "设计",
+    "树"
+  ],
+  "content": "设计算法将二叉树序列化为字符串并能还原。输入给出层序字符串，要求输出序列化后再反序列化后的层序，以验证功能。",
+  "input_description": "第一行整数 m；第二行 m 个字符串（整数或 null）为层序。",
+  "output_description": "输出反序列化后树的层序（空指针用 null），空树输出空行。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n1 2 3 null null 4 5\n",
+      "output_text": "1 2 3 null null 4 5\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "1 2 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n",
+      "output_text": "1 null 2\n",
+      "is_sample": false
+    }
+  ]
+}

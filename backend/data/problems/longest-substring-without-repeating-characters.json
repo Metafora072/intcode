@@ -1,0 +1,117 @@
+{
+  "slug": "longest-substring-without-repeating-characters",
+  "title": "无重复字符的最长子串",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "字符串",
+    "滑动窗口"
+  ],
+  "content": "给定字符串 s，求其中不包含重复字符的最长连续子串的长度。子串必须连续；当遇到重复字符时，需要移动窗口左边界重新保证子串内字符互不相同。空串返回 0，可包含任意可见 ASCII 字符。常用滑动窗口配合哈希表记录字符最近出现位置。",
+  "input_description": "输入一行字符串 s，可为空，字符集限定为可见 ASCII。",
+  "output_description": "输出一个整数，表示最长无重复字符子串的长度，行尾换行。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "abcabcbb\n",
+      "output_text": "3\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "bbbbb\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "pwwkew\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "au\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "dvdf\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abba\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "tmmzuxt\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "anviaj\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcddefgh\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdefg\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abbaac\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaab\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcabcbbxyz\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "123451234512345\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aab\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "qrstuq\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "dvdfdvdf\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdabcde\n",
+      "output_text": "5\n",
+      "is_sample": false
+    }
+  ]
+}

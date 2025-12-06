@@ -1,0 +1,42 @@
+{
+  "slug": "flatten-binary-tree-to-linked-list",
+  "title": "二叉树展开为链表",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "树",
+    "DFS"
+  ],
+  "content": "将二叉树按先序遍历顺序就地展开为单链表（仅右指针），输出展开后的节点值序列。需原地修改指针。",
+  "input_description": "第一行整数 m；第二行 m 个字符串（整数或 null）为层序序列。",
+  "output_description": "输出展开后的节点值，空格分隔；空树输出空行。",
+  "constraints": "$0 \\le m \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "7\n1 2 5 3 4 null 6\n",
+      "output_text": "1 2 3 4 5 6\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "1 2 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 null 2 null 3\n",
+      "output_text": "1 2 3\n",
+      "is_sample": false
+    }
+  ]
+}

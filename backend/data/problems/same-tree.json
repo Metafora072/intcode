@@ -1,0 +1,42 @@
+{
+  "slug": "same-tree",
+  "title": "相同的树",
+  "difficulty": "EASY",
+  "tags": [
+    "树",
+    "递归"
+  ],
+  "content": "判断两棵二叉树是否在结构和节点值上完全相同。输入为两棵树的层序序列。",
+  "input_description": "第一行整数 m1，第二行 m1 个字符串（整数或 null）表示树 A；第三行整数 m2，第四行 m2 个字符串表示树 B。",
+  "output_description": "相同输出 \"true\"，否则输出 \"false\"。",
+  "constraints": "$0 \\le m1,m2 \\le 2000$。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "3\n1 2 3\n3\n1 2 3\n",
+      "output_text": "true\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\n1 2 1\n3\n1 1 2\n",
+      "output_text": "false\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "0\n\n0\n\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n1\n2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 null null\n5\n1 2 3 null null\n",
+      "output_text": "true\n",
+      "is_sample": false
+    }
+  ]
+}

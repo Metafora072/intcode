@@ -1,0 +1,47 @@
+{
+  "slug": "group-anagrams",
+  "title": "字母异位词分组",
+  "difficulty": "MEDIUM",
+  "tags": [
+    "哈希表",
+    "字符串"
+  ],
+  "content": "给定字符串数组，将字母异位词分到同一组。判断异位词可通过排序后的键或计数向量。输出时，每组内部单词按字典序排序，组之间按组首元素字典序排序输出，便于评测。",
+  "input_description": "第一行整数 n，第二行 n 个字符串。",
+  "output_description": "按要求输出分组结果，每组一行，组内单词空格分隔。",
+  "constraints": "$1 \\le n \\le 10^{4}$，单词长度不超过 100。",
+  "is_spj": false,
+  "spj_code": null,
+  "testcases": [
+    {
+      "input_text": "6\neat tea tan ate nat bat\n",
+      "output_text": "ate eat tea\nbat\nnat tan\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "3\na a a\n",
+      "output_text": "a a a\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "4\nabc bca cab cba\n",
+      "output_text": "abc bca cab cba\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\nbddb dbdb bddb ccc abc\n",
+      "output_text": "abc\nbddb bddb dbdb\nccc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\nabc def ghi\n",
+      "output_text": "abc\ndef\nghi\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\nzzz zzz zz zz z\n",
+      "output_text": "z\nzz\nzzz zzz\n",
+      "is_sample": false
+    }
+  ]
+}
