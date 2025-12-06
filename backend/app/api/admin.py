@@ -46,3 +46,8 @@ def add_testcase(problem_id: int, payload: TestCaseCreate, db: Session = Depends
 def sync_problem(payload: ProblemCreate, db: Session = Depends(get_db)):
     problem = problem_service.upsert_problem(db, payload)
     return problem_service.serialize_problem(problem)
+
+
+@router.get("/users")
+def list_users(db: Session = Depends(get_db)):
+    return problem_service.list_users_with_stats(db)

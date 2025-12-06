@@ -41,6 +41,9 @@ class ProblemOut(ProblemBase):
     created_at: datetime
     updated_at: datetime
     testcases: List[TestCaseBase] = Field(default_factory=list)
+    acceptance_rate: float = 0.0
+    submit_total: int = 0
+    ac_total: int = 0
     is_spj: bool = False
     spj_code: Optional[str] = None
 

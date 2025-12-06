@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { addTestcase, createProblem, fetchProblems } from "../api";
+import { addTestcase, createProblem, fetchProblems, fetchUsers } from "../api";
 import CodeEditor from "../components/CodeEditor";
-import { Problem } from "../types";
+import { Problem, UserSummary } from "../types";
 import { useAuth } from "../context/AuthContext";
 
 const defaultSpj = `def check(input_str, user_output_str):
@@ -36,6 +36,7 @@ type FormState = {
 
 const AdminPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [mainTab, setMainTab] = useState<"problems" | "users">("problems");
   const [activeTab, setActiveTab] = useState<"create" | "cases">("create");
   const [problemId, setProblemId] = useState<number | null>(null);
   const [form, setForm] = useState<FormState>({
@@ -53,15 +54,22 @@ const AdminPage = () => {
   const [caseForm, setCaseForm] = useState({ input_text: "", output_text: "", is_sample: true });
   const [msg, setMsg] = useState("");
   const { user } = useAuth();
+  const [users, setUsers] = useState<UserSummary[]>([]);
 
   const loadProblems = async () => {
     const data = await fetchProblems({ limit: 100, offset: 0 });
     setProblems(data.items);
   };
 
+  const loadUsers = async () => {
+    const data = await fetchUsers();
+    setUsers(data);
+  };
+
   useEffect(() => {
     if (user?.is_admin) {
       loadProblems();
+      loadUsers();
     }
   }, [user]);
 
@@ -118,20 +126,94 @@ const AdminPage = () => {
     <div className="space-y-6">
       <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700 p-2 shadow-sm flex gap-2 text-sm font-medium">
         <button
-          className={`px-4 py-2 rounded-lg ${activeTab === "create" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
-          onClick={() => setActiveTab("create")}
+          className={`px-4 py-2 rounded-lg ${
+            mainTab === "problems" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"
+          }`}
+          onClick={() => setMainTab("problems")}
         >
-          新建题目
+          题目管理
         </button>
         <button
-          className={`px-4 py-2 rounded-lg ${activeTab === "cases" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
-          onClick={() => setActiveTab("cases")}
+          className={`px-4 py-2 rounded-lg ${mainTab === "users" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
+          onClick={() => setMainTab("users")}
         >
-          管理测试用例
+          用户管理
         </button>
       </div>
 
-      {activeTab === "create" ? (
+      {mainTab === "problems" && (
+        <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700 p-2 shadow-sm flex gap-2 text-sm font-medium">
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === "create" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
+            onClick={() => setActiveTab("create")}
+          >
+            新建题目
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === "cases" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
+            onClick={() => setActiveTab("cases")}
+          >
+            管理测试用例
+          </button>
+        </div>
+      )}
+
+      {mainTab === "users" ? (
+        <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">用户列表</h3>
+            <span className="px-3 py-1 rounded-full text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
+              共 {users.length} 人
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="text-left text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                  <th className="py-2 pr-2">ID</th>
+                  <th className="py-2 pr-2">头像</th>
+                  <th className="py-2 pr-2">用户名</th>
+                  <th className="py-2 pr-2">邮箱</th>
+                  <th className="py-2 pr-2">角色</th>
+                  <th className="py-2 pr-2">已解</th>
+                  <th className="py-2 pr-2">加入时间</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+                {users.map((u) => (
+                  <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                    <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.id}</td>
+                    <td className="py-2 pr-2">
+                      {u.avatar_url ? (
+                        <img src={u.avatar_url} alt={u.username} className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700" />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                          {u.username[0]?.toUpperCase()}
+                        </div>
+                      )}
+                    </td>
+                    <td className="py-2 pr-2 text-slate-800 dark:text-slate-100">{u.username}</td>
+                    <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">{u.email}</td>
+                    <td className="py-2 pr-2">
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          u.is_admin ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"
+                        }`}
+                      >
+                        {u.is_admin ? "管理员" : "用户"}
+                      </span>
+                    </td>
+                    <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.solved_count}</td>
+                    <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">
+                      {new Date(u.created_at).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : activeTab === "create" ? (
         <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">创建新题目</h3>

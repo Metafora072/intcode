@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Problem, SubmissionResult, SubmissionSummary, UserProfile, User } from "../types";
+import { Problem, SubmissionResult, SubmissionSummary, UserProfile, User, UserSummary } from "../types";
 
 const api = axios.create({
   baseURL: "/api"
@@ -38,6 +38,11 @@ export const fetchProblems = async (params?: {
 
 export const fetchProblem = async (id: number) => {
   const res = await api.get<Problem>(`/problems/${id}`);
+  return res.data;
+};
+
+export const fetchTrendingTags = async () => {
+  const res = await api.get<{ tag: string; count: number }[]>("/problems/tags/trending");
   return res.data;
 };
 
@@ -94,6 +99,11 @@ export const registerApi = async (payload: { username: string; email: string; pa
 
 export const fetchMe = async () => {
   const res = await api.get<UserProfile>("/users/me");
+  return res.data;
+};
+
+export const fetchUsers = async () => {
+  const res = await api.get<UserSummary[]>("/admin/users");
   return res.data;
 };
 

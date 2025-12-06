@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { BarChart3, Flame, Shuffle, Target, TrendingUp } from "lucide-react";
-import { fetchProblems } from "../api";
+import { Link } from "react-router-dom";
+import { BarChart3, Flame, Shuffle, Target, TrendingUp, CheckCircle2 } from "lucide-react";
+import { fetchProblems, fetchTrendingTags } from "../api";
 import { Problem } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
-
-const mockAcceptance = () => (60 + Math.random() * 30).toFixed(1) + "%";
+import { useAuth } from "../context/AuthContext";
 
 const ProblemListPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
@@ -16,6 +16,8 @@ const ProblemListPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
   const [allTags, setAllTags] = useState<string[]>([]);
+  const [trendingTags, setTrendingTags] = useState<{ tag: string; count: number }[]>([]);
+  const { user } = useAuth();
 
   const mergeTags = (items: Problem[]) => {
     setAllTags((prev) => {
@@ -53,16 +55,16 @@ const ProblemListPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const solved = useMemo(() => Math.min(10, problems.length), [problems.length]);
-  const progressTotal = useMemo(() => Math.max(20, problems.length + 10), [problems.length]);
-  const trendingTags = useMemo(() => {
-    const tagCount: Record<string, number> = {};
-    problems.forEach((p) => p.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
-    return Object.entries(tagCount)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6)
-      .map(([tag, count]) => ({ tag, count }));
-  }, [problems]);
+  useEffect(() => {
+    const loadTrending = async () => {
+      const res = await fetchTrendingTags();
+      setTrendingTags(res);
+    };
+    loadTrending();
+  }, []);
+
+  const solved = useMemo(() => user?.solved_count ?? 0, [user]);
+  const progressTotal = useMemo(() => Math.max(totalCount, solved), [totalCount, solved]);
 
   const randomPick = () => {
     if (!problems.length) return;
@@ -127,12 +129,16 @@ const ProblemListPage = () => {
         </div>
 
         <div className="card overflow-hidden">
-          <div className="grid grid-cols-6 px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-            <div>状态</div>
-            <div>标题</div>
-            <div>标签</div>
-            <div>难度</div>
-            <div className="text-right col-span-2">通过率</div>
+          <div className="flex items-center justify-between px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-3">
+              <span className="w-4" />
+              <span>题目</span>
+            </div>
+            <div className="flex items-center gap-6 text-xs">
+              <span className="hidden md:inline-block text-slate-500">标签</span>
+              <span className="w-16 text-center">难度</span>
+              <span className="w-12 text-right">通过率</span>
+            </div>
           </div>
           <div>
             {problems.length === 0 ? (
@@ -140,39 +146,46 @@ const ProblemListPage = () => {
             ) : (
               <div>
                 {problems.map((p, idx) => (
-                  <a
+                  <Link
                     key={p.id}
-                    href={`/problems/${p.id}`}
-                    className={`grid grid-cols-6 px-4 py-3 text-sm items-center ${
-                      idx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50 dark:bg-slate-800"
-                    } hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors`}
+                    to={`/problems/${p.id}`}
+                    className={`flex items-center justify-between px-4 py-3 text-sm border-b border-slate-100 dark:border-slate-800/50 group ${
+                      idx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50/60 dark:bg-slate-800"
+                    } hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors`}
                   >
-                    <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                      <Target size={16} />
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="text-slate-400 group-hover:text-indigo-500 transition-colors">
+                        <CheckCircle2 size={18} />
+                      </div>
+                      <span className="w-8 text-sm font-mono text-slate-400 dark:text-slate-500 text-right shrink-0">
+                        {String(p.id).padStart(3, "0")}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="font-medium text-slate-700 dark:text-slate-200 truncate hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                          {p.title}
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{p.slug}</p>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600">{p.title}</div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{p.slug}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 text-xs">
-                      {p.tags.length === 0 ? (
-                        <span className="text-slate-400 dark:text-slate-500">无</span>
-                      ) : (
-                        p.tags.map((tagName) => (
+                    <div className="flex items-center gap-6 shrink-0 ml-4">
+                      <div className="hidden md:flex gap-2">
+                        {p.tags.slice(0, 2).map((tagName) => (
                           <span
                             key={tagName}
-                            className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600"
+                            className="px-2 py-0.5 text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-full"
                           >
                             {tagName}
                           </span>
-                        ))
-                      )}
+                        ))}
+                      </div>
+                      <div className="w-16 flex justify-center">
+                        <DifficultyBadge level={p.difficulty} />
+                      </div>
+                      <span className="w-12 text-xs text-right text-slate-400 font-mono tabular-nums">
+                        {p.submit_total > 0 ? `${(p.acceptance_rate * 100).toFixed(0)}%` : "—"}
+                      </span>
                     </div>
-                    <div>
-                      <DifficultyBadge level={p.difficulty} />
-                    </div>
-                    <div className="text-right text-slate-600 dark:text-slate-300 col-span-2">{mockAcceptance()}</div>
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
@@ -230,7 +243,7 @@ const ProblemListPage = () => {
               <BarChart3 size={16} />
               进度
             </div>
-            <span className="text-xs text-slate-500">近一周</span>
+              <span className="text-xs text-slate-500">总进度</span>
           </div>
           <div className="mt-3">
             <div className="flex justify-between text-sm text-slate-600">
@@ -240,7 +253,7 @@ const ProblemListPage = () => {
               </span>
             </div>
             <div className="mt-2 h-2 rounded-full bg-slate-100 overflow-hidden">
-              <div className="h-full bg-indigo-500" style={{ width: `${Math.min(100, (solved / progressTotal) * 100)}%` }} />
+              <div className="h-full bg-indigo-500" style={{ width: `${progressTotal ? Math.min(100, (solved / progressTotal) * 100) : 0}%` }} />
             </div>
           </div>
           <div className="mt-3 text-xs text-slate-500">保持每日 1 题，轻松冲击目标。</div>

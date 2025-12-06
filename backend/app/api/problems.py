@@ -25,6 +25,12 @@ def list_problems(
     return {"items": [problem_service.serialize_problem(p) for p in problems], "total": total}
 
 
+@router.get("/tags/trending")
+def get_trending_tags(db: Session = Depends(get_db)):
+    tags = problem_service.get_trending_tags(db)
+    return [{"tag": tag, "count": count} for tag, count in tags]
+
+
 @router.get("/{problem_id}")
 def get_problem_detail(problem_id: int, db: Session = Depends(get_db)):
     problem = problem_service.get_problem(db, problem_id)

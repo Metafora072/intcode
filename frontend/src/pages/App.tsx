@@ -1,5 +1,6 @@
 import { Route, Routes, Link, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Layers, Settings, History } from "lucide-react";
+import { useEffect, useState, type ComponentType } from "react";
 import { Toaster } from "react-hot-toast"; // Ensure Toaster is here
 import ProblemListPage from "./ProblemListPage";
 import ProblemDetailPage from "./ProblemDetailPage";
@@ -17,6 +18,22 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isIDE = location.pathname.startsWith("/problems/");
+  const NavItem = ({ to, icon: Icon, label }: { to: string; icon: ComponentType<{ size?: number }>; label: string }) => {
+    const isActive = to === "/" ? location.pathname === "/" : location.pathname.startsWith(to);
+    return (
+      <Link
+        to={to}
+        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+          isActive
+            ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400"
+            : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+        }`}
+      >
+        <Icon size={18} />
+        {label}
+      </Link>
+    );
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -39,25 +56,18 @@ const App = () => {
     <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Toaster position="top-center" />
       <header className="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 z-10">
-        <div className="w-full px-6 py-3 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold text-slate-800 dark:text-white">
-            intcode
-          </Link>
-          <nav className="flex gap-4 text-sm font-medium text-slate-600 dark:text-slate-200">
-            <Link to="/" className="hover:text-slate-900 dark:hover:text-white">
-              题库
+        <div className="w-full px-6 h-16 flex items-center">
+          <div className="flex items-center gap-8">
+            <Link to="/" className="text-xl font-bold text-slate-800 dark:text-white">
+              intcode
             </Link>
-            {user?.is_admin && (
-              <Link to="/admin" className="hover:text-slate-900 dark:hover:text-white">
-                题目管理
-              </Link>
-            )}
-            <Link to="/submissions" className="hover:text-slate-900 dark:hover:text-white">
-              提交记录
-            </Link>
-          </nav>
-          
-          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-1">
+              <NavItem to="/" icon={Layers} label="题库" />
+              {user?.is_admin && <NavItem to="/admin" icon={Settings} label="题目管理" />}
+              <NavItem to="/submissions" icon={History} label="提交记录" />
+            </nav>
+          </div>
+          <div className="ml-auto flex items-center gap-3">
             <button
               className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
               onClick={() => setDark((v) => !v)}

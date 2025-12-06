@@ -22,6 +22,9 @@ export interface Problem {
   created_at: string;
   updated_at: string;
   testcases: TestCase[];
+   acceptance_rate: number;
+   submit_total: number;
+   ac_total: number;
 }
 
 export interface SubmissionSummary {
@@ -78,4 +81,14 @@ export interface UserProfile extends User {
   acceptance_rate: number;
   rank: number;
   recent_submissions: RecentSubmission[];
+}
+
+export interface UserSummary {
+  id: number;
+  username: string;
+  email: string;
+  is_admin: boolean;
+  created_at: string;
+  avatar_url?: string | null;
+  solved_count: number;
 }
