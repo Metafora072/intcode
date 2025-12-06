@@ -1,4 +1,4 @@
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast"; // Ensure Toaster is here
 import ProblemListPage from "./ProblemListPage";
@@ -15,6 +15,8 @@ const App = () => {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isIDE = location.pathname.startsWith("/problems/");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -34,7 +36,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <Toaster position="top-center" />
       <header className="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 z-10">
         <div className="w-full px-6 py-3 flex items-center justify-between">
@@ -113,17 +115,18 @@ const App = () => {
           </div>
         </div>
       </header>
-      
-      <main className="h-[calc(100vh-64px)] px-4 py-4 overflow-hidden">
-        <Routes>
-          <Route path="/" element={<ProblemListPage />} />
-          <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/submissions" element={<SubmissionsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
+      <main className={`flex-1 relative w-full ${isIDE ? "overflow-hidden" : "overflow-y-auto"}`}>
+        <div className={isIDE ? "h-full" : "w-full max-w-screen-2xl mx-auto px-4 py-6"}>
+          <Routes>
+            <Route path="/" element={<ProblemListPage />} />
+            <Route path="/problems/:id" element={<ProblemDetailPage theme={dark ? "vs-dark" : "vs-light"} />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/submissions" element={<SubmissionsPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
+        </div>
       </main>
     </div>
   );

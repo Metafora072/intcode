@@ -73,8 +73,8 @@ const ProblemListPage = () => {
   const dailyProblem = problems[0];
 
   return (
-    <div className="h-full grid grid-cols-4 gap-4">
-      <div className="col-span-3 space-y-4">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="col-span-1 lg:col-span-3 space-y-4">
         <div className="card shadow-sm p-4 flex items-center gap-3">
           <div className="flex items-center gap-2 flex-1">
             <div className="flex items-center px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700">

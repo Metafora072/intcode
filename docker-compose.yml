@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: intcode-backend
+    environment:
+      - INTCODE_DATABASE_URL=sqlite:////app/data/intcode.db
+    volumes:
+      - ./backend/data:/app/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: intcode-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
