@@ -29,6 +29,7 @@ class SubmissionCreate(BaseModel):
 class SubmissionOut(BaseModel):
     id: int
     problem_id: int
+    problem_title: str
     language: str
     code: str
     status: str

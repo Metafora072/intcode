@@ -70,24 +70,26 @@ const ProblemListPage = () => {
     window.location.href = `/problems/${pick.id}`;
   };
 
+  const dailyProblem = problems[0];
+
   return (
     <div className="h-full grid grid-cols-4 gap-4">
       <div className="col-span-3 space-y-4">
         <div className="card shadow-sm p-4 flex items-center gap-3">
           <div className="flex items-center gap-2 flex-1">
-            <div className="flex items-center px-3 py-2 bg-slate-100 rounded-lg text-slate-600">
+            <div className="flex items-center px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
               <svg className="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 3.5a5.5 5.5 0 1 1 2.735 4.724l-4.76 4.76a.75.75 0 1 1-1.06-1.06l4.76-4.76A5.5 5.5 0 0 1 9 3.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <input
-                className="bg-transparent outline-none text-sm"
+                className="bg-transparent outline-none text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 placeholder="搜索题目标题..."
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
               />
             </div>
             <select
-              className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+              className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-slate-200"
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
             >
@@ -97,7 +99,7 @@ const ProblemListPage = () => {
               <option value="HARD">HARD</option>
             </select>
             <select
-              className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm"
+              className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-slate-200"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
             >
@@ -125,7 +127,7 @@ const ProblemListPage = () => {
         </div>
 
         <div className="card overflow-hidden">
-          <div className="grid grid-cols-6 px-4 py-3 text-xs font-semibold text-slate-500 bg-slate-50 border-b border-slate-200">
+          <div className="grid grid-cols-6 px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
             <div>状态</div>
             <div>标题</div>
             <div>标签</div>
@@ -142,24 +144,24 @@ const ProblemListPage = () => {
                     key={p.id}
                     href={`/problems/${p.id}`}
                     className={`grid grid-cols-6 px-4 py-3 text-sm items-center ${
-                      idx % 2 === 0 ? "bg-white" : "bg-slate-50"
-                    } hover:bg-slate-100 transition-colors`}
+                      idx % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50 dark:bg-slate-800"
+                    } hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors`}
                   >
-                    <div className="flex items-center gap-2 text-slate-500">
+                    <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                       <Target size={16} />
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-800 hover:text-indigo-600">{p.title}</div>
-                      <p className="text-xs text-slate-500">{p.slug}</p>
+                      <div className="font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600">{p.title}</div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{p.slug}</p>
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs">
                       {p.tags.length === 0 ? (
-                        <span className="text-slate-400">无</span>
+                        <span className="text-slate-400 dark:text-slate-500">无</span>
                       ) : (
                         p.tags.map((tagName) => (
                           <span
                             key={tagName}
-                            className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
+                            className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600"
                           >
                             {tagName}
                           </span>
@@ -169,7 +171,7 @@ const ProblemListPage = () => {
                     <div>
                       <DifficultyBadge level={p.difficulty} />
                     </div>
-                    <div className="text-right text-slate-600 col-span-2">{mockAcceptance()}</div>
+                    <div className="text-right text-slate-600 dark:text-slate-300 col-span-2">{mockAcceptance()}</div>
                   </a>
                 ))}
               </div>
@@ -204,11 +206,22 @@ const ProblemListPage = () => {
             <Flame size={16} />
             本日挑战
           </div>
-          <h3 className="mt-2 text-lg font-bold">两数之和 (Two Sum)</h3>
-          <p className="text-sm text-indigo-100 mt-1">今日热度题目，尝试用 O(n) 解法击败 90% 用户。</p>
-          <a href="/problems/1" className="inline-block mt-3 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-sm hover:bg-white/20">
-            去挑战
-          </a>
+          <h3 className="mt-2 text-lg font-bold">{dailyProblem ? dailyProblem.title : "开始你的每日练习！"}</h3>
+          <p className="text-sm text-indigo-100 mt-1">
+            {dailyProblem ? `今日推荐：${dailyProblem.slug}` : "随便挑一题开练，保持手感。"}
+          </p>
+          {dailyProblem ? (
+            <a
+              href={`/problems/${dailyProblem.id}`}
+              className="inline-block mt-3 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-sm hover:bg-white/20"
+            >
+              去挑战
+            </a>
+          ) : (
+            <div className="inline-block mt-3 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-sm">
+              加载题目中...
+            </div>
+          )}
         </div>
 
         <div className="card p-4 shadow-sm">

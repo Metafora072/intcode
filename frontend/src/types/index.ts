@@ -27,6 +27,7 @@ export interface Problem {
 export interface SubmissionSummary {
   id: number;
   problem_id: number;
+  problem_title?: string;
   language: string;
   status: string;
   runtime_ms: number;

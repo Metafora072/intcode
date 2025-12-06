@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { addTestcase, createProblem, fetchProblems } from "../api";
 import CodeEditor from "../components/CodeEditor";
 import { Problem } from "../types";
@@ -21,10 +21,24 @@ const defaultSpj = `def check(input_str, user_output_str):
         return False
 `;
 
+type FormState = {
+  slug: string;
+  title: string;
+  difficulty: string;
+  tags: string;
+  content: string;
+  input_description: string;
+  output_description: string;
+  constraints: string;
+  is_spj: boolean;
+  spj_code: string;
+};
+
 const AdminPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [activeTab, setActiveTab] = useState<"create" | "cases">("create");
   const [problemId, setProblemId] = useState<number | null>(null);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormState>({
     slug: "",
     title: "",
     difficulty: "EASY",
@@ -41,7 +55,7 @@ const AdminPage = () => {
   const { user } = useAuth();
 
   const loadProblems = async () => {
-    const data = await fetchProblems();
+    const data = await fetchProblems({ limit: 100, offset: 0 });
     setProblems(data.items);
   };
 
@@ -51,20 +65,7 @@ const AdminPage = () => {
     }
   }, [user]);
 
-  if (!user) {
-    return <p className="text-sm text-slate-600">请先登录管理员账号。</p>;
-  }
-
-  if (!user.is_admin) {
-    return <p className="text-sm text-slate-600">当前账号没有管理员权限。</p>;
-  }
-
-  const handleCreate = async () => {
-    await createProblem({
-      ...form,
-      tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean)
-    });
-    setMsg("题目创建成功");
+  const resetForm = () =>
     setForm({
       slug: "",
       title: "",
@@ -77,7 +78,19 @@ const AdminPage = () => {
       is_spj: false,
       spj_code: ""
     });
+
+  const handleCreate = async () => {
+    await createProblem({
+      ...form,
+      tags: form.tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean)
+    });
+    setMsg("题目创建成功");
+    resetForm();
     loadProblems();
+    setActiveTab("cases");
   };
 
   const handleAddCase = async () => {
@@ -88,89 +101,249 @@ const AdminPage = () => {
     loadProblems();
   };
 
+  const selectedProblemTitle = useMemo(
+    () => problems.find((p) => p.id === problemId)?.title || "选择题目",
+    [problems, problemId]
+  );
+
+  if (!user) {
+    return <p className="text-sm text-slate-600">请先登录管理员账号。</p>;
+  }
+
+  if (!user.is_admin) {
+    return <p className="text-sm text-slate-600">当前账号没有管理员权限。</p>;
+  }
+
   return (
-    <div className="grid md:grid-cols-2 gap-4">
-      <div className="card p-4 space-y-3">
-        <h3 className="text-lg font-semibold">新建题目</h3>
-        <input className="input" placeholder="slug" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
-        <input className="input" placeholder="标题" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-        <select className="input" value={form.difficulty} onChange={(e) => setForm({ ...form, difficulty: e.target.value })}>
-          <option value="EASY">EASY</option>
-          <option value="MEDIUM">MEDIUM</option>
-          <option value="HARD">HARD</option>
-        </select>
-        <input className="input" placeholder="标签，逗号分隔" value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} />
-        <textarea className="input h-24" placeholder="题目描述 markdown" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} />
-        <textarea className="input" placeholder="输入说明" value={form.input_description} onChange={(e) => setForm({ ...form, input_description: e.target.value })} />
-        <textarea className="input" placeholder="输出说明" value={form.output_description} onChange={(e) => setForm({ ...form, output_description: e.target.value })} />
-        <textarea className="input" placeholder="约束" value={form.constraints} onChange={(e) => setForm({ ...form, constraints: e.target.value })} />
-        <label className="text-sm text-slate-600 inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={form.is_spj}
-            onChange={(e) =>
-              setForm((prev) => ({
-                ...prev,
-                is_spj: e.target.checked,
-                spj_code: e.target.checked && !prev.spj_code ? defaultSpj : prev.spj_code
-              }))
-            }
-          />
-          启用特殊判题（SPJ）
-        </label>
-        {form.is_spj && (
-          <div className="space-y-2">
-            <p className="text-sm text-slate-600">SPJ 代码（Python，需实现 check(input_str, user_output_str)）</p>
-            <div className="h-64">
-              <CodeEditor
-                language="python"
-                value={form.spj_code || ""}
-                onChange={(code) => setForm((prev) => ({ ...prev, spj_code: code }))}
-                theme="vs-light"
-                height="100%"
+    <div className="space-y-6">
+      <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-700 p-2 shadow-sm flex gap-2 text-sm font-medium">
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === "create" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
+          onClick={() => setActiveTab("create")}
+        >
+          新建题目
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === "cases" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
+          onClick={() => setActiveTab("cases")}
+        >
+          管理测试用例
+        </button>
+      </div>
+
+      {activeTab === "create" ? (
+        <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">创建新题目</h3>
+            {msg && <span className="text-sm text-emerald-500">{msg}</span>}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Slug</label>
+              <input
+                className="input w-full"
+                placeholder="two-sum"
+                value={form.slug}
+                onChange={(e) => setForm({ ...form, slug: e.target.value })}
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">标题</label>
+              <input
+                className="input w-full"
+                placeholder="两数之和"
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">难度</label>
+              <select
+                className="input w-full"
+                value={form.difficulty}
+                onChange={(e) => setForm({ ...form, difficulty: e.target.value })}
+              >
+                <option value="EASY">EASY</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HARD">HARD</option>
+              </select>
+            </div>
           </div>
-        )}
-        <button className="btn bg-indigo-600 text-white hover:bg-indigo-500" onClick={handleCreate}>
-          保存
-        </button>
-      </div>
-      <div className="card p-4 space-y-3">
-        <h3 className="text-lg font-semibold">管理用例</h3>
-        <select className="input" value={problemId ?? ""} onChange={(e) => setProblemId(Number(e.target.value))}>
-          <option value="">选择题目</option>
-          {problems.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.title}
-            </option>
-          ))}
-        </select>
-        <textarea
-          className="input h-24"
-          placeholder="输入"
-          value={caseForm.input_text}
-          onChange={(e) => setCaseForm({ ...caseForm, input_text: e.target.value })}
-        />
-        <textarea
-          className="input h-24"
-          placeholder="输出"
-          value={caseForm.output_text}
-          onChange={(e) => setCaseForm({ ...caseForm, output_text: e.target.value })}
-        />
-        <label className="text-sm text-slate-600 inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={caseForm.is_sample}
-            onChange={(e) => setCaseForm({ ...caseForm, is_sample: e.target.checked })}
-          />
-          是否样例
-        </label>
-        <button className="btn bg-slate-900 text-white hover:bg-slate-800" onClick={handleAddCase}>
-          添加用例
-        </button>
-        {msg && <p className="text-sm text-emerald-600">{msg}</p>}
-      </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">标签（逗号分隔）</label>
+            <input
+              className="input w-full"
+              placeholder="数组, 哈希表"
+              value={form.tags}
+              onChange={(e) => setForm({ ...form, tags: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">题目描述</label>
+              <textarea
+                className="input h-40"
+                placeholder="支持 Markdown"
+                value={form.content}
+                onChange={(e) => setForm({ ...form, content: e.target.value })}
+              />
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">输入说明</label>
+              <textarea
+                className="input"
+                value={form.input_description}
+                onChange={(e) => setForm({ ...form, input_description: e.target.value })}
+              />
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">输出说明</label>
+              <textarea
+                className="input"
+                value={form.output_description}
+                onChange={(e) => setForm({ ...form, output_description: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">约束</label>
+              <textarea
+                className="input font-mono h-28"
+                value={form.constraints}
+                onChange={(e) => setForm({ ...form, constraints: e.target.value })}
+              />
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">是否启用 SPJ</label>
+              <label className="text-sm text-slate-600 dark:text-slate-400 inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={form.is_spj}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      is_spj: e.target.checked,
+                      spj_code: e.target.checked && !prev.spj_code ? defaultSpj : prev.spj_code
+                    }))
+                  }
+                />
+                启用特殊判题（Python）
+              </label>
+              {form.is_spj && (
+                <div className="space-y-2">
+                  <p className="text-sm text-slate-600 dark:text-slate-400">实现 check(input_str, user_output_str)</p>
+                  <div className="h-64 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <CodeEditor
+                      language="python"
+                      value={form.spj_code || ""}
+                      onChange={(code) => setForm((prev) => ({ ...prev, spj_code: code }))}
+                      theme="vs-dark"
+                      height="100%"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <button className="btn bg-indigo-600 text-white hover:bg-indigo-500" onClick={handleCreate}>
+            保存题目
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6 space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">测试用例管理</h3>
+              {msg && <span className="text-sm text-emerald-500">{msg}</span>}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">选择题目</label>
+                <select
+                  className="input w-full"
+                  value={problemId ?? ""}
+                  onChange={(e) => setProblemId(Number(e.target.value))}
+                >
+                  <option value="">请选择</option>
+                  {problems.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.title}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-slate-500 mt-1">当前：{selectedProblemTitle}</p>
+              </div>
+              <div className="flex items-center gap-3 mt-5 md:mt-0">
+                <label className="text-sm text-slate-700 dark:text-slate-300 inline-flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={caseForm.is_sample}
+                    onChange={(e) => setCaseForm({ ...caseForm, is_sample: e.target.checked })}
+                  />
+                  设为样例
+                </label>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输入</label>
+                <textarea
+                  className="input h-28"
+                  placeholder="输入"
+                  value={caseForm.input_text}
+                  onChange={(e) => setCaseForm({ ...caseForm, input_text: e.target.value })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输出</label>
+                <textarea
+                  className="input h-28"
+                  placeholder="输出"
+                  value={caseForm.output_text}
+                  onChange={(e) => setCaseForm({ ...caseForm, output_text: e.target.value })}
+                />
+              </div>
+            </div>
+            <button className="btn bg-slate-900 text-white hover:bg-slate-800" onClick={handleAddCase}>
+              添加用例
+            </button>
+          </div>
+
+          <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-md font-semibold text-slate-800 dark:text-slate-100">题目列表</h4>
+              <span className="text-xs text-slate-500">共 {problems.length} 道</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className="text-left text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                    <th className="py-2">ID</th>
+                    <th className="py-2">标题</th>
+                    <th className="py-2">Slug</th>
+                    <th className="py-2">难度</th>
+                    <th className="py-2 text-right">操作</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+                  {problems.map((p) => (
+                    <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/70">
+                      <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{p.id}</td>
+                      <td className="py-2 pr-2 text-slate-800 dark:text-slate-100">{p.title}</td>
+                      <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">{p.slug}</td>
+                      <td className="py-2 pr-2">
+                        <span className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-200 text-xs">
+                          {p.difficulty}
+                        </span>
+                      </td>
+                      <td className="py-2 text-right">
+                        <button className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">编辑</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

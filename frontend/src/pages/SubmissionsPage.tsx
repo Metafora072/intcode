@@ -44,7 +44,7 @@ const SubmissionsPage = () => {
               onClick={() => showDetail(s.id)}
             >
               <div className="flex justify-between text-sm">
-                <span>#{s.id} · 题目 {s.problem_id}</span>
+                <span>#{s.id} · {s.problem_title || `题目 ${s.problem_id}`}</span>
                 <span className="font-semibold">{s.status}</span>
               </div>
               <p className="text-xs text-slate-500">

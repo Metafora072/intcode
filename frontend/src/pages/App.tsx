@@ -37,7 +37,7 @@ const App = () => {
     <div className="min-h-screen">
       <Toaster position="top-center" />
       <header className="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="w-full px-6 py-3 flex items-center justify-between">
           <Link to="/" className="text-xl font-bold text-slate-800 dark:text-white">
             intcode
           </Link>

@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.models.base import get_db
 from app.models.submission import Submission
+from app.models.problem import Problem
 from app.schemas.submission import SubmissionCreate
 from app.services import judge_service, problem_service
 from app.api.deps import get_current_user
@@ -22,7 +23,7 @@ def list_submissions(
     limit: int = Query(default=20, le=100),
     db: Session = Depends(get_db),
 ):
-    query = db.query(Submission)
+    query = db.query(Submission, Problem.title.label("problem_title")).join(Problem, Submission.problem_id == Problem.id)
     if problem_id:
         query = query.filter(Submission.problem_id == problem_id)
     if user_id:
@@ -32,13 +33,14 @@ def list_submissions(
         {
             "id": s.id,
             "problem_id": s.problem_id,
+            "problem_title": title,
             "language": s.language,
             "status": s.status,
             "runtime_ms": s.runtime_ms,
             "score": s.score,
             "created_at": s.created_at,
         }
-        for s in subs
+        for s, title in subs
     ]
 
 
@@ -57,6 +59,7 @@ def get_submission(submission_id: int, db: Session = Depends(get_db)):
         "runtime_ms": sub.runtime_ms,
         "score": sub.score,
         "created_at": sub.created_at,
+        "problem_title": sub.problem.title if sub.problem else "",
         "cases": detail,
     }
 
