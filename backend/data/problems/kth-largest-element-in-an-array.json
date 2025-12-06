@@ -6,10 +6,10 @@
     "堆",
     "快选"
   ],
-  "content": "在未排序数组中找出第 k 大的元素（1-based）。可用快速选择或小根堆。",
-  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 k。",
-  "output_description": "输出第 k 大的元素值。",
-  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "content": "给定一个未排序的整数数组 nums，返回其中第 k 大的元素（1-based）。可以使用快速选择或小根堆等线性/对数方法，要求不必完全排序数组。",
+  "input_description": "第一行整数 n，表示数组长度；第二行 n 个整数为数组元素；第三行整数 k，1 ≤ k ≤ n。",
+  "output_description": "输出一个整数，为第 k 大的元素值，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$，保证 k 合法。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -36,6 +36,81 @@
     {
       "input_text": "5\n7 10 4 3 20\n2\n",
       "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n5\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 2 2\n2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1000000000 -1000000000 5 7\n3\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 3 3 2\n2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 3 3 2\n4\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n9 8 7 6 5 4 3 2 1\n1\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n9 8 7 6 5 4 3 2 1\n9\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 5 5 5 5\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n10 20 30 40 50\n3\n",
+      "output_text": "30\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n4 6 8 10 12\n4\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-5 -2 -3 -1\n2\n",
+      "output_text": "-2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0 0 0\n3\n",
+      "output_text": "0\n",
       "is_sample": false
     }
   ]

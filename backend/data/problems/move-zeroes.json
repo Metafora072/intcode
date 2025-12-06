@@ -1,15 +1,15 @@
 {
   "slug": "move-zeroes",
-  "title": "Move Zeroes",
+  "title": "移动零",
   "difficulty": "EASY",
   "tags": [
     "数组",
     "双指针"
   ],
-  "content": "给定整数数组 nums，请将数组中的所有 0 挪到末尾，保持非零元素的相对顺序不变，并且在原地完成，不得使用额外数组。需要输出调整后的数组内容。常见做法是双指针或覆盖写入，最后把剩余位置补 0。",
-  "input_description": "第一行一个整数 n，表示数组长度。第二行包含 n 个整数，为数组元素，可以为负数或 0。",
-  "output_description": "输出一行 n 个整数，表示移动零后的数组，元素之间用空格分隔，行尾换行，无多余空格。",
-  "constraints": "$1 \\le n \\le 10^{5},\\ |nums[i]| \\le 10^{9}$",
+  "content": "给定一个整数数组 nums，请将数组中的所有 0 移动到末尾，保持非零元素的相对顺序不变，并在原地完成操作。需要输出调整后的数组内容。数组可能包含负数和多个 0，应确保最终长度不变。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数，可能为负数或 0，各数之间以空格分隔，行末换行。",
+  "output_description": "输出一行 n 个整数，表示移动零后的数组，元素之间用单个空格分隔，行尾换行，无多余空格。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素范围为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,18 +39,13 @@
       "is_sample": false
     },
     {
-      "input_text": "6\n4 5 6 0 0 0\n",
-      "output_text": "4 5 6 0 0 0\n",
+      "input_text": "10\n4 2 4 0 0 3 0 5 1 0\n",
+      "output_text": "4 2 4 3 5 1 0 0 0 0\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n-1 0 -2 0 -3\n",
-      "output_text": "-1 -2 -3 0 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "7\n0 0 1 0 3 0 5\n",
-      "output_text": "1 3 5 0 0 0 0\n",
+      "input_text": "6\n1 0 0 1 0 1\n",
+      "output_text": "1 1 1 0 0 0\n",
       "is_sample": false
     },
     {
@@ -59,58 +54,63 @@
       "is_sample": false
     },
     {
-      "input_text": "2\n0 5\n",
-      "output_text": "5 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "8\n9 8 0 7 6 0 5 0\n",
-      "output_text": "9 8 7 6 5 0 0 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "6\n0 0 1 0 0 3\n",
-      "output_text": "1 3 0 0 0 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "5\n4 0 5 0 6\n",
-      "output_text": "4 5 6 0 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "3\n0 -1 -2\n",
-      "output_text": "-1 -2 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "7\n1 0 0 0 2 0 3\n",
-      "output_text": "1 2 3 0 0 0 0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "4\n9 8 7 6\n",
-      "output_text": "9 8 7 6\n",
-      "is_sample": false
-    },
-    {
       "input_text": "2\n0 1\n",
       "output_text": "1 0\n",
       "is_sample": false
     },
     {
-      "input_text": "10\n0 1 0 0 0 2 0 3 0 4\n",
-      "output_text": "1 2 3 4 0 0 0 0 0 0\n",
+      "input_text": "2\n1 0\n",
+      "output_text": "1 0\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n0 0 0 1 2\n",
-      "output_text": "1 2 0 0 0\n",
+      "input_text": "2\n2 1\n",
+      "output_text": "2 1\n",
       "is_sample": false
     },
     {
-      "input_text": "1\n7\n",
-      "output_text": "7\n",
+      "input_text": "3\n0 2 1\n",
+      "output_text": "2 1 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 1 0\n",
+      "output_text": "2 1 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n1 0 1 0 1 0 1 0\n",
+      "output_text": "1 1 1 1 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 -1 -2 0 -3\n",
+      "output_text": "-1 -2 -3 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n3 0 0 3 0 3\n",
+      "output_text": "3 3 3 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 0 1 0 0\n",
+      "output_text": "1 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "5 4 3 2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n0 5 0 4 0 3 0 2 0 1\n",
+      "output_text": "5 4 3 2 1 0 0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0 0 1\n",
+      "output_text": "1 0 0 0\n",
       "is_sample": false
     }
   ]

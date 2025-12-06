@@ -6,22 +6,24 @@
     "数组",
     "贪心"
   ],
-  "content": "给定每天的股价，只允许一次买入一次卖出，求最大利润（可为 0）。",
-  "input_description": "第一行整数 n，第二行 n 个整数表示股价。",
-  "output_description": "输出最大利润整数，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5}$，股价不超过 $10^{9}$。",
+  "content": "给定数组 prices，其中 prices[i] 表示第 i 天的股票价格。你只能选择某一天买入并在未来的某一天卖出，且只能完成一次交易，求可以获得的最大利润。如果无法获利则返回 0。",
+  "input_description": "第一行一个整数 n，表示价格数量。第二行包含 n 个整数，为每天的股价，按时间顺序给出。",
+  "output_description": "输出一个整数，表示一次买入一次卖出能够获得的最大利润，若无利润则为 0，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，价格为非负整数且不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "6\n7 1 5 3 6 4\n",
       "output_text": "5\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "最低在1买，6卖获利5"
     },
     {
       "input_text": "5\n7 6 4 3 1\n",
       "output_text": "0\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "价格单调下降只能不交易"
     },
     {
       "input_text": "2\n1 2\n",
@@ -46,6 +48,71 @@
     {
       "input_text": "6\n1 2 3 4 5 6\n",
       "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 5 4 3 2 1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 0 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 1 2 1 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1000000000 1 1000000000\n",
+      "output_text": "999999999\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 8 2 7\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 10\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n3 8 5 1 7 8\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 2 5\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 5 3 8 4 9\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n9 1 9 1 9\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 1 2 0 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 1 2 3 4\n",
+      "output_text": "3\n",
       "is_sample": false
     }
   ]

@@ -6,10 +6,10 @@
     "栈",
     "字符串"
   ],
-  "content": "解码形如 k[encoded_string] 的嵌套重复字符串，k 为正整数。",
-  "input_description": "一行字符串 s。",
-  "output_description": "输出解码后的字符串。",
-  "constraints": "$1 \\le |s| \\le 10^{5}$。",
+  "content": "给定一个编码字符串 s，其中包含重复模式 k[encoded_string]，k 为正整数，encoded_string 可以嵌套。请解码并返回展开后的字符串，保证输入格式合法。",
+  "input_description": "一行字符串 s，包含数字、英文字母及方括号，编码格式合法且括号配对。",
+  "output_description": "输出解码后的完整字符串，行尾换行。",
+  "constraints": "$1 \\le |s| \\le 10^{5}$，展开后长度不超过 $10^{6}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -31,6 +31,86 @@
     {
       "input_text": "abc3[cd]xyz\n",
       "output_text": "abccdcdcdxyz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10[a]\n",
+      "output_text": "aaaaaaaaaa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2[ab3[c]]\n",
+      "output_text": "abcccabccc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3[a]2[b4[F]c]\n",
+      "output_text": "aaabFFFFcbFFFFc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2[2[y]pq4[2[jk]e1[f]]]ef\n",
+      "output_text": "yypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "100[leetcode]\n",
+      "output_text": "leetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcodeleetcode\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3[z]2[2[y]pq4[2[jk]e1[f]]]ef\n",
+      "output_text": "zzzyypqjkjkefjkjkefjkjkefjkjkefyypqjkjkefjkjkefjkjkefjkjkefef\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1[a]\n",
+      "output_text": "a\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0[a]\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2[ab]3[cd]\n",
+      "output_text": "ababcdcdcd\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "xyz\n",
+      "output_text": "xyz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3[a2[b4[F]c]]\n",
+      "output_text": "abFFFFcbFFFFcabFFFFcbFFFFcabFFFFcbFFFFc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2[a2[b2[c]]]\n",
+      "output_text": "abccbccabccbcc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5[a]\n",
+      "output_text": "aaaaa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3[a2[c2[d]]]\n",
+      "output_text": "acddcddacddcddacddcdd\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2[ab10[c]]\n",
+      "output_text": "abccccccccccabcccccccccc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4[q]1[w]\n",
+      "output_text": "qqqqw\n",
       "is_sample": false
     }
   ]

@@ -6,13 +6,18 @@
     "动态规划",
     "数学"
   ],
-  "content": "给定 n，问用值 1..n 能构成多少种不同结构的二叉搜索树。",
-  "input_description": "一行整数 n。",
-  "output_description": "输出方案数（卡特兰数），行尾换行。",
-  "constraints": "$0 \\le n \\le 19$",
+  "content": "给定一个整数 n，表示节点值为 1..n，要求计算能构造出多少种不同形态的二叉搜索树（BST）。BST 需满足左子树所有节点值小于根，右子树所有节点值大于根。答案即第 n 个卡特兰数，n 取值较小，可直接输出精确整数。",
+  "input_description": "输入一行一个整数 n。",
+  "output_description": "输出一个整数，表示不同 BST 的数量，行尾换行。",
+  "constraints": "$0 \\le n \\le 19$，答案适合 64 位有符号整数范围。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
+    {
+      "input_text": "0\n",
+      "output_text": "1\n",
+      "is_sample": true
+    },
     {
       "input_text": "3\n",
       "output_text": "5\n",
@@ -21,7 +26,7 @@
     {
       "input_text": "1\n",
       "output_text": "1\n",
-      "is_sample": true
+      "is_sample": false
     },
     {
       "input_text": "2\n",
@@ -29,8 +34,8 @@
       "is_sample": false
     },
     {
-      "input_text": "0\n",
-      "output_text": "1\n",
+      "input_text": "4\n",
+      "output_text": "14\n",
       "is_sample": false
     },
     {
@@ -39,13 +44,73 @@
       "is_sample": false
     },
     {
+      "input_text": "6\n",
+      "output_text": "132\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n",
+      "output_text": "429\n",
+      "is_sample": false
+    },
+    {
       "input_text": "8\n",
       "output_text": "1430\n",
       "is_sample": false
     },
     {
+      "input_text": "9\n",
+      "output_text": "4862\n",
+      "is_sample": false
+    },
+    {
       "input_text": "10\n",
       "output_text": "16796\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n",
+      "output_text": "58786\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "12\n",
+      "output_text": "208012\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "13\n",
+      "output_text": "742900\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "14\n",
+      "output_text": "2674440\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15\n",
+      "output_text": "9694845\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "16\n",
+      "output_text": "35357670\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "17\n",
+      "output_text": "129644790\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "18\n",
+      "output_text": "477638700\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "19\n",
+      "output_text": "1767263190\n",
       "is_sample": false
     }
   ]

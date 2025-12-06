@@ -6,10 +6,10 @@
     "链表",
     "双指针"
   ],
-  "content": "判断单链表的值序列是否为回文。可用快慢指针+反转后半段或栈。需自行定义链表、读入并输出 true/false。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "回文输出 \"true\"，否则 \"false\"。",
-  "constraints": "$0 \\le n \\le 10^{5}$。",
+  "content": "给定一个单向链表，判断其节点值序列是否为回文序列（从前往后与从后往前读相同），并输出布尔结果。链表可能为空或只有一个节点，也可能包含偶数或奇数长度的重复数字，需要在读入后完成判断并输出 true 或 false。",
+  "input_description": "第一行输入整数 n，表示链表节点数量。第二行输入 n 个整数，表示从头到尾的节点值，若 n=0 则第二行可为空行。",
+  "output_description": "若链表值序列为回文输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$0 \\le n \\le 10^{5}$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -35,6 +35,81 @@
     },
     {
       "input_text": "3\n1 0 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 1 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 2 3 4 5 4 3 2 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n1 2 3 4 5 5 4 3 2 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 4 3 2 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 0 0 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 1 2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n2 4 6 6 4 2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n9 9\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n5 6 5 6\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 20 10\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 2 2 3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n7 8 7 8 7\n",
       "output_text": "true\n",
       "is_sample": false
     }

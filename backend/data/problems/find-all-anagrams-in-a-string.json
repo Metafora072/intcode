@@ -6,17 +6,18 @@
     "滑动窗口",
     "字符串"
   ],
-  "content": "在字符串 s 中找到所有与 p 为字母异位词的子串起始下标，返回按升序的下标列表。",
-  "input_description": "第一行字符串 s，第二行字符串 p。",
-  "output_description": "输出起始下标，空格分隔；无则输出空行。",
-  "constraints": "$1 \\le |s|,|p| \\le 10^{5}$。",
+  "content": "给定两个字符串 s 和 p，找出 s 中所有与 p 互为字母异位词的子串的起始下标。字母异位词指由相同字符组成且字符出现次数相同但顺序可不同的字符串。请输出所有满足条件的起始位置，按升序排列。",
+  "input_description": "第一行字符串 s，第二行字符串 p，均由小写字母组成，可以为空。",
+  "output_description": "输出所有起始下标，按升序，用空格分隔，行尾换行；若不存在输出空行。",
+  "constraints": "$0 \\le |s|,|p| \\le 10^{5}$，字符串仅包含小写英文字母，保证输入有效。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "cbaebabacd\nabc\n",
       "output_text": "0 6\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "匹配起点 0 和 6"
     },
     {
       "input_text": "abab\nab\n",
@@ -31,6 +32,86 @@
     {
       "input_text": "abc\nabcd\n",
       "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\na\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\n\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcde\na\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcabc\nabc\n",
+      "output_text": "0 1 2 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abababab\naab\n",
+      "output_text": "0 2 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaaa\naaaa\n",
+      "output_text": "0 1 2 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\ndcba\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "BACDGABCDA\nABCD\n",
+      "output_text": "0 5 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "af\nbe\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "baa\naa\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abab\naba\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abab\nbaba\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bbbaba\nab\n",
+      "output_text": "2 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcdefghijklmnop\npon\n",
+      "output_text": "13\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "xyz\nxyz\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ababababab\nab\n",
+      "output_text": "0 1 2 3 4 5 6 7 8\n",
       "is_sample": false
     }
   ]

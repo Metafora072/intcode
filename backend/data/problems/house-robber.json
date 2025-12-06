@@ -6,17 +6,18 @@
     "动态规划",
     "数组"
   ],
-  "content": "一排房子，每间有一定金额，相邻房子不能同时偷，求最大可偷金额（一次遍历 DP）。",
-  "input_description": "第一行整数 n，第二行 n 个非负整数表示金额。",
-  "output_description": "输出最大金额，行尾换行。",
-  "constraints": "$0 \\le n \\le 10^{5}$，金额不超过 $10^{9}$。",
+  "content": "在一条街上有 n 间房屋，第 i 间房屋存有金额 nums[i]。盗贼不能偷取相邻的两间房屋，求在不触发警报的前提下可以偷取的最大金额。",
+  "input_description": "第一行整数 n，表示房屋数量；第二行 n 个非负整数为各房屋金额。n 可以为 0。",
+  "output_description": "输出一个整数，为可获得的最大金额，行尾换行。",
+  "constraints": "$0 \\le n \\le 10^{5}$，金额为非负整数且不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "4\n1 2 3 1\n",
       "output_text": "4\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "选 2+1=3? 实际 1+3=4"
     },
     {
       "input_text": "5\n2 7 9 3 1\n",
@@ -26,6 +27,11 @@
     {
       "input_text": "1\n5\n",
       "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "0\n",
       "is_sample": false
     },
     {
@@ -40,7 +46,72 @@
     },
     {
       "input_text": "6\n10 1 1 10 1 1\n",
-      "output_text": "20\n",
+      "output_text": "21\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n2 7 9 3 1 5\n",
+      "output_text": "16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1000000000 1 1000000000\n",
+      "output_text": "2000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 1 1 1 1\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0 0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n4 1 2 7 5 3 1\n",
+      "output_text": "14\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n2 4 6 2 5 7 9 3 1\n",
+      "output_text": "23\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 1 3 100\n",
+      "output_text": "103\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 5 6\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 5 4 3 2 1\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n9 1 9 1 9 1\n",
+      "output_text": "27\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n3 10 3 1 2\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n8 2 8 2 9 2\n",
+      "output_text": "25\n",
       "is_sample": false
     }
   ]

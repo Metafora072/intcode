@@ -6,10 +6,10 @@
     "贪心",
     "排序"
   ],
-  "content": "每个人用 [h, k] 表示身高和前面不矮于他的人的数量，重建原队列顺序。",
-  "input_description": "第一行整数 n，接下来 n 行每行两个整数 h k。",
-  "output_description": "输出重建后的队列，每行两个整数。",
-  "constraints": "$1 \\le n \\le 10^{4}$。",
+  "content": "有一组人，每个人用一个二元组 [h, k] 表示：h 为身高，k 表示在队伍中排在他前面且身高不低于 h 的人数。给定所有人的 [h, k] 数据，需要还原出符合条件的原始队列。所有输入保证存在至少一组解，要求输出任意一组符合条件的队列顺序。",
+  "input_description": "第一行输入整数 n，表示人数。接下来 n 行，每行两个整数 h 和 k，描述一个人的身高与约束值。输入中的每个人互不重复。",
+  "output_description": "输出重建后的队列，每行两个整数 h 和 k，按队伍从前到后的顺序输出，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{4}$，$0 \\le h,k \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -19,13 +19,98 @@
       "is_sample": true
     },
     {
-      "input_text": "3\n6 0\n5 0\n4 0\n",
-      "output_text": "4 0\n5 0\n6 0\n",
+      "input_text": "6\n6 0\n5 0\n4 0\n3 2\n2 2\n1 4\n",
+      "output_text": "4 0\n5 0\n2 2\n3 2\n1 4\n6 0\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "10\n9 0\n7 0\n1 9\n3 0\n2 7\n5 3\n6 0\n3 4\n6 2\n5 2\n",
+      "output_text": "3 0\n6 0\n7 0\n5 2\n3 4\n5 3\n6 2\n2 7\n9 0\n1 9\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n6 2\n5 1\n4 0\n",
-      "output_text": "4 0\n5 1\n6 2\n",
+      "input_text": "6\n5 0\n7 0\n5 2\n6 1\n4 4\n7 1\n",
+      "output_text": "5 0\n7 0\n5 2\n6 1\n4 4\n7 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1 0\n",
+      "output_text": "1 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n4 4\n5 0\n",
+      "output_text": "5 0\n4 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n9 1\n7 0\n1 1\n3 3\n2 2\n5 0\n6 2\n3 0\n6 0\n5 2\n",
+      "output_text": "3 0\n1 1\n5 0\n2 2\n6 0\n3 3\n5 2\n7 0\n6 2\n9 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n8 0\n8 1\n8 2\n8 3\n",
+      "output_text": "8 0\n8 1\n8 2\n8 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n5 3\n6 0\n5 2\n4 4\n7 1\n7 0\n",
+      "output_text": "6 0\n7 0\n5 2\n5 3\n4 4\n7 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 0\n5 0\n4 0\n3 0\n2 0\n1 0\n",
+      "output_text": "1 0\n2 0\n3 0\n4 0\n5 0\n6 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n6 0\n6 2\n6 1\n5 0\n5 2\n4 4\n4 0\n",
+      "output_text": "4 0\n5 0\n6 0\n5 2\n4 4\n6 1\n6 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n9 0\n8 1\n7 2\n6 3\n5 4\n",
+      "output_text": "9 0\n8 1\n7 2\n6 3\n5 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n7 0\n7 1\n7 2\n7 3\n7 4\n7 5\n",
+      "output_text": "7 0\n7 1\n7 2\n7 3\n7 4\n7 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n5 2\n5 0\n5 1\n5 3\n",
+      "output_text": "5 0\n5 1\n5 2\n5 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n9 0\n1 1\n2 2\n3 3\n4 4\n5 5\n6 6\n7 7\n8 8\n",
+      "output_text": "9 0\n1 1\n8 8\n2 2\n7 7\n3 3\n6 6\n4 4\n5 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n4 0\n5 1\n6 1\n4 2\n5 0\n",
+      "output_text": "4 0\n5 0\n4 2\n5 1\n6 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n10 0\n9 1\n8 1\n7 2\n6 2\n5 3\n4 4\n",
+      "output_text": "10 0\n8 1\n6 2\n5 3\n4 4\n7 2\n9 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n3 0\n3 1\n3 2\n",
+      "output_text": "3 0\n3 1\n3 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n9 0\n7 0\n5 0\n3 2\n2 2\n1 4\n",
+      "output_text": "5 0\n7 0\n2 2\n3 2\n1 4\n9 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 3\n5 0\n6 1\n5 2\n4 4\n7 0\n",
+      "output_text": "5 0\n7 0\n5 2\n6 1\n4 4\n6 3\n",
       "is_sample": false
     }
   ]

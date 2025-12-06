@@ -6,26 +6,111 @@
     "设计",
     "栈"
   ],
-  "content": "设计支持 push、pop、top 和在 O(1) 时间内检索最小元素的栈。输入操作序列，输出 getMin 和 top 的结果。",
-  "input_description": "第一行整数 q 表示操作数；接下来 q 行，每行一个操作：push x、pop、top、getMin。",
-  "output_description": "对每个 top/getMin 输出结果（pop 若栈空可忽略）；各结果按出现顺序每行输出。",
+  "content": "设计并实现一个支持在 O(1) 时间内获取当前栈最小值的栈，需支持 push、pop、top 和 getMin 四种操作。输入给出操作序列，可能包含负数与大整数，栈初始为空，保证所有查询操作均在栈非空时调用。要求按出现顺序输出每次 top 与 getMin 的结果。",
+  "input_description": "第一行输入整数 q，表示操作数。接下来 q 行，每行是一次操作，格式为：\"push x\" 表示将整数 x 入栈；\"pop\" 弹出栈顶；\"top\" 查询栈顶元素；\"getMin\" 查询栈内最小值。所有输入均合法。",
+  "output_description": "对每个 top 或 getMin 操作输出一行结果，按输入出现顺序排列。pop 操作无输出。",
   "constraints": "$1 \\le q \\le 10^{5}$，|x| \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "8\npush -2\npush 0\npush -3\ngetMin\ntop\npop\ngetMin\npop\n",
+      "input_text": "7\npush -2\npush 0\npush -3\ngetMin\ntop\npop\ngetMin\n",
       "output_text": "-3\n-3\n-2\n",
       "is_sample": true
     },
     {
-      "input_text": "4\npush 1\ngetMin\npush 2\ngetMin\n",
+      "input_text": "8\npush 1\npush 2\npush 3\ngetMin\npop\ngetMin\npop\ngetMin\n",
+      "output_text": "1\n1\n1\n",
+      "is_sample": true
+    },
+    {
+      "input_text": "6\npush 3\npush 1\npush 2\ngetMin\npop\ntop\n",
       "output_text": "1\n1\n",
       "is_sample": false
     },
     {
-      "input_text": "5\npush 2\npush 2\npop\ngetMin\ngetMin\n",
-      "output_text": "2\n2\n",
+      "input_text": "5\npush -1\npush -2\ngetMin\npop\ngetMin\n",
+      "output_text": "-2\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\npush 5\npush 5\npush 5\ngetMin\npop\ngetMin\npop\ngetMin\n",
+      "output_text": "5\n5\n5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\npush 0\ngetMin\npop\npush -1\ngetMin\n",
+      "output_text": "0\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\npush 2\npush 0\npush 3\npush 0\ngetMin\npop\ngetMin\npop\ngetMin\npop\ngetMin\n",
+      "output_text": "0\n0\n0\n2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\npush 1\npush -1\npush 1\npop\ngetMin\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\npush 10\npush 9\npop\ngetMin\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\npush 1000000000\npush -1000000000\ngetMin\npop\ngetMin\n",
+      "output_text": "-1000000000\n1000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\npush 4\npush 7\npush 1\npush 8\ngetMin\npop\ntop\ngetMin\n",
+      "output_text": "1\n1\n1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush 2\npush 3\npop\npop\npush -5\ngetMin\n",
+      "output_text": "-5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush -3\npush -4\npush -5\ngetMin\npop\ngetMin\n",
+      "output_text": "-5\n-4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\npush 6\npush 5\npush 7\ngetMin\npop\npop\ngetMin\n",
+      "output_text": "5\n6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush 1\ngetMin\npush 2\ngetMin\npush -1\ngetMin\n",
+      "output_text": "1\n1\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\npush 3\npush 3\npush 2\npush 2\npop\ngetMin\npop\ngetMin\n",
+      "output_text": "2\n3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush 9\npush 8\npush 7\npop\npop\ngetMin\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush -2\npush -3\npush -4\npop\npop\ngetMin\n",
+      "output_text": "-2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\npush 0\npush 1\npush 0\ngetMin\npop\ngetMin\n",
+      "output_text": "0\n0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\npush 5\npush 1\npush 5\npush 0\ngetMin\npop\ngetMin\npop\ngetMin\n",
+      "output_text": "0\n1\n1\n",
       "is_sample": false
     }
   ]

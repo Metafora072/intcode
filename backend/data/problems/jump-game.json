@@ -6,22 +6,24 @@
     "贪心",
     "数组"
   ],
-  "content": "给定非负整数数组，每个元素代表从该位置最多能跳的步数。判断能否从下标 0 跳到最后一个下标。常用贪心维护当前能到的最远位置。",
-  "input_description": "第一行整数 n，第二行 n 个非负整数。",
-  "output_description": "能到达输出 \"true\"，否则输出 \"false\"。",
-  "constraints": "$1 \\le n \\le 10^{5}$，元素不超过 $10^{9}$。",
+  "content": "给定一个非负整数数组 nums，nums[i] 表示从下标 i 处最多可以向右跳的步数。起始位置为下标 0，判断是否可以到达最后一个下标。",
+  "input_description": "第一行整数 n，表示数组长度；第二行 n 个非负整数，为跳跃步数。",
+  "output_description": "如果能够到达最后一个下标输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，$0 \\le nums[i] \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "5\n2 3 1 1 4\n",
       "output_text": "true\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "可达"
     },
     {
       "input_text": "5\n3 2 1 0 4\n",
       "output_text": "false\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "被 0 卡住"
     },
     {
       "input_text": "1\n0\n",
@@ -35,7 +37,7 @@
     },
     {
       "input_text": "4\n2 0 0 0\n",
-      "output_text": "true\n",
+      "output_text": "false\n",
       "is_sample": false
     },
     {
@@ -50,6 +52,66 @@
     },
     {
       "input_text": "6\n1 0 2 0 0 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 5 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n3 0 8 2 0 0 1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 0 1 0 0\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n4 0 0 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 0 1 0 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 3 1 0 4\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 0 0\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 0 1 0\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n5 0 0 0 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 0 0\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 0 0 0 4\n",
       "output_text": "false\n",
       "is_sample": false
     }

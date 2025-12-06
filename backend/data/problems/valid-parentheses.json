@@ -1,15 +1,15 @@
 {
   "slug": "valid-parentheses",
-  "title": "Valid Parentheses",
+  "title": "有效的括号",
   "difficulty": "EASY",
   "tags": [
     "栈",
     "字符串"
   ],
-  "content": "给定只包含 \"()[]{}\" 的字符串 s，判断其中的括号是否有效：左括号必须由相同类型的右括号闭合，且闭合顺序正确。空串视为有效。常用栈顺序匹配，遇到非法字符或提前闭合则判定为无效。",
-  "input_description": "输入一行字符串 s，仅由 \"(\", \"\\)\", \"[\", \"]\", \"{\", \"}\" 组成，长度可以为 0。",
-  "output_description": "若括号字符串有效输出 \"true\"，否则输出 \"false\"，均为小写，行尾换行。",
-  "constraints": "$0 \\le |s| \\le 10^{5}$",
+  "content": "给定仅包含字符 '(', ')', '[', ']', '{', '}' 的字符串 s，判断其中的括号是否成对、类型匹配且顺序有效。空字符串视为有效。要求输出布尔结果，长度可达 10^5，需要正确处理嵌套、交叉以及不匹配的情形。",
+  "input_description": "输入一行字符串 s，长度可以为 0，仅包含六种括号字符，行尾换行。",
+  "output_description": "若括号字符串有效输出 \"true\"，否则输出 \"false\"，小写，行尾换行。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -44,12 +44,62 @@
       "is_sample": false
     },
     {
-      "input_text": "((((\n",
+      "input_text": "(((((((())))))))\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "))))\n",
+      "input_text": ")(\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "{[()()]}\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "{[()()]}]\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "[]{}()\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "[{()}]\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "[{(})]\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "((((((())))))))\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(((())))()[]{}\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "[\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "([]\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -59,58 +109,8 @@
       "is_sample": false
     },
     {
-      "input_text": "{[()()]}\n",
+      "input_text": "((()))[]{}{}[]\n",
       "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "(([]{})\n",
-      "output_text": "false\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "[({})](())\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "{[}\n",
-      "output_text": "false\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "((((()))\n",
-      "output_text": "false\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "(()())\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "([{}{}])\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "(){}}{\n",
-      "output_text": "false\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "[[]][]{{}}\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "((())[]{})\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "{[(])}\n",
-      "output_text": "false\n",
       "is_sample": false
     }
   ]

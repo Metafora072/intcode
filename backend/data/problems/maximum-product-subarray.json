@@ -6,10 +6,10 @@
     "数组",
     "动态规划"
   ],
-  "content": "给定整数数组，找出乘积最大的连续子数组的乘积（可为负）。需要同时维护当前最大/最小积以应对负数翻转。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "输出最大乘积，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "content": "给定一个包含整数的数组 nums，要求找到乘积最大的非空连续子数组，并返回该乘积的值。子数组必须由原数组中相邻的元素组成，不能重新排序。数组中可能包含正数、负数与 0，乘积可能出现符号翻转或被 0 截断，需要覆盖单元素、全为负数、包含多个 0 的情况。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数（可为正、负或 0），以空格分隔，行末换行。",
+  "output_description": "输出一个整数，表示乘积最大的连续子数组的乘积值，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,8 +39,78 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n0 2 -3 0 4\n",
+      "input_text": "2\n0 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 3 -2 -3 4\n",
+      "output_text": "144\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-2 -3 7\n",
+      "output_text": "42\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 0 -1 2 3 -5 -2\n",
+      "output_text": "60\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n3 -1 4\n",
       "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n-2\n",
+      "output_text": "-2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 -5 -2 -4 3\n",
+      "output_text": "24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 2 2\n",
+      "output_text": "16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 -2 3 -4 5 -6 7\n",
+      "output_text": "2520\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-1 -1 -1 -1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-4 -3 -2\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n-2 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "120\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n-1 2 3 -4 5 6 -7 8\n",
+      "output_text": "40320\n",
       "is_sample": false
     }
   ]

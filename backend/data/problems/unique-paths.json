@@ -6,10 +6,10 @@
     "动态规划",
     "组合数学"
   ],
-  "content": "m×n 网格，机器人从左上角出发，每次只能向右或向下，问到达右下角共有多少条不同路径。可用组合公式或 DP 计算。",
-  "input_description": "一行两个整数 m n。",
-  "output_description": "输出路径数（整数）。",
-  "constraints": "$1 \\le m,n \\le 100$",
+  "content": "一个机器人位于 m×n 网格的左上角，只能向右或向下移动一步，目标是到达右下角。问一共有多少条不同的路径。m,n 最多 100，可使用组合公式或动态规划求解，需要输出精确整数。",
+  "input_description": "输入一行包含两个整数 m 和 n，表示网格的行数与列数。",
+  "output_description": "输出一个整数，表示从左上到右下的不同路径数量，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 100$，答案在 64 位整数范围内。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -24,7 +24,42 @@
       "is_sample": true
     },
     {
+      "input_text": "7 3\n",
+      "output_text": "28\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
       "input_text": "1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 5\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10 10\n",
+      "output_text": "48620\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 10\n",
       "output_text": "1\n",
       "is_sample": false
     },
@@ -34,18 +69,48 @@
       "is_sample": false
     },
     {
-      "input_text": "7 3\n",
-      "output_text": "28\n",
+      "input_text": "2 3\n",
+      "output_text": "3\n",
       "is_sample": false
     },
     {
-      "input_text": "10 10\n",
-      "output_text": "48620\n",
+      "input_text": "3 4\n",
+      "output_text": "10\n",
       "is_sample": false
     },
     {
-      "input_text": "15 1\n",
-      "output_text": "1\n",
+      "input_text": "4 3\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7 7\n",
+      "output_text": "924\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "16 16\n",
+      "output_text": "155117520\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10 20\n",
+      "output_text": "6906900\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15 10\n",
+      "output_text": "817190\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 5\n",
+      "output_text": "70\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6 4\n",
+      "output_text": "56\n",
       "is_sample": false
     }
   ]

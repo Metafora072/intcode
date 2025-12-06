@@ -5,10 +5,10 @@
   "tags": [
     "回溯"
   ],
-  "content": "给定一组互不相同的整数，返回它们所有可能的全排列。输出按字典序，每行一个排列。",
-  "input_description": "第一行整数 n，第二行 n 个互不相同的整数。",
-  "output_description": "每行一个排列，元素间空格分隔；按字典序输出。",
-  "constraints": "$1 \\le n \\le 9$，元素绝对值不超过 $10^{9}$。",
+  "content": "给定一组互不相同的整数 nums，要求返回所有可能的全排列。每个排列包含数组中的全部元素且不重复，排列顺序需完整输出。由于排列数量为 n!，测试数据仅在 n 不大于 9 的范围内给出。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个互不相同的整数，为数组元素，行末换行。",
+  "output_description": "按字典序输出所有排列，每个排列单独占一行，元素之间以空格分隔，最后输出换行符。",
+  "constraints": "$1 \\le n \\le 9$，元素绝对值不超过 $10^{9}$，元素互不相同。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -18,13 +18,23 @@
       "is_sample": true
     },
     {
-      "input_text": "1\n5\n",
-      "output_text": "5\n",
+      "input_text": "2\n1 2\n",
+      "output_text": "1 2\n2 1\n",
       "is_sample": true
     },
     {
-      "input_text": "2\n0 1\n",
-      "output_text": "0 1\n1 0\n",
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n",
+      "output_text": "1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 1 2\n",
+      "output_text": "0 1 2\n0 2 1\n1 0 2\n1 2 0\n2 0 1\n2 1 0\n",
       "is_sample": false
     },
     {
@@ -33,8 +43,48 @@
       "is_sample": false
     },
     {
-      "input_text": "4\n1 2 3 4\n",
-      "output_text": "1 2 3 4\n1 2 4 3\n1 3 2 4\n...",
+      "input_text": "4\n4 5 6 7\n",
+      "output_text": "4 5 6 7\n4 5 7 6\n4 6 5 7\n4 6 7 5\n4 7 5 6\n4 7 6 5\n5 4 6 7\n5 4 7 6\n5 6 4 7\n5 6 7 4\n5 7 4 6\n5 7 6 4\n6 4 5 7\n6 4 7 5\n6 5 4 7\n6 5 7 4\n6 7 4 5\n6 7 5 4\n7 4 5 6\n7 4 6 5\n7 5 4 6\n7 5 6 4\n7 6 4 5\n7 6 5 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n7 8 9\n",
+      "output_text": "7 8 9\n7 9 8\n8 7 9\n8 9 7\n9 7 8\n9 8 7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n10 20 30 40\n",
+      "output_text": "10 20 30 40\n10 20 40 30\n10 30 20 40\n10 30 40 20\n10 40 20 30\n10 40 30 20\n20 10 30 40\n20 10 40 30\n20 30 10 40\n20 30 40 10\n20 40 10 30\n20 40 30 10\n30 10 20 40\n30 10 40 20\n30 20 10 40\n30 20 40 10\n30 40 10 20\n30 40 20 10\n40 10 20 30\n40 10 30 20\n40 20 10 30\n40 20 30 10\n40 30 10 20\n40 30 20 10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 3 5\n",
+      "output_text": "1 3 5\n1 5 3\n3 1 5\n3 5 1\n5 1 3\n5 3 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-3 -2 -1\n",
+      "output_text": "-3 -2 -1\n-3 -1 -2\n-2 -3 -1\n-2 -1 -3\n-1 -3 -2\n-1 -2 -3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n100 200\n",
+      "output_text": "100 200\n200 100\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 4 6 8\n",
+      "output_text": "2 4 6 8\n2 4 8 6\n2 6 4 8\n2 6 8 4\n2 8 4 6\n2 8 6 4\n4 2 6 8\n4 2 8 6\n4 6 2 8\n4 6 8 2\n4 8 2 6\n4 8 6 2\n6 2 4 8\n6 2 8 4\n6 4 2 8\n6 4 8 2\n6 8 2 4\n6 8 4 2\n8 2 4 6\n8 2 6 4\n8 4 2 6\n8 4 6 2\n8 6 2 4\n8 6 4 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 5 3\n",
+      "output_text": "1 3 5\n1 5 3\n3 1 5\n3 5 1\n5 1 3\n5 3 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n7 11\n",
+      "output_text": "7 11\n11 7\n",
       "is_sample": false
     }
   ]

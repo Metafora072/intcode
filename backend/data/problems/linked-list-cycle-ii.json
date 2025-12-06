@@ -6,10 +6,10 @@
     "链表",
     "双指针"
   ],
-  "content": "在存在环的单链表中，返回环的入口节点值；若无环输出 \"null\"。输入提供节点值及尾指向位置。可用快慢指针相遇后再找入口。",
-  "input_description": "第一行整数 n；第二行 n 个整数为节点值；第三行整数 pos（0-based，-1 表示无环）。",
-  "output_description": "输出入口节点的值；无环输出 \"null\"。",
-  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "content": "给定一个可能含环的单向链表，返回环的入口节点值；如果无环返回 \"null\"。输入提供节点值序列以及尾节点指向的位置 pos（-1 表示无环）。",
+  "input_description": "第一行整数 n，表示链表长度；第二行 n 个整数为节点值；第三行整数 pos（0-based），尾节点指向 pos 所在节点，-1 表示无环。",
+  "output_description": "输出环入口节点的值；若无环输出 \"null\"，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，节点值绝对值不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -36,6 +36,81 @@
     {
       "input_text": "5\n1 2 3 4 5\n2\n",
       "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 1 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n0\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 2 2 2\n3\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n0\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 1\n0\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 1\n3\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n10 20 30 40\n1\n",
+      "output_text": "20\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n10 20 30 40\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 5 6\n4\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 5 6\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 0\n1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 2 3 4 5 6 7 8 9\n5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 2 3 4 5 6 7 8 9\n-1\n",
+      "output_text": "null\n",
       "is_sample": false
     }
   ]

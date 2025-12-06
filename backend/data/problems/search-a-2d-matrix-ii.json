@@ -7,10 +7,10 @@
     "二分",
     "双指针"
   ],
-  "content": "在行列均升序的矩阵中查找 target，返回 true/false。可从右上角或左下角按“折线”二分移动。",
-  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个整数；最后一行整数 target。",
-  "output_description": "找到输出 \"true\"，否则 \"false\"。",
-  "constraints": "$1 \\le m,n \\le 300$。",
+  "content": "给定一个 m×n 的整数矩阵，每行从左到右升序、每列从上到下升序，以及一个目标值 target，判断矩阵中是否存在该值。需要输出布尔结果。矩阵可能包含重复元素或负数，尺寸可达 10^3×10^3。",
+  "input_description": "第一行输入两个整数 m 和 n，表示矩阵行数和列数。接下来 m 行，每行 n 个整数表示矩阵。最后一行输入目标值 target。",
+  "output_description": "若矩阵中存在 target 输出 \"true\"，否则输出 \"false\"（小写），行尾换行。",
+  "constraints": "$1 \\le m,n \\le 1000$，元素值与 target 为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -20,23 +20,98 @@
       "is_sample": true
     },
     {
-      "input_text": "2 2\n1 2\n3 4\n5\n",
+      "input_text": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n20\n",
       "output_text": "false\n",
       "is_sample": true
     },
     {
-      "input_text": "1 1\n-1\n-1\n",
+      "input_text": "1 1\n-5\n-5\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "1 2\n1 3\n2\n",
+      "input_text": "1 1\n-5\n5\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "3 3\n1 2 3\n4 5 6\n7 8 9\n8\n",
+      "input_text": "3 3\n1 3 5\n7 9 11\n13 15 17\n11\n",
       "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n1 3 5\n7 9 11\n13 15 17\n12\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\n1 2 3\n4 5 6\n6\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\n1 2 3\n4 5 6\n0\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n-10 -5 -2 0\n-8 -4 -1 1\n-7 -3 2 3\n-6 -2 4 5\n-3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n-10 -5 -2 0\n-8 -4 -1 1\n-7 -3 2 3\n-6 -2 4 5\n6\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n1 2 3 4 5\n6 7 8 9 10\n11 12 13 14 15\n14\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n1 2 3 4 5\n6 7 8 9 10\n11 12 13 14 15\n16\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n1 3\n5 7\n1\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n1 3\n5 7\n6\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1 4 7 10\n2 5 8 11\n3 6 9 12\n2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1 4 7 10\n2 5 8 11\n3 6 9 12\n13\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 4\n1 3 5 7\n7\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 4\n1 3 5 7\n2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 5\n1 2 3 4 5\n6 7 8 9 10\n10\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 5\n1 2 3 4 5\n6 7 8 9 10\n11\n",
+      "output_text": "false\n",
       "is_sample": false
     }
   ]

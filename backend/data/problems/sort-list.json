@@ -6,10 +6,10 @@
     "链表",
     "归并排序"
   ],
-  "content": "对单链表进行 O(n log n) 排序（升序），要求常数额外空间。需自行定义链表结构、读入并输出。",
-  "input_description": "第一行整数 n，第二行 n 个整数为链表节点值。",
-  "output_description": "输出排序后的链表节点值，空格分隔，行尾换行。",
-  "constraints": "$0 \\le n \\le 10^{5}$，节点值绝对值不超过 $10^{9}$。",
+  "content": "给定一个单向链表的头节点，要求对链表进行升序排序，时间复杂度 O(n log n)、额外空间 O(1)。需自行构造链表并输出排序后的节点值序列，链表可能为空。",
+  "input_description": "第一行输入整数 n，表示链表长度。第二行输入 n 个整数，为链表从头到尾的节点值；若 n=0，第二行可以为空行。",
+  "output_description": "输出排序后的链表节点值，按升序，节点间以空格分隔，行尾换行。若链表为空则输出空行（仅换行）。",
+  "constraints": "$0 \\le n \\le 10^{5}$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -19,13 +19,18 @@
       "is_sample": true
     },
     {
-      "input_text": "1\n-1\n",
-      "output_text": "-1\n",
+      "input_text": "0\n\n",
+      "output_text": "\n",
       "is_sample": true
     },
     {
-      "input_text": "0\n\n",
-      "output_text": "\n",
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n",
+      "output_text": "1 2\n",
       "is_sample": false
     },
     {
@@ -34,8 +39,78 @@
       "is_sample": false
     },
     {
-      "input_text": "3\n2 2 1\n",
-      "output_text": "1 2 2\n",
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "1 2 3 4 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 1 1 1 1\n",
+      "output_text": "1 1 1 1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 3 2 4 6 5\n",
+      "output_text": "1 2 3 4 5 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n3 2 3\n",
+      "output_text": "2 3 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n10 9 8 7\n",
+      "output_text": "7 8 9 10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1000000000 -1000000000 0 5\n",
+      "output_text": "-1000000000 0 5 1000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n2 2 2 2 2 1\n",
+      "output_text": "1 2 2 2 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n2 1 2 1 2 1\n",
+      "output_text": "1 1 1 2 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n9 8 7\n",
+      "output_text": "7 8 9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 5 7 9\n",
+      "output_text": "1 3 5 7 9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n9 7 5 3 1\n",
+      "output_text": "1 3 5 7 9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 4 6 8 10\n",
+      "output_text": "2 4 6 8 10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n10 8 6 4 2\n",
+      "output_text": "2 4 6 8 10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n0 0 1 0 -1 2\n",
+      "output_text": "-1 0 0 0 1 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n42 42 0\n",
+      "output_text": "0 42 42\n",
       "is_sample": false
     }
   ]

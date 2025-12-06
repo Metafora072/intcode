@@ -6,17 +6,18 @@
     "双指针",
     "贪心"
   ],
-  "content": "给定长度为 n 的数组 height，其中第 i 条线段高度为 height[i]（坐标为 i）。选择两条线与 x 轴组成容器，容积为横距乘以较短的高度，求能盛水的最大容积（整数）。常用双指针从两端向中间收敛。",
-  "input_description": "第一行整数 n，第二行 n 个非负整数表示各位置高度。",
-  "output_description": "输出一个整数，为最大容积，行尾换行。",
-  "constraints": "$2 \\le n \\le 10^{5},\\ 0 \\le height[i] \\le 10^{9}$",
+  "content": "给定一个长度为 n 的非负整数数组 height，其中 height[i] 表示在坐标 i 处竖立的一条垂直线段。任意选择两条线段与 x 轴形成一个容器，其容量等于两线段间的水平距离乘以较短线段的高度。求所有可能容器的最大容量值。",
+  "input_description": "第一行一个整数 n，表示线段数量；第二行包含 n 个非负整数，为各线段高度。",
+  "output_description": "输出一个整数，为可盛水的最大容量，行尾换行。",
+  "constraints": "$2 \\le n \\le 10^{5}$，$0 \\le height[i] \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "9\n1 8 6 2 5 4 8 3 7\n",
       "output_text": "49\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "经典样例，选 8 和 7"
     },
     {
       "input_text": "2\n1 1\n",

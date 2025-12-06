@@ -6,10 +6,10 @@
     "排序",
     "数组"
   ],
-  "content": "给定若干闭区间，合并所有重叠区间，输出合并后区间集合，按起点升序。可先按起点排序再线性扫描。",
-  "input_description": "第一行整数 n，接下来 n 行每行两个整数 l r 表示一个区间。",
-  "output_description": "合并后的区间逐行输出 \"l r\"。",
-  "constraints": "$1 \\le n \\le 10^{5}$，区间端点绝对值不超过 $10^{9}$。",
+  "content": "给定若干闭区间 [li, ri]，需要将所有有交集或端点相邻的区间合并成覆盖它们的最小集合，合并后区间按照起点升序输出。输入可能包含相互嵌套、部分重叠或完全分离的区间，需要正确处理端点相同、长度为 0 的区间等情况。",
+  "input_description": "第一行输入整数 n，表示区间数量。接下来 n 行，每行两个整数 li ri，表示一个闭区间，可能有 li = ri。区间端点可以为负数。",
+  "output_description": "输出合并后的区间集合，按起点升序逐行输出，每行两个整数，分别为合并后区间的左右端点，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，端点绝对值不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,13 +39,78 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n-5 -3\n-4 0\n1 2\n2 3\n3 4\n",
-      "output_text": "-5 0\n1 4\n",
+      "input_text": "3\n-3 -1\n-2 2\n1 5\n",
+      "output_text": "-3 5\n",
       "is_sample": false
     },
     {
-      "input_text": "4\n0 0\n0 0\n1 1\n2 2\n",
-      "output_text": "0 0\n1 1\n2 2\n",
+      "input_text": "2\n1 4\n0 0\n",
+      "output_text": "0 0\n1 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n5 7\n1 2\n3 4\n6 8\n",
+      "output_text": "1 2\n3 4\n5 8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 4\n0 2\n3 5\n",
+      "output_text": "0 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 4\n2 3\n",
+      "output_text": "1 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n0 0\n",
+      "output_text": "0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2\n2 3\n3 4\n4 5\n",
+      "output_text": "1 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 12\n1 5\n6 9\n",
+      "output_text": "1 12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 100\n2 99\n50 60\n",
+      "output_text": "1 100\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-10 -5\n-6 -1\n-20 -15\n",
+      "output_text": "-20 -15\n-10 -1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 3\n7 9\n4 6\n10 12\n",
+      "output_text": "1 3\n4 6\n7 9\n10 12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2\n2 2\n2 3\n",
+      "output_text": "1 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n5 5\n5 6\n6 6\n",
+      "output_text": "5 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 4\n5 5\n0 0\n",
+      "output_text": "0 0\n1 4\n5 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2\n8 10\n3 6\n15 18\n",
+      "output_text": "1 2\n3 6\n8 10\n15 18\n",
       "is_sample": false
     }
   ]

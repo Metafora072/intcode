@@ -7,10 +7,10 @@
     "递归",
     "BFS"
   ],
-  "content": "判断二叉树是否关于根节点左右对称。输入层序序列，null 表示空。",
-  "input_description": "第一行整数 m，第二行 m 个字符串（整数或 null）。",
-  "output_description": "对称输出 \"true\"，否则输出 \"false\"。",
-  "constraints": "$0 \\le m \\le 2000$。",
+  "content": "给定一棵二叉树，判断它是否关于根节点左右镜像对称。要求左右子树在结构和节点值上镜像相同，空树视为对称。输入以层序序列给出，使用 \"null\" 表示空子节点。",
+  "input_description": "第一行输入整数 m，表示层序序列长度（包含 null 占位）。第二行输入 m 个以空格分隔的字符串，依次为层序遍历的节点值或 \"null\"。若 m=0，可为空树。",
+  "output_description": "若二叉树对称输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$0 \\le m \\le 2000$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -20,9 +20,14 @@
       "is_sample": true
     },
     {
-      "input_text": "5\n1 2 2 null 3 null 3\n",
+      "input_text": "7\n1 2 2 null 3 null 3\n",
       "output_text": "false\n",
       "is_sample": true
+    },
+    {
+      "input_text": "0\n\n",
+      "output_text": "true\n",
+      "is_sample": false
     },
     {
       "input_text": "1\n1\n",
@@ -35,8 +40,78 @@
       "is_sample": false
     },
     {
+      "input_text": "5\n1 2 2 3 4\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 2 4 3 3 4\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 2 3 4 4 3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 1\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 2 null 3\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 2 3 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 null 1 2 2\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 3 3 4 5 5 4\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 3 3 null 5 5 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 3 3 4 null null 4\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 10 10\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n10 20 20 30 40 40 30\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n10 20 20 30 40 50 30\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
       "input_text": "3\n1 2 3\n",
       "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n-1\n",
+      "output_text": "true\n",
       "is_sample": false
     }
   ]

@@ -6,10 +6,10 @@
     "动态规划",
     "字符串"
   ],
-  "content": "实现支持 '' 和 '*' 的正则匹配，判断模式串 p 是否能完全匹配文本串 s。'.' 匹配任意单字符，'*' 匹配其前一个字符出现零次或多次，要求整串匹配而非子串。需处理空串、连续 *、以及多段匹配的状态转移，可用动态规划。",
-  "input_description": "第一行字符串 s（可为空），第二行字符串 p（可为空），字符范围为可见 ASCII，模式中仅 '*' 具有特殊含义且不会作为第一个字符单独出现。",
-  "output_description": "若模式能完整匹配文本输出 \"true\"，否则输出 \"false\"，均为小写，行尾换行。",
-  "constraints": "$0 \\le |s|,|p| \\le 200$",
+  "content": "实现一个只支持 '.' 和 '*' 的简化正则匹配，判断模式串 p 能否完整匹配文本串 s。'.' 可以匹配任意单个字符，'*' 只能表示其前一个字符重复零次或多次，匹配必须覆盖整个字符串。输入字符串均为可见 ASCII，可能为空，需要输出能否完全匹配的布尔值。",
+  "input_description": "第一行输入文本串 s（可为空字符串），第二行输入模式串 p（可为空字符串）。模式串中只有 '*' 具有特殊含义，并且不会作为首字符单独出现，其余字符均视为普通字符。",
+  "output_description": "若模式可以完整匹配文本输出 \"true\"，否则输出 \"false\"（小写），行尾换行。",
+  "constraints": "$0 \\le |s|,|p| \\le 200$，字符均为可见 ASCII。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,33 +39,23 @@
       "is_sample": false
     },
     {
-      "input_text": "aa\n.*a\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
       "input_text": "\n\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "\na*\n",
+      "input_text": "\nc*\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "abc\n.*\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "mississippi\nmis*is*ip*.\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "ab\n.*c\n",
+      "input_text": "abcd\nd*\n",
       "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaa\na*a\n",
+      "output_text": "true\n",
       "is_sample": false
     },
     {
@@ -79,8 +69,8 @@
       "is_sample": false
     },
     {
-      "input_text": "bbbba\n.*a*a\n",
-      "output_text": "true\n",
+      "input_text": "ab\n.*c\n",
+      "output_text": "false\n",
       "is_sample": false
     },
     {
@@ -89,27 +79,37 @@
       "is_sample": false
     },
     {
-      "input_text": "abcd\nd*\n",
+      "input_text": "abc\na.c\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaa\naaaa\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
+      "input_text": "aaa\na*aa\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bbbba\n.*a*a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\n.*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "c\n.*\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
       "input_text": "abcd\n.*d\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "abcd\nab.*d\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "aaa\na*a\n",
-      "output_text": "true\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "aa\naa\n",
       "output_text": "true\n",
       "is_sample": false
     }

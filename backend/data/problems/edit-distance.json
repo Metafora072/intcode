@@ -6,10 +6,10 @@
     "动态规划",
     "字符串"
   ],
-  "content": "给定两个字符串，允许插入、删除、替换字符，求将一个变成另一个的最少操作次数（经典 Levenshtein 距离）。可用 DP，转移考虑三种操作。",
-  "input_description": "第一行字符串 word1，第二行字符串 word2。",
-  "output_description": "输出最少操作数，行尾换行。",
-  "constraints": "$0 \\le |word1|,|word2| \\le 500$",
+  "content": "给定两个字符串 word1 和 word2，可对任意字符执行插入、删除、替换三种操作，每次操作代价为 1，求将 word1 转换为 word2 的最少操作次数（Levenshtein 距离）。",
+  "input_description": "第一行字符串 word1，第二行字符串 word2，均可为空字符串。",
+  "output_description": "输出一个整数，为将 word1 变为 word2 的最小操作次数，行尾换行。",
+  "constraints": "$0 \\le |word1|,|word2| \\le 500$，均为可见 ASCII。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -50,7 +50,67 @@
     },
     {
       "input_text": "pneumonoultramicroscopicsilicovolcanoconiosis\nultramicroscopicsilicovolcanoconiosis\n",
-      "output_text": "11\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\nabc\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\n\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\n\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\na\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\nacbd\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaa\naaa\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "algorithm\naltruistic\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "distance\nediting\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "food\nmoney\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\nwxyz\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "same\nsame\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "palindrome\nrandom\n",
+      "output_text": "5\n",
       "is_sample": false
     }
   ]

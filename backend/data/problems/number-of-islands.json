@@ -7,10 +7,10 @@
     "BFS",
     "并查集"
   ],
-  "content": "给定 0/1 网格，1 表示陆地，0 表示水，统计岛屿个数。岛屿由上下左右相邻的 1 连接而成，可用 DFS/BFS 或并查集。",
-  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个字符 0 或 1（无空格）。",
-  "output_description": "输出岛屿数量，行尾换行。",
-  "constraints": "$1 \\le m,n \\le 300$。",
+  "content": "给定一个由字符 '0' 和 '1' 构成的二维网格，'1' 表示陆地，'0' 表示水域。岛屿由水平方向或垂直方向相邻的陆地单元格连成，要求统计网格中岛屿的数量。网格尺寸可达 300×300，需要覆盖无陆地、全陆地、稀疏分布以及多条独立细长岛屿等多种场景。",
+  "input_description": "第一行输入两个整数 m 和 n，表示网格的行数与列数。接下来 m 行，每行是一个长度为 n 的仅包含字符 '0' 或 '1' 的字符串，行内无空格。",
+  "output_description": "输出一个整数，表示岛屿的个数，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 300$，网格字符仅为 '0' 或 '1'。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -40,8 +40,78 @@
       "is_sample": false
     },
     {
-      "input_text": "3 3\n111\n101\n111\n",
+      "input_text": "3 3\n111\n010\n111\n",
       "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n101\n010\n101\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n111\n111\n111\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n000\n000\n000\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n100\n010\n001\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n110\n110\n001\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n110\n011\n001\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 5\n10100\n00010\n00101\n11000\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n1011\n0010\n1010\n0011\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 10\n1111111111\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 10\n1111100000\n0000011111\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n10101\n01010\n10101\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 5\n11100\n10001\n10101\n10001\n11111\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 1\n1\n1\n1\n1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 6\n101111\n001000\n111011\n000011\n",
+      "output_text": "3\n",
       "is_sample": false
     }
   ]

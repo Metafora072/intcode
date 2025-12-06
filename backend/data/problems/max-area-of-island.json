@@ -6,10 +6,10 @@
     "DFS",
     "BFS"
   ],
-  "content": "给定 0/1 网格，求最大连通陆地块的格子数（面积）。上下左右为邻接，可用 DFS/BFS 遍历并计数。",
-  "input_description": "第一行两个整数 m n；接下来 m 行 n 个 0/1（无空格）。",
-  "output_description": "输出最大岛屿面积，行尾换行。",
-  "constraints": "$1 \\le m,n \\le 50$。",
+  "content": "给定一个由字符 '0' 和 '1' 组成的二维网格，其中 '1' 表示陆地、'0' 表示水域。岛屿定义为在四个方向（上、下、左、右）上相邻的陆地单元格组成的连通块。请计算网格中面积最大的岛屿的格子数，若没有陆地则结果为 0。网格规模可达 50×50，需要正确处理分散的小岛、对角分离的陆地以及仅一格的情况。",
+  "input_description": "第一行输入两个整数 m 和 n，表示网格行数与列数。接下来 m 行，每行给出一个长度为 n 的仅包含字符 '0' 或 '1' 的字符串，行内无空格。",
+  "output_description": "输出一个整数，为网格中最大的岛屿面积（格子数），行尾换行。",
+  "constraints": "$1 \\le m,n \\le 50$，网格字符仅为 '0' 或 '1'。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -20,7 +20,7 @@
     },
     {
       "input_text": "3 3\n111\n010\n111\n",
-      "output_text": "4\n",
+      "output_text": "7\n",
       "is_sample": true
     },
     {
@@ -36,6 +36,81 @@
     {
       "input_text": "3 4\n1100\n1100\n0011\n",
       "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n101\n111\n101\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 4\n0000\n0000\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 5\n10000\n01000\n00100\n00010\n00001\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 5\n11110\n11010\n11000\n00000\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 5\n10100\n10111\n11111\n10010\n",
+      "output_text": "13\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n111\n111\n111\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n1001\n0000\n1001\n1111\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 5\n10101\n01010\n10101\n01010\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 5\n00100\n01110\n11111\n01110\n00100\n",
+      "output_text": "13\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\n10\n01\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n1010\n0101\n1010\n0101\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 4\n1110\n0110\n0110\n0001\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 5\n11111\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n11011\n11011\n00110\n",
+      "output_text": "6\n",
       "is_sample": false
     }
   ]

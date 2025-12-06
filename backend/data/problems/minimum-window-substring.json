@@ -6,10 +6,10 @@
     "滑动窗口",
     "字符串"
   ],
-  "content": "给定字符串 s 和 t，求 s 中包含 t 所有字符的最短子串（大小写敏感，可含重复），若不存在返回空串。典型滑动窗口，需要维护计数与覆盖度。",
-  "input_description": "第一行字符串 s，第二行字符串 t。",
-  "output_description": "输出最小覆盖子串，若不存在输出空行。",
-  "constraints": "$1 \\le |s|,|t| \\le 10^{5}$",
+  "content": "给定两个字符串 s 和 t，求 s 中包含 t 所有字符（包括重复次数）的最短连续子串。若不存在这样的子串则返回空串。",
+  "input_description": "第一行字符串 s，第二行字符串 t，均区分大小写，可为空字符串。",
+  "output_description": "输出 s 中包含 t 所有字符的最短子串；若不存在则输出空行，行尾换行。",
+  "constraints": "$0 \\le |s|,|t| \\le 10^{5}$，展开后答案长度不超过 $10^{5}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -46,6 +46,71 @@
     {
       "input_text": "thisisateststring\ntist\n",
       "output_text": "tstri\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaaaaaaabbbbbcdd\nabcdd\n",
+      "output_text": "abbbbbcdd\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\n\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "\nabc\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abc\nac\n",
+      "output_text": "abc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abab\nab\n",
+      "output_text": "ab\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bbaa\naba\n",
+      "output_text": "baa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "cabefgecdaecf\ncae\n",
+      "output_text": "aec\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ADOBECODEBANC\nAABC\n",
+      "output_text": "ADOBECODEBA\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ABC\nABC\n",
+      "output_text": "ABC\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "ABC\nABCD\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "mississippi\nissip\n",
+      "output_text": "issip\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "pqrst\npq\n",
+      "output_text": "pq\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "timetopractice\ntoc\n",
+      "output_text": "opract\n",
       "is_sample": false
     }
   ]

@@ -6,10 +6,10 @@
     "单调栈",
     "动态规划"
   ],
-  "content": "给定仅包含 0 和 1 的矩阵，求只含 1 的最大矩形面积。",
-  "input_description": "第一行两个整数 m n；接下来 m 行，每行一个由 0/1 组成且长度为 n 的字符串。",
-  "output_description": "输出最大全 1 矩形的面积。",
-  "constraints": "$1 \\le m,n \\le 200$",
+  "content": "给定一个仅包含字符 '0' 和 '1' 的 m×n 矩阵，要求找到只由 '1' 组成的面积最大的长方形，并返回其面积。矩形的边必须与行、列平行，不允许旋转或跨越空位。矩阵可能只有一行或一列，也可能全为 0，需要在各种分布下准确求出最大覆盖面积。",
+  "input_description": "第一行输入两个整数 m 和 n，表示矩阵的行数与列数。接下来 m 行，每行给出一个长度为 n 的由字符 '0' 和 '1' 组成的字符串，行内无空格。",
+  "output_description": "输出一个整数，为矩阵中只含 '1' 的最大矩形面积，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 200$，矩阵字符仅为 '0' 或 '1'。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,13 +39,78 @@
       "is_sample": false
     },
     {
-      "input_text": "3 4\n1111\n1111\n1111\n",
-      "output_text": "12\n",
+      "input_text": "1 1\n0\n",
+      "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "2 3\n010\n010\n",
+      "input_text": "2 4\n1111\n1111\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1101\n1101\n1111\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n0101\n1111\n0101\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 4\n1010\n1010\n",
       "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\n1110\n1100\n1100\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6 5\n01101\n11010\n01110\n11110\n11111\n00000\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 1\n1\n0\n1\n1\n1\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n10101\n11111\n10101\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n110\n011\n011\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 3\n111\n101\n101\n111\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n11011\n11011\n11111\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 5\n11111\n11111\n11111\n",
+      "output_text": "15\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4 5\n10111\n11111\n11101\n11111\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\n000\n000\n000\n",
+      "output_text": "0\n",
       "is_sample": false
     }
   ]

@@ -1,15 +1,15 @@
 {
   "slug": "maximum-subarray",
-  "title": "Maximum Subarray",
+  "title": "最大子数组和",
   "difficulty": "MEDIUM",
   "tags": [
     "数组",
     "动态规划"
   ],
-  "content": "给定长度为 n 的整数数组 nums，请找到一个非空的连续子数组（至少包含一个元素），使其元素和最大，并输出这个最大和。子数组必须连续，如果数组全为负数则选取最大的那个单个元素。常用线性动态规划（Kadane）或分治求解。",
-  "input_description": "第一行一个整数 n。第二行包含 n 个整数，为数组 nums 的元素，可以为负数或零。",
-  "output_description": "输出一行一个整数，表示所有连续子数组中最大的元素和，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5},\\ |nums[i]| \\le 10^{9}$",
+  "content": "给定一个长度为 n 的整数数组 nums，需要找到一个非空的连续子数组，使其元素之和最大，并输出这个最大和。子数组必须由数组中相邻的元素组成，不能跳跃或重排。当数组全为负数时，结果应为其中最大的那个单个元素。数组可能很长，元素也可能为大整数，需要在不溢出的前提下求得正确的最大和。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数，为数组 nums 的元素，元素可以为正数、负数或 0，各数之间以空格分隔，行末换行。",
+  "output_description": "输出一行一个整数，为所有连续子数组中的最大元素和，行尾输出换行符。",
+  "constraints": "$1 \\le n \\le 10^{5}$，$-10^{9} \\le nums[i] \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,38 +39,8 @@
       "is_sample": false
     },
     {
-      "input_text": "6\n-1 4 -2 5 -5 2\n",
-      "output_text": "7\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "6\n0 0 0 -1 0 0\n",
-      "output_text": "0\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "6\n-2 -3 -1 -5 -4 -6\n",
-      "output_text": "-1\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "8\n-2 -1 -3 -4 -1 -2 -1 -5\n",
-      "output_text": "-1\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "10\n1 -2 3 10 -4 7 2 -5 6 1\n",
-      "output_text": "18\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "5\n1000000000 -1 1000000000 -1 1000000000\n",
-      "output_text": "2999999998\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "7\n-2 1 -3 4 -1 2 1\n",
-      "output_text": "6\n",
+      "input_text": "6\n2 -1 2 3 4 -5\n",
+      "output_text": "10\n",
       "is_sample": false
     },
     {
@@ -79,38 +49,68 @@
       "is_sample": false
     },
     {
-      "input_text": "4\n3 -2 5 -1\n",
-      "output_text": "6\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "4\n2 2 -1 2\n",
-      "output_text": "5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "5\n-1 0 -1 0 -1\n",
+      "input_text": "3\n0 0 0\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n8 -9 10 -2 3\n",
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n8 -19 5 -4 20\n",
+      "output_text": "21\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1000000000 -1000000000 1000000000\n",
+      "output_text": "1000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n-1 2 3 -5 4 6 -1\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n3 -2 5 -1 6 -3 2\n",
       "output_text": "11\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n4 -1 -2 1 5\n",
-      "output_text": "7\n",
+      "input_text": "8\n1 -2 3 10 -4 7 2 -5\n",
+      "output_text": "18\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n-5 4 6 -3 4 -1\n",
-      "output_text": "11\n",
+      "input_text": "5\n-5 -4 -3 -2 -1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 1 2 3 0\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n4 -1 2 1\n",
+      "output_text": "6\n",
       "is_sample": false
     },
     {
       "input_text": "7\n1 -1 1 -1 1 -1 1\n",
       "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n10 -3 4 -2 -1 6\n",
+      "output_text": "14\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n-2 -3 4 -1 -2 1 5 -3\n",
+      "output_text": "7\n",
       "is_sample": false
     }
   ]

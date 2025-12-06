@@ -6,9 +6,9 @@
     "动态规划",
     "数论"
   ],
-  "content": "给定正整数 n，求最少需要多少个完全平方数相加得到 n。",
-  "input_description": "一行整数 n。",
-  "output_description": "输出最少数量，行尾换行。",
+  "content": "给定正整数 n，求最少需要多少个完全平方数（1、4、9、16 …）相加得到 n。n 范围在 1 到 10^4，需要输出最小数量。可以使用动态规划或数论方法，但题面不要求具体实现方式。",
+  "input_description": "输入一行一个整数 n，表示目标值。",
+  "output_description": "输出一个整数，表示组成 n 的最少完全平方数个数，行尾换行。",
   "constraints": "$1 \\le n \\le 10^{4}$。",
   "is_spj": false,
   "spj_code": null,
@@ -40,6 +40,71 @@
     },
     {
       "input_text": "4\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "17\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "18\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "19\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "23\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "24\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "25\n",
       "output_text": "1\n",
       "is_sample": false
     },

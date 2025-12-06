@@ -3,13 +3,13 @@
   "title": "电话号码的字母组合",
   "difficulty": "MEDIUM",
   "tags": [
-    "回溯",
-    "字符串"
+    "字符串",
+    "回溯"
   ],
-  "content": "给定仅包含数字 2-9 的字符串 digits（可为空），返回所有可能的字母组合，映射规则为经典电话键盘：2->abc, 3->def, 4->ghi, 5->jkl, 6->mno, 7->pqrs, 8->tuv, 9->wxyz。需按输入顺序对每一位做笛卡尔积生成全排列，输出按字典序。",
-  "input_description": "一行字符串 digits，仅含字符 2-9，可为空字符串表示无按键。",
-  "output_description": "输出一行所有组合，单个组合之间用空格分隔，行尾换行。若输入为空字符串，输出空行。",
-  "constraints": "$0 \\le |digits| \\le 10$",
+  "content": "给定仅包含数字 2-9 的字符串 digits，返回按电话按键映射生成的所有可能字母组合。若 digits 为空，则返回空字符串。组合顺序按字典序输出。",
+  "input_description": "一行字符串 digits，仅包含字符 2-9，可为空。",
+  "output_description": "输出一行所有组合，组合之间用空格分隔，行尾换行；若输入为空字符串，输出空行。",
+  "constraints": "$0 \\le |digits| \\le 10$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [

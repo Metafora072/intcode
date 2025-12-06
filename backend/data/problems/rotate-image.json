@@ -6,10 +6,10 @@
     "数组",
     "原地操作"
   ],
-  "content": "给定一个 n×n 的矩阵，原地顺时针旋转 90 度。输入输出均为矩阵，旋转后输出每行。",
-  "input_description": "第一行整数 n；接下来 n 行，每行 n 个整数表示矩阵。",
-  "output_description": "输出旋转后的矩阵，每行 n 个整数，行尾换行。",
-  "constraints": "$1 \\le n \\le 200$，元素绝对值不超过 $10^{9}$。",
+  "content": "给定一个 n×n 的矩阵，要求将其顺时针旋转 90 度，必须原地完成（允许常数额外空间）。输入输出都以矩阵形式给出。矩阵元素可能为负数或大整数，n 最大 200，需要确保旋转后每个位置的值正确。",
+  "input_description": "第一行输入整数 n，表示矩阵维度。接下来 n 行，每行包含 n 个整数，表示矩阵的每一行，元素之间以空格分隔。",
+  "output_description": "输出旋转后的矩阵，共 n 行，每行 n 个整数，元素之间以空格分隔，行尾换行。",
+  "constraints": "$1 \\le n \\le 200$，矩阵元素为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -19,13 +19,33 @@
       "is_sample": true
     },
     {
-      "input_text": "2\n1 2\n3 4\n",
-      "output_text": "3 1\n4 2\n",
+      "input_text": "1\n1\n",
+      "output_text": "1\n",
       "is_sample": true
     },
     {
-      "input_text": "1\n5\n",
-      "output_text": "5\n",
+      "input_text": "2\n1 2\n3 4\n",
+      "output_text": "3 1\n4 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n5 1 9 11\n2 4 8 10\n13 3 6 7\n15 14 12 16\n",
+      "output_text": "15 13 2 5\n14 3 4 1\n12 6 8 9\n16 7 10 11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 1 2\n3 4 5\n6 7 8\n",
+      "output_text": "6 3 0\n7 4 1\n8 5 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 0 1\n0 1 0\n1 0 1\n",
+      "output_text": "1 0 1\n0 1 0\n1 0 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n-1 -2\n-3 -4\n",
+      "output_text": "-3 -1\n-4 -2\n",
       "is_sample": false
     },
     {
@@ -34,13 +54,63 @@
       "is_sample": false
     },
     {
-      "input_text": "3\n1 1 1\n1 1 1\n1 1 1\n",
-      "output_text": "1 1 1\n1 1 1\n1 1 1\n",
+      "input_text": "3\n1 2 3\n4 5 6\n7 8 9\n",
+      "output_text": "7 4 1\n8 5 2\n9 6 3\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n0 -1 -2\n-3 -4 -5\n-6 -7 -8\n",
-      "output_text": "-6 -3 0\n-7 -4 -1\n-8 -5 -2\n",
+      "input_text": "2\n2 4\n6 8\n",
+      "output_text": "6 2\n8 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n2 1\n",
+      "output_text": "2 1\n1 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 20 30\n40 50 60\n70 80 90\n",
+      "output_text": "70 40 10\n80 50 20\n90 60 30\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n3 2 1\n1 2 3\n",
+      "output_text": "1 3 1\n2 2 2\n3 1 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n5 6 7\n8 9 10\n11 12 13\n",
+      "output_text": "11 8 5\n12 9 6\n13 10 7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 1 1\n2 2 2\n3 3 3\n",
+      "output_text": "3 2 1\n3 2 1\n3 2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n4 3 2 1\n5 6 7 8\n8 7 6 5\n",
+      "output_text": "8 5 4 1\n7 6 3 2\n6 7 2 3\n5 8 1 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 0\n1 1 1\n2 2 2\n",
+      "output_text": "2 1 0\n2 1 0\n2 1 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n9 8 7 6\n5 4 3 2\n1 0 -1 -2\n-3 -4 -5 -6\n",
+      "output_text": "-3 1 5 9\n-4 0 4 8\n-5 -1 3 7\n-6 -2 2 6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n3 4\n",
+      "output_text": "3 1\n4 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n7 8 9\n4 5 6\n1 2 3\n",
+      "output_text": "1 4 7\n2 5 8\n3 6 9\n",
       "is_sample": false
     }
   ]

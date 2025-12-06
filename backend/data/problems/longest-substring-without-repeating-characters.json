@@ -6,10 +6,10 @@
     "字符串",
     "滑动窗口"
   ],
-  "content": "给定字符串 s，求其中不包含重复字符的最长连续子串的长度。子串必须连续；当遇到重复字符时，需要移动窗口左边界重新保证子串内字符互不相同。空串返回 0，可包含任意可见 ASCII 字符。常用滑动窗口配合哈希表记录字符最近出现位置。",
-  "input_description": "输入一行字符串 s，可为空，字符集限定为可见 ASCII。",
-  "output_description": "输出一个整数，表示最长无重复字符子串的长度，行尾换行。",
-  "constraints": "$0 \\le |s| \\le 10^{5}$",
+  "content": "给定一个字符串 s，要求找到其中不包含任何重复字符的最长连续子串，并输出该子串的长度。子串必须由原字符串中相邻的字符组成，不能调换顺序或跳过字符。字符串可能为空，也可能包含空格、标点和大小写字母等可见 ASCII 字符，需要覆盖极端长度与重复字符频繁交替的情况，保证得到的长度是所有合法子串中的最大值。",
+  "input_description": "输入仅一行字符串 s，长度可以为 0。字符集限定为可见 ASCII，可包含空格、标点或数字，行末以换行结束。",
+  "output_description": "输出一个整数，表示字符串中最长无重复字符连续子串的长度，行尾输出换行符。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$，字符均为可见 ASCII。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -64,28 +64,38 @@
       "is_sample": false
     },
     {
+      "input_text": "abcdeafghij\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a b c a b c\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "!@#!@\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
       "input_text": "abcddefgh\n",
       "output_text": "5\n",
       "is_sample": false
     },
     {
-      "input_text": "abcdefg\n",
-      "output_text": "7\n",
+      "input_text": "abcABCabcABC\n",
+      "output_text": "6\n",
       "is_sample": false
     },
     {
-      "input_text": "abbaac\n",
-      "output_text": "2\n",
+      "input_text": "longestsubstringtest\n",
+      "output_text": "8\n",
       "is_sample": false
     },
     {
-      "input_text": "aaab\n",
-      "output_text": "2\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "abcabcbbxyz\n",
-      "output_text": "4\n",
+      "input_text": "abbaacdedfghijklm\n",
+      "output_text": "10\n",
       "is_sample": false
     },
     {
@@ -94,23 +104,13 @@
       "is_sample": false
     },
     {
-      "input_text": "aab\n",
-      "output_text": "2\n",
+      "input_text": "abca bcbb\n",
+      "output_text": "4\n",
       "is_sample": false
     },
     {
-      "input_text": "qrstuq\n",
-      "output_text": "5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "dvdfdvdf\n",
-      "output_text": "3\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "abcdabcde\n",
-      "output_text": "5\n",
+      "input_text": "qwertyqwerty\n",
+      "output_text": "6\n",
       "is_sample": false
     }
   ]

@@ -6,9 +6,9 @@
     "哈希表",
     "字符串"
   ],
-  "content": "给定字符串数组，将字母异位词分到同一组。判断异位词可通过排序后的键或计数向量。输出时，每组内部单词按字典序排序，组之间按组首元素字典序排序输出，便于评测。",
-  "input_description": "第一行整数 n，第二行 n 个字符串。",
-  "output_description": "按要求输出分组结果，每组一行，组内单词空格分隔。",
+  "content": "给定一组字符串，请将其中互为字母异位词的单词分到同一组。字母异位词是指由相同字符组成且各字符出现次数相同、顺序可不同的字符串。",
+  "input_description": "第一行整数 n，表示单词数量；第二行 n 个字符串，均由小写字母组成，可以有重复单词或空串。",
+  "output_description": "按组输出结果，每组一行，组内单词按字典序排列，组之间按各组首元素的字典序排序。行尾换行。",
   "constraints": "$1 \\le n \\le 10^{4}$，单词长度不超过 100。",
   "is_spj": false,
   "spj_code": null,
@@ -16,7 +16,8 @@
     {
       "input_text": "6\neat tea tan ate nat bat\n",
       "output_text": "ate eat tea\nbat\nnat tan\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "组内字典序，组按首元素排序"
     },
     {
       "input_text": "3\na a a\n",
@@ -40,7 +41,77 @@
     },
     {
       "input_text": "5\nzzz zzz zz zz z\n",
-      "output_text": "z\nzz\nzzz zzz\n",
+      "output_text": "z\nzz zz\nzzz zzz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n \n",
+      "output_text": " \n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nab ba abc bca cab bac\n",
+      "output_text": "ab ba\nabc bac bca cab\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\nlisten silent enlist google elgoog\n",
+      "output_text": "elgoog google\nenlist listen silent\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nrat tar art star\n",
+      "output_text": "art rat tar\nstar\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\naa aa aaa\n",
+      "output_text": "aa aa\naaa\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\nx\n",
+      "output_text": "x\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\nabcd bcda dabc abdc acbd\n",
+      "output_text": "abcd abdc acbd bcda dabc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nqwe ewq weq qweq\n",
+      "output_text": "ewq qwe weq\nqweq\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nmno onm nmo xyz\n",
+      "output_text": "mno nmo onm\nxyz\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nabc ab ba cab bca bac\n",
+      "output_text": "ab ba\nabc bac bca cab\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\na b c ab bc\n",
+      "output_text": "a\nab\nb\nbc\nc\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nabc cba bca dab\n",
+      "output_text": "abc bca cba\ndab\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\nabcabc aabbcc baccab\n",
+      "output_text": "aabbcc abcabc baccab\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\naaab abaa baaa aaba\n",
+      "output_text": "aaab aaba abaa baaa\n",
       "is_sample": false
     }
   ]

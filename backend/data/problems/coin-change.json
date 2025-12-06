@@ -5,22 +5,24 @@
   "tags": [
     "动态规划"
   ],
-  "content": "给定硬币面额和总金额，求组成该金额所需最少硬币数；无法组成返回 -1。典型完全背包 DP。",
-  "input_description": "第一行整数 n，第二行 n 个正整数表示面额；第三行整数 amount。",
-  "output_description": "输出最少硬币数或 -1。",
-  "constraints": "$1 \\le n \\le 50$，$1 \\le amount \\le 10^{4}$。",
+  "content": "给定不同面额的硬币 coins 和一个总金额 amount，要求用最少的硬币数凑出该金额。每种面额的硬币可以使用任意多个，如果无法正好凑出则返回 -1。",
+  "input_description": "第一行一个整数 n，表示硬币种类数；第二行 n 个正整数表示各面额；第三行一个整数 amount 表示目标金额。",
+  "output_description": "输出凑出金额所需的最少硬币数；若无法凑出则输出 -1，行尾换行。",
+  "constraints": "$1 \\le n \\le 50$，$0 \\le amount \\le 10^{4}$，硬币面额为正整数且不超过 $10^{4}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "3\n1 2 5\n11\n",
       "output_text": "3\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "11=5+5+1"
     },
     {
       "input_text": "2\n2 5\n3\n",
       "output_text": "-1\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "无法组合"
     },
     {
       "input_text": "1\n1\n0\n",
@@ -35,6 +37,81 @@
     {
       "input_text": "2\n1 2\n100\n",
       "output_text": "50\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 4\n7\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 3 5\n1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 3 5\n11\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 3 5\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 3 4\n6\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n5 7 8\n15\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n5 7 8\n14\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 10 25\n30\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n9 6 5 1\n11\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n2\n1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n3\n9\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n186 419 83 408\n6249\n",
+      "output_text": "20\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 5 10 1\n27\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 5\n63\n",
+      "output_text": "14\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n7 13 19\n27\n",
+      "output_text": "3\n",
       "is_sample": false
     }
   ]

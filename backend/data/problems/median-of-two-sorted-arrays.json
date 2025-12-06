@@ -6,10 +6,10 @@
     "二分查找",
     "数组"
   ],
-  "content": "给定两个升序数组 nums1 和 nums2，长度分别为 m、n，请在 O(log(m+n)) 时间内求出合并后有序序列的中位数。若总长度为奇数，中位数为中间元素；为偶数时为中间两元素平均值（可能为小数 .5）。可使用二分划分或等价的对数时间方法实现。",
-  "input_description": "第一行整数 m，第二行为 m 个按非降序排列的整数；第三行整数 n，第四行为 n 个按非降序排列的整数，允许某个数组为空（此时对应行可为空）。",
-  "output_description": "输出一行，为合并有序序列的中位数，整数或带小数 .5，行尾换行。",
-  "constraints": "$0 \\le m,n \\le 10^{5}$，数组元素绝对值不超过 $10^{9}$。",
+  "content": "给定两个按非降序排列的整数数组 nums1 和 nums2，长度分别为 m 和 n，要求在不实际合并的前提下求出将二者整体排序后序列的中位数。若总长度为奇数，中位数为中间元素；若为偶数，则为中间两元素平均值，结果可能为小数（.5）。任一数组可以为空，总长度至少为 1，需要正确处理重复值与极端长度差异的情况。",
+  "input_description": "第一行输入整数 m，第二行输入 m 个按非降序排列的整数表示 nums1；第三行输入整数 n，第四行输入 n 个按非降序排列的整数表示 nums2。若某个数组长度为 0，则对应的下一行可以为空行。",
+  "output_description": "输出一个数，为合并有序序列的中位数。若为整数直接输出整数形式，若为小数输出一位小数（形如 2.5），行尾换行。",
+  "constraints": "$0 \\le m,n \\le 10^{5}$，$m+n \\ge 1$，元素绝对值不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -39,38 +39,8 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n-5 -3 -1 0 2\n4\n-2 -1 3 4\n",
-      "output_text": "-1\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "1\n1000000000\n1\n1000000000\n",
-      "output_text": "1000000000\n",
-      "is_sample": false
-    },
-    {
       "input_text": "2\n1 2\n2\n3 4\n",
       "output_text": "2.5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "3\n1 2 5\n3\n3 4 6\n",
-      "output_text": "3.5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "5\n1 2 3 4 5\n1\n6\n",
-      "output_text": "3.5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "0\n\n4\n2 3 4 5\n",
-      "output_text": "3.5\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "3\n1 2 3\n3\n4 5 6\n",
-      "output_text": "3.5\n",
       "is_sample": false
     },
     {
@@ -79,38 +49,68 @@
       "is_sample": false
     },
     {
-      "input_text": "1\n3\n2\n1 2\n",
-      "output_text": "2\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "3\n1 1 1\n3\n1 1 1\n",
-      "output_text": "1\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "4\n-5 -4 -3 -2\n3\n-1 0 1\n",
-      "output_text": "-2\n",
-      "is_sample": false
-    },
-    {
-      "input_text": "5\n0 0 0 0 0\n2\n1 1\n",
+      "input_text": "2\n0 0\n2\n0 0\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "1\n-1000000000\n2\n1000000000 1000000000\n",
-      "output_text": "1000000000\n",
+      "input_text": "1\n1\n1\n1\n",
+      "output_text": "1\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n1 1 2 2 3 3\n2\n4 4\n",
-      "output_text": "2.5\n",
+      "input_text": "1\n2\n5\n1 3 4 5 6\n",
+      "output_text": "3\n",
       "is_sample": false
     },
     {
-      "input_text": "2\n10 20\n3\n30 40 50\n",
-      "output_text": "30\n",
+      "input_text": "4\n1 2 3 4\n4\n5 6 7 8\n",
+      "output_text": "4.5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1000000\n2\n1000001 1000002\n",
+      "output_text": "1000001\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-5 -3 -1\n3\n1 3 5\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 2 2\n5\n2 2 2 2 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n0\n\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n0\n0\n\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n1\n0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 4 7\n5\n2 3 6 8 9\n",
+      "output_text": "4.5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 20 30\n5\n5 15 25 35 45\n",
+      "output_text": "22.5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n1\n6\n",
+      "output_text": "3.5\n",
       "is_sample": false
     }
   ]

@@ -5,9 +5,9 @@
   "tags": [
     "位运算"
   ],
-  "content": "两个整数的汉明距离是其二进制对应位不同的个数，计算该值。",
-  "input_description": "一行两个整数 x y。",
-  "output_description": "输出汉明距离整数。",
+  "content": "两个整数的汉明距离是它们二进制表示中对应位不同的个数。给定两个非负整数 x 和 y，求它们的汉明距离。",
+  "input_description": "一行包含两个非负整数 x 和 y。",
+  "output_description": "输出一个整数，为 x 与 y 的汉明距离，行尾换行。",
   "constraints": "$0 \\le x,y \\le 2^{31}-1$。",
   "is_spj": false,
   "spj_code": null,
@@ -15,7 +15,8 @@
     {
       "input_text": "1 4\n",
       "output_text": "2\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "001 vs 100 有2位不同"
     },
     {
       "input_text": "3 1\n",
@@ -30,6 +31,86 @@
     {
       "input_text": "7 10\n",
       "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15 0\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8 8\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "255 0\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1023 512\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "12345 54321\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6 9\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "31 14\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "100000 99999\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2147483647 0\n",
+      "output_text": "31\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2147483647 2147483647\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10 12\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "42 21\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "256 1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "512 1024\n",
+      "output_text": "2\n",
       "is_sample": false
     }
   ]

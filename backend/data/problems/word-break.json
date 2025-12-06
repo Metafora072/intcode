@@ -6,10 +6,10 @@
     "动态规划",
     "字符串"
   ],
-  "content": "给定字符串 s 和字典 wordDict，判断 s 能否拆分成若干字典单词。典型解法为 DP，dp[i] 表示前 i 位可否拆分。",
-  "input_description": "第一行字符串 s；第二行整数 m；第三行 m 个字符串为字典。",
-  "output_description": "能拆分输出 \"true\"，否则输出 \"false\"。",
-  "constraints": "$1 \\le |s| \\le 10^{5}$，字典单词总长度不超过 $10^{5}$。",
+  "content": "给定一个字符串 s 和一个单词字典 wordDict，判断 s 能否拆分成字典中单词的空格分隔序列。字典中单词可重复使用，字符串可能为空。长度与字典规模较大时需高效处理，返回布尔结果。",
+  "input_description": "第一行输入字符串 s，可为空串。第二行输入整数 m，表示字典单词数量。第三行输入 m 个字符串，作为字典单词，以空格分隔。行末换行。",
+  "output_description": "若 s 可以被拆分输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$，字典单词总长度不超过 $10^{5}$，字典大小 $0 \\le m \\le 10^{5}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -26,10 +26,15 @@
     {
       "input_text": "catsandog\n5\ncats dog sand and cat\n",
       "output_text": "false\n",
-      "is_sample": true
+      "is_sample": false
     },
     {
-      "input_text": "aaaaaaa\n2\na aa\n",
+      "input_text": "\n1\na\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\n1\na\n",
       "output_text": "true\n",
       "is_sample": false
     },
@@ -39,7 +44,72 @@
       "is_sample": false
     },
     {
-      "input_text": "aaaaaaa\n1\naaaaaaa\n",
+      "input_text": "pineapplepenapple\n5\napple pen applepen pine pineapple\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "catsanddogs\n5\ncats dog sand and catsand\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "cars\n3\ncar ca rs\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "cars\n4\ncar ca rs ars\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "cars\n5\nc ca car a rs\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaa\n2\naaaa aa\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaa\n3\naaaa aa a\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab\n5\na aa aaa aaaa aaaaa\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bb\n4\na bbb bbbb bbbb\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "bb\n4\na bb bbb bbbb\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\n4\na abc b cd\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\n3\nab abc cd\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "carsandbike\n4\ncar cars and bike\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "catsandbike\n4\ncat cats and bike\n",
       "output_text": "true\n",
       "is_sample": false
     }

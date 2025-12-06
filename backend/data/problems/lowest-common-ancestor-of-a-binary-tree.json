@@ -6,20 +6,20 @@
     "树",
     "DFS"
   ],
-  "content": "在普通二叉树中，给定两节点值 p、q，求它们的最近公共祖先节点值（节点值唯一）。可用递归自底向上判断。",
-  "input_description": "第一行整数 m；第二行 m 个字符串为层序（整数或 null）；第三行两个整数 p q。",
-  "output_description": "输出最近公共祖先的节点值，若不存在输出 \"null\"。",
-  "constraints": "$1 \\le m \\le 2000$。",
+  "content": "给定一棵普通二叉树（节点值互不相同）以及树上两个目标节点值 p 与 q，要求找到它们的最近公共祖先节点并输出该节点的值。最近公共祖先指在树中同时拥有 p 与 q 作为后代（节点可视为自身后代）的最深节点。如果树为空或不存在目标节点，输出 \"null\"。树采用按层序给出的节点列表构造，列表中用 null 表示空子节点。",
+  "input_description": "第一行输入整数 m，表示给出的层序列表长度（包含 null 占位）。第二行包含 m 个字符串，依次为层序遍历的节点值或 \"null\"，数值与字符串间以空格分隔。第三行包含两个整数 p 和 q，表示需要查询的两个节点值。",
+  "output_description": "输出最近公共祖先节点的值；若树为空或任一节点不存在则输出 \"null\"，行尾换行。",
+  "constraints": "$0 \\le m \\le 2000$，节点值为 32 位有符号整数且互不重复。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "7\n3 5 1 6 2 0 8 null null 7 4\n5 1\n",
+      "input_text": "11\n3 5 1 6 2 0 8 null null 7 4\n5 1\n",
       "output_text": "3\n",
       "is_sample": true
     },
     {
-      "input_text": "7\n3 5 1 6 2 0 8 null null 7 4\n5 4\n",
+      "input_text": "11\n3 5 1 6 2 0 8 null null 7 4\n5 4\n",
       "output_text": "5\n",
       "is_sample": true
     },
@@ -36,6 +36,81 @@
     {
       "input_text": "3\n1 null 2\n1 2\n",
       "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 null 2 null 3 null 4\n3 4\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 2 3 4 5 6 7 8 9\n8 9\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n1 2 3 4 5 null 6 null null 7\n7 6\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n6 2 8 0 4 7 9 null null 3 5\n2 4\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n6 2 8 0 4 7 9 null null 3 5\n0 5\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n6 2 8 0 4 7 9 null null 3 5\n7 9\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n6 2 8 0 4 7 9 null null 3 5\n2 8\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 null 2 null 3 null 4\n1 3\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n1 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n5 3 6 2 4 null null 1\n1 4\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n5 3 6 2 4 null null 1\n1 6\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 null 5\n4 5\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n3 2\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n1 2\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 null null 4 5\n4 5\n",
+      "output_text": "3\n",
       "is_sample": false
     }
   ]

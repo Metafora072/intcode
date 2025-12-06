@@ -6,27 +6,30 @@
     "回溯",
     "网格"
   ],
-  "content": "给定字符网格和单词，判断是否存在一条路径可拼出该单词。路径从任意格开始，按上下左右相邻移动，同一格只能使用一次。典型回溯 + 剪枝。",
-  "input_description": "第一行两个整数 m n；接下来 m 行，每行 n 个字符（不含空格）；最后一行为目标单词。",
-  "output_description": "若可以拼出输出 \"true\"，否则输出 \"false\"。",
-  "constraints": "$1 \\le m,n \\le 6$，单词长度不超过 15。",
+  "content": "给定一个由大写字母组成的 m×n 网格 board 和一个目标字符串 word，判断是否存在一条路径可以按顺序拼出 word。路径可以从网格任意位置开始，每一步只能向上下左右移动到相邻格，同一个格子在同一条路径中最多使用一次。若存在至少一条满足条件的路径则返回 true，否则返回 false。",
+  "input_description": "第一行包含两个整数 m 和 n，表示网格的行数和列数。接下来 m 行，每行包含恰好 n 个大写字母字符，表示网格。最后一行是目标单词 word，只包含大写字母，长度可为 1。",
+  "output_description": "若存在能拼出单词的路径输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$1 \\le m,n \\le 6$，$1 \\le |word| \\le 15$；网格和单词仅包含大写英文字母。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "3 4\nABCE\nSFCS\nADEE\nABCCED\n",
       "output_text": "true\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "从左上开始可按 A->B->C->C->E->D 走到目标"
     },
     {
       "input_text": "3 4\nABCE\nSFCS\nADEE\nSEE\n",
       "output_text": "true\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "S(1,0)->E(2,1)->E(2,2)"
     },
     {
       "input_text": "3 4\nABCE\nSFCS\nADEE\nABCB\n",
       "output_text": "false\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "需要重复使用同一格的 B，路径无解"
     },
     {
       "input_text": "1 1\nA\nA\n",
@@ -34,12 +37,12 @@
       "is_sample": false
     },
     {
-      "input_text": "1 2\nAB\nBA\n",
+      "input_text": "1 2\nAB\nAA\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "2 2\nAA\nAA\nAAAA\n",
+      "input_text": "2 2\nAA\nAA\nAAAAA\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -50,6 +53,66 @@
     },
     {
       "input_text": "2 3\nCAA\nAAA\nAAA\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\nABCE\nSFES\nADEE\nABCESEEEFS\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\nABCE\nSFES\nADEE\nSFES\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\nCAT\nAXE\nDOG\nCAT\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\nCAT\nAXE\nDOG\nCODE\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\nABA\nBAB\nABA\nABAB\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\nABA\nBAB\nABA\nBBBB\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 2\nAB\nCD\nABCD\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 2\nAA\nBA\nAA\nABAA\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 3\nQQQ\nQWQ\nQQQ\nQWQ\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\nTREE\nROEA\nAART\nTREE\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3 4\nTREE\nROEA\nAART\nTORE\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2 3\nSSS\nSSS\nSSSSS\n",
       "output_text": "true\n",
       "is_sample": false
     }

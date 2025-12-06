@@ -6,9 +6,9 @@
     "哈希表",
     "数组"
   ],
-  "content": "给定未排序整数数组，找出最长连续元素序列的长度，要求 O(n) 时间。常用哈希集合判断序列起点（前驱不存在）再线性扩展。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "输出最长连续序列的长度，行尾换行。",
+  "content": "给定一个未排序的整数数组 nums，找出其中最长连续元素序列（元素差值为 1 的序列）的长度。要求时间复杂度 O(n)。",
+  "input_description": "第一行整数 n，表示数组长度；第二行 n 个整数，可为负数或重复。n 可以为 0。",
+  "output_description": "输出一个整数，为最长连续序列的长度，行尾换行。",
   "constraints": "$0 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
@@ -35,12 +35,82 @@
     },
     {
       "input_text": "8\n0 -1 1 2 -2 3 4 5\n",
-      "output_text": "6\n",
+      "output_text": "8\n",
       "is_sample": false
     },
     {
       "input_text": "5\n10 5 6 7 20\n",
       "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 0 1\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 3 5 7\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 2 3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1000000000 -1000000000\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0 0 0\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n10 11 12 13 50\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 9 3 10 4 20 2\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n5 5 5 6 7 8\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n8 7 6 5 4 3 2 1\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 100 200 300\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n1 2 3 10 11 12 13 14\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n0\n",
+      "output_text": "1\n",
       "is_sample": false
     }
   ]

@@ -7,26 +7,111 @@
     "链表",
     "哈希表"
   ],
-  "content": "设计实现 LRU 缓存，支持 O(1) 的 get 和 put，容量固定。输入给出容量和操作序列，输出每次 get 的结果。",
-  "input_description": "第一行整数 capacity；第二行整数 q 表示操作数；接下来 q 行操作，格式为 \"get key\" 或 \"put key value\"。",
-  "output_description": "对每个 get 输出结果（未命中输出 -1），按出现顺序每行一个。put 无输出。",
-  "constraints": "$1 \\le capacity,q \\le 10^{5}$，键值范围 |key|,|value| \\le 10^{9}$。",
+  "content": "需要实现一个固定容量的最近最少使用（LRU）缓存，支持按照访问顺序淘汰最久未被使用的键值对。缓存需要提供 get 与 put 两种操作：get 查询键并返回对应的值（未命中时返回 -1），同时将该键标记为最近使用；put 插入或更新键值，如果容量已满则移除最久未使用的键后再写入。评测会给出容量以及一系列操作，要求按顺序执行并输出每次 get 的结果。",
+  "input_description": "第一行给出整数 capacity，表示缓存容量。第二行给出整数 q，表示操作数量。接下来 q 行，每行是一个操作：\"get key\" 或 \"put key value\"，其中 key 与 value 为 32 位有符号整数。输入按顺序执行，缓存初始为空。",
+  "output_description": "按出现顺序输出每次 get 操作的结果，每个结果单独占一行，未命中输出 -1，末尾输出换行符。",
+  "constraints": "$1 \\le capacity \\le 10^{5}$，$1 \\le q \\le 10^{5}$，|key|,|value| \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "2\n7\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\n",
+      "input_text": "2\n9\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\n",
       "output_text": "1\n-1\n-1\n3\n4\n",
       "is_sample": true
     },
     {
       "input_text": "1\n3\nput 1 1\nput 2 2\nget 1\n",
       "output_text": "-1\n",
-      "is_sample": false
+      "is_sample": true
     },
     {
       "input_text": "2\n4\nput 1 1\nput 2 2\nput 3 3\nget 2\n",
       "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n8\nput 1 10\nput 2 20\nput 3 30\nget 1\nput 4 40\nget 2\nget 3\nget 4\n",
+      "output_text": "10\n-1\n30\n40\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n7\nget 2\nput 2 6\nget 1\nput 1 5\nput 1 2\nget 1\nget 2\n",
+      "output_text": "-1\n-1\n2\n6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n9\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\n",
+      "output_text": "1\n2\n-1\n3\n4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n3\nput 2 1\nput 2 2\nget 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n7\nput 2 1\nput 3 2\nget 3\nget 2\nput 4 3\nget 2\nget 3\n",
+      "output_text": "2\n1\n1\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n6\nget 0\nput 0 0\nget 0\nput 1 1\nget 0\nget 1\n",
+      "output_text": "-1\n0\n-1\n1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n12\nput 1 1\nput 2 2\nput 3 3\nput 4 4\nget 1\nput 5 5\nget 2\nget 5\nput 6 6\nget 3\nget 4\nget 6\n",
+      "output_text": "1\n-1\n5\n-1\n4\n6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n5\nput 1 1\nput 2 2\nget 1\nget 2\nget 3\n",
+      "output_text": "1\n2\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n8\nput 1 1\nget 1\nput 2 2\nget 2\nput 3 3\nget 1\nget 2\nget 3\n",
+      "output_text": "1\n2\n-1\n2\n3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n8\nput 1 1\nput 2 2\nput 3 3\nput 4 4\nget 4\nget 3\nget 2\nget 1\n",
+      "output_text": "4\n3\n2\n-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n4\nput 1 0\nget 1\nput 1 1\nget 1\n",
+      "output_text": "0\n1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n6\nput 2 1\nput 1 1\nput 2 3\nput 4 1\nget 1\nget 2\n",
+      "output_text": "-1\n3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n9\nput 2 2\nput 2 2\nget 2\nput 1 1\nput 3 3\nput 4 4\nget 2\nget 3\nget 4\n",
+      "output_text": "2\n-1\n3\n4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n9\nput 1 1\nput 2 2\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\nget 2\n",
+      "output_text": "2\n-1\n3\n4\n2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n8\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\n",
+      "output_text": "1\n-1\n-1\n3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10\nput 1 1\nput 2 2\nget 2\nput 3 3\nget 1\nget 2\nget 3\nput 4 4\nget 4\nget 2\n",
+      "output_text": "2\n1\n2\n3\n4\n2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n4\nget 2\nput 2 1\nget 2\nget 1\n",
+      "output_text": "-1\n1\n-1\n",
       "is_sample": false
     }
   ]

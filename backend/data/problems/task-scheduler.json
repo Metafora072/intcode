@@ -6,10 +6,10 @@
     "贪心",
     "堆"
   ],
-  "content": "给定任务列表（字母 A-Z）和冷却时间 n，CPU 每单位时间做一个任务或空闲，求完成所有任务的最少时间单位数。典型贪心：按最高频任务填充空档，或用公式/大顶堆模拟。",
-  "input_description": "第一行整数 t，表示任务数量；第二行 t 个大写字母；第三行整数 n。",
-  "output_description": "输出最少时间单位数。",
-  "constraints": "$1 \\le t \\le 10^{5}$，$0 \\le n \\le 10^{5}$。",
+  "content": "给定一个表示任务类型的字符数组 tasks（仅包含大写字母 A-Z），以及一个非负整数冷却时间 n。CPU 每个时间单位可以执行一个任务或保持空闲，同一类型任务之间必须至少间隔 n 个时间单位。求完成所有任务所需的最少时间单位数。可以通过重新排序任务或插入空闲时间完成，输出最短总耗时。",
+  "input_description": "第一行输入整数 t，表示任务数量。第二行输入 t 个大写字母，表示各任务类型，字母间用空格分隔或紧贴均可。第三行输入整数 n，表示冷却时间。行末换行。",
+  "output_description": "输出一个整数，表示最短完成所有任务所需的时间单位数，行尾换行。",
+  "constraints": "$1 \\le t \\le 10^{5}$，任务类型为 'A' 到 'Z'，$0 \\le n \\le 10^{5}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -19,9 +19,14 @@
       "is_sample": true
     },
     {
-      "input_text": "1\nA\n0\n",
-      "output_text": "1\n",
+      "input_text": "6\nA A A B B B\n0\n",
+      "output_text": "6\n",
       "is_sample": true
+    },
+    {
+      "input_text": "4\nA B C D\n2\n",
+      "output_text": "4\n",
+      "is_sample": false
     },
     {
       "input_text": "3\nA A A\n3\n",
@@ -29,13 +34,83 @@
       "is_sample": false
     },
     {
-      "input_text": "4\nA A A A\n2\n",
+      "input_text": "7\nA A A B B C D\n2\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\nA A A A B B B B\n1\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\nA A A A A\n2\n",
       "output_text": "13\n",
       "is_sample": false
     },
     {
-      "input_text": "4\nA B C D\n2\n",
+      "input_text": "5\nA A A A A\n0\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA B A B C C\n3\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA B C A B C\n2\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA B C A B C\n3\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nZ Z Z Z\n2\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\nZ Z Z Z\n0\n",
       "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\nA B C D E F G H\n5\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\nA A A B B B C C C\n1\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA A B B C C\n4\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA B C D E F\n2\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA A A B B B\n3\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\nA A A B B B\n1\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\nA A A A A B B B B B\n2\n",
+      "output_text": "19\n",
       "is_sample": false
     }
   ]

@@ -6,17 +6,18 @@
     "数组",
     "前后缀"
   ],
-  "content": "返回数组 output，其中 output[i] 为除 nums[i] 外所有元素乘积，要求 O(n) 时间且不用除法，可用前后缀积。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "输出结果数组，空格分隔。",
-  "constraints": "$2 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
+  "content": "给定一个长度为 n 的整数数组 nums，返回一个数组 output，其中 output[i] 等于 nums 中除 nums[i] 以外其余元素的乘积。要求时间复杂度 O(n)，空间 O(1)（输出数组不计），且不得使用除法。保证 n 至少为 2。",
+  "input_description": "第一行整数 n，表示数组长度；第二行 n 个整数为数组元素。",
+  "output_description": "输出一行 n 个整数，为除自身以外的乘积结果，按原顺序，元素间空格分隔，行尾换行。",
+  "constraints": "$2 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$，结果在 64 位带符号范围内。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "4\n1 2 3 4\n",
       "output_text": "24 12 8 6\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "示例"
     },
     {
       "input_text": "5\n-1 1 0 -3 3\n",
@@ -36,6 +37,81 @@
     {
       "input_text": "2\n2 3\n",
       "output_text": "3 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n5 5 5 5\n",
+      "output_text": "125 125 125 125\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n",
+      "output_text": "120 60 40 30 24\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n10 -10 10 -10\n",
+      "output_text": "1000 -1000 1000 -1000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 0 1 0\n",
+      "output_text": "0 0 0 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n100000 1 1 1\n",
+      "output_text": "1 100000 100000 100000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 -2 2 -2 2\n",
+      "output_text": "16 -16 16 -16 16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n",
+      "output_text": "2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n3 4 5\n",
+      "output_text": "20 15 12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 0 4\n",
+      "output_text": "0 0 8 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-1 -2 -3 -4\n",
+      "output_text": "-24 -12 -8 -6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n9 0 -9\n",
+      "output_text": "0 -81 0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 1 1 1 1\n",
+      "output_text": "1 1 1 1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 3 4 5 6\n",
+      "output_text": "360 240 180 144 120\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n7 8 9 10\n",
+      "output_text": "720 630 560 504\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 4 6 8 10\n",
+      "output_text": "1920 960 640 480 384\n",
       "is_sample": false
     }
   ]

@@ -6,10 +6,10 @@
     "单调队列",
     "滑动窗口"
   ],
-  "content": "给定数组和窗口大小 k，返回每个窗口的最大值，按出现顺序输出。典型解法为单调队列维护当前窗口最大值。",
-  "input_description": "第一行整数 n，第二行 n 个整数，第三行整数 k。",
-  "output_description": "输出窗口最大值数组，空格分隔。",
-  "constraints": "$1 \\le k \\le n \\le 10^{5}$。",
+  "content": "给定一个整数数组 nums 和窗口大小 k，窗口从左到右滑动，每次移动一格。要求输出每个窗口中的最大值，按窗口出现顺序给出结果。需要在 O(n) 时间内处理最多 10^5 规模的数据，常见做法是用单调队列维护当前窗口的最大值。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数，为数组元素。第三行输入整数 k，表示窗口大小，满足 1 ≤ k ≤ n。",
+  "output_description": "输出一行，包含 n−k+1 个整数，为每个窗口的最大值，按顺序排列，元素间用空格分隔，行尾换行。",
+  "constraints": "$1 \\le k \\le n \\le 10^{5}$，元素为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -24,18 +24,93 @@
       "is_sample": true
     },
     {
-      "input_text": "3\n9 8 7\n2\n",
-      "output_text": "9 8\n",
+      "input_text": "3\n1 2 3\n2\n",
+      "output_text": "2 3\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 4 5\n1\n",
-      "output_text": "1 2 3 4 5\n",
+      "input_text": "5\n5 4 3 2 1\n1\n",
+      "output_text": "5 4 3 2 1\n",
       "is_sample": false
     },
     {
       "input_text": "5\n5 4 3 2 1\n2\n",
       "output_text": "5 4 3 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 1 1 1 1 1\n3\n",
+      "output_text": "1 1 1 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 3 1 2 0 5\n3\n",
+      "output_text": "3 3 2 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n9 8 7 6 5 4 3\n2\n",
+      "output_text": "9 8 7 6 5 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n9 8 7 6 5 4 3\n3\n",
+      "output_text": "9 8 7 6 5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n9 8 7 6 5 4 3\n7\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-1 -2 -3 -4\n2\n",
+      "output_text": "-1 -2 -3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-1 -2 -3 -4\n3\n",
+      "output_text": "-1 -2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n-1 -2 -3 -4\n4\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 2 3 3 4\n2\n",
+      "output_text": "2 2 3 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 2 3 3 4\n3\n",
+      "output_text": "2 3 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 2 3 3 4\n4\n",
+      "output_text": "3 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1000000000 999999999 1000000000 999999998 999999997\n2\n",
+      "output_text": "1000000000 1000000000 1000000000 999999998\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 1 2 1 2\n2\n",
+      "output_text": "2 2 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 1 2 1 2\n3\n",
+      "output_text": "2 2 2\n",
       "is_sample": false
     }
   ]

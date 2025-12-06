@@ -6,10 +6,10 @@
     "动态规划",
     "二分"
   ],
-  "content": "给定整数数组，求最长严格递增子序列长度。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "输出 LIS 长度，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "content": "给定一个整数数组 nums，返回其中最长严格递增子序列的长度。子序列中的元素不必连续，但顺序必须保持。",
+  "input_description": "第一行整数 n；第二行 n 个整数为数组元素。",
+  "output_description": "输出一个整数，为最长递增子序列的长度，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，元素绝对值不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -36,6 +36,81 @@
     {
       "input_text": "5\n1 2 3 4 5\n",
       "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n1 3 6 7 9 4 10 5 6\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n3 5 7 1 2 8 4 10 6\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 0 1 0 1 0\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n4 10 4 3 8 9\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 3 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n2 5 3 7 11 8 10 13 6\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n9 8 7 6 5\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n1 5 2 6 3 7 4 8\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 4 3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 3 6 7\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n1 3 6 7 9 4 10 5 6 7 8\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n1 2 3 4 5 6 7 8 9 10\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n10 9 2 5 3 4\n",
+      "output_text": "3\n",
       "is_sample": false
     }
   ]

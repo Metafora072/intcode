@@ -6,10 +6,10 @@
     "位运算",
     "哈希表"
   ],
-  "content": "数组中其他元素都出现两次，只有一个元素出现一次，找出该元素。",
-  "input_description": "第一行整数 n，第二行 n 个整数。",
-  "output_description": "输出只出现一次的数字，行尾换行。",
-  "constraints": "$1 \\le n \\le 3\\times10^{5}$，保证答案存在且唯一。",
+  "content": "给定一个非空整数数组，除一个元素只出现一次外，其他每个元素都出现两次，找出这个只出现一次的元素并输出。保证唯一解。可用位运算或哈希表实现，本题仅需正确输出结果。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数，为数组元素，行末换行。",
+  "output_description": "输出只出现一次的元素值，行尾换行。",
+  "constraints": "$1 \\le n \\le 3\\times10^{5}$，元素为 32 位有符号整数，且恰有一个元素只出现一次。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -29,18 +29,88 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n0 0 1 1 2 2 3\n",
-      "output_text": "3\n",
+      "input_text": "5\n0 1 0 1 2\n",
+      "output_text": "2\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n-1 -1 -2 -2 -3\n",
+      "input_text": "7\n5 4 1 4 3 5 3\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n9 8 7 8 9 6 7 5 6\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n-1 -2 -1 -2 -3 -4 -4\n",
       "output_text": "-3\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1000000000 2 2 3 3\n",
+      "input_text": "7\n1000000000 2 2 3 3 4 4\n",
       "output_text": "1000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n-1000000000 -1 -1 -2 -2 -3 -3\n",
+      "output_text": "-1000000000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n10 10 11 11 12\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-5 -5 -6 -6 -7\n",
+      "output_text": "-7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n0 0 -1\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 0 1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n2 2 3 3 4 4 5 6 5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 3 2 1 4 3\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n9 8 9 8 7\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n6 5 6 5 4\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n-1 -1 -2 -2 0\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n100 101 100\n",
+      "output_text": "101\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n42 42 43 43 99\n",
+      "output_text": "99\n",
       "is_sample": false
     }
   ]

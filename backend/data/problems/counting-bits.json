@@ -6,10 +6,10 @@
     "动态规划",
     "位运算"
   ],
-  "content": "对于每个 0..n 的整数，求其二进制中 1 的个数，返回数组。",
-  "input_description": "一行整数 n。",
-  "output_description": "输出 0..n 的 1 数量，空格分隔。",
-  "constraints": "$0 \\le n \\le 10^{5}$。",
+  "content": "给定一个非负整数 n，请计算并输出从 0 到 n 之间每个整数的二进制表示中 1 的个数，按数字从小到大依次输出。需要包含 0 的结果；当 n=0 时仅输出 0 的比特计数。返回的是一组计数值而非单个数字。",
+  "input_description": "一行包含一个非负整数 n。",
+  "output_description": "输出一行，共 n+1 个整数，依次为 0、1、2、...、n 每个数的二进制 1 的个数，数字之间用空格分隔，行尾换行。",
+  "constraints": "$0 \\le n \\le 10^{5}$，输入为整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -31,6 +31,86 @@
     {
       "input_text": "1\n",
       "output_text": "0 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n",
+      "output_text": "0 1 1 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n",
+      "output_text": "0 1 1 2 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n",
+      "output_text": "0 1 1 2 1 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n",
+      "output_text": "0 1 1 2 1 2 2 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n",
+      "output_text": "0 1 1 2 1 2 2 3 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "12\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "15\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "16\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "18\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "20\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "24\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2 3 3 4 2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "30\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2 3 3 4 2 3 3 4 3 4 4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "50\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2 3 3 4 2 3 3 4 3 4 4 5 1 2 2 3 2 3 3 4 2 3 3 4 3 4 4 5 2 3 3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "64\n",
+      "output_text": "0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2 3 3 4 2 3 3 4 3 4 4 5 1 2 2 3 2 3 3 4 2 3 3 4 3 4 4 5 2 3 3 4 3 4 4 5 3 4 4 5 4 5 5 6 1\n",
       "is_sample": false
     }
   ]

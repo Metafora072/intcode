@@ -6,36 +6,111 @@
     "树",
     "递归"
   ],
-  "content": "判断两棵二叉树是否在结构和节点值上完全相同。输入为两棵树的层序序列。",
-  "input_description": "第一行整数 m1，第二行 m1 个字符串（整数或 null）表示树 A；第三行整数 m2，第四行 m2 个字符串表示树 B。",
-  "output_description": "相同输出 \"true\"，否则输出 \"false\"。",
-  "constraints": "$0 \\le m1,m2 \\le 2000$。",
+  "content": "给定两棵二叉树，判断它们在结构和节点值上是否完全相同。要求两棵树对应位置的节点同时存在且值相等，空节点位置也要一致。输入使用层序序列描述二叉树，序列中用 \"null\" 表示缺失子节点。空树视为相同。",
+  "input_description": "第一行输入整数 m1，第二行输入 m1 个以空格分隔的字符串表示第一棵树的层序遍历（节点值或 \"null\"）。第三行输入整数 m2，第四行输入 m2 个字符串表示第二棵树的层序遍历。若某棵树为空，可令长度为 0，序列行为空行。",
+  "output_description": "若两棵树相同输出 \"true\"，否则输出 \"false\"，行尾换行。",
+  "constraints": "$0 \\le m1,m2 \\le 2000$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "3\n1 2 3\n3\n1 2 3\n",
+      "input_text": "7\n1 2 3 4 5 6 7\n7\n1 2 3 4 5 6 7\n",
       "output_text": "true\n",
-      "is_sample": true
-    },
-    {
-      "input_text": "3\n1 2 1\n3\n1 1 2\n",
-      "output_text": "false\n",
       "is_sample": true
     },
     {
       "input_text": "0\n\n0\n\n",
       "output_text": "true\n",
-      "is_sample": false
+      "is_sample": true
     },
     {
-      "input_text": "1\n1\n1\n2\n",
+      "input_text": "3\n1 2 3\n3\n1 2 4\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 null null\n5\n1 2 3 null null\n",
+      "input_text": "5\n1 2 3 null 4\n5\n1 2 3 null 4\n",
       "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 null 4\n5\n1 2 3 4 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n5\n1\n5\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n5\n1\n6\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n3\n1 null 2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 null 2\n3\n1 2 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 2 3 4 4 3\n7\n1 2 2 3 4 4 3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 2 null 3 null 3\n7\n1 2 2 null 3 null 3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n1 2 2 null 3 null 3\n7\n1 2 2 3 null 3 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n2\n1 2\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n2\n1 3\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n-1 -2 -3\n3\n-1 -2 -3\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n4\n1 2 3 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 null 2 3 null 4\n6\n1 null 2 3 null 4\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 null 2 3 null 4\n6\n1 null 2 3 4 null\n",
+      "output_text": "false\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1000000000\n1\n1000000000\n",
+      "output_text": "true\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1000000000\n1\n-1000000000\n",
+      "output_text": "false\n",
       "is_sample": false
     }
   ]

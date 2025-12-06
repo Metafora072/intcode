@@ -7,10 +7,10 @@
     "快慢指针",
     "二分"
   ],
-  "content": "给定包含 n+1 个整数的数组 nums，取值范围 1..n，至少有一个重复数，找出任意一个重复数，不允许修改数组。",
-  "input_description": "第一行整数 n（实际数组长度为 n+1），第二行 n+1 个整数。",
-  "output_description": "输出任意一个重复的数字。",
-  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "content": "给定一个包含 n+1 个整数的数组 nums，每个整数取值范围为 1..n，保证至少存在一个重复数字，可能重复多次。请在不修改数组的前提下找出任意一个重复数，返回其值。",
+  "input_description": "第一行整数 n，表示取值范围为 1..n，实际数组长度为 n+1；第二行包含 n+1 个整数，为数组元素。",
+  "output_description": "输出任意一个重复的数字，行尾换行。若输入不合法（理论上不会出现），可任选一个重复值输出。",
+  "constraints": "$1 \\le n \\le 10^{5}$，数组长度为 n+1，元素范围在 1..n。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -36,7 +36,82 @@
     },
     {
       "input_text": "3\n1 3 4 2\n",
-      "output_text": "NONE\n",
+      "output_text": "\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5 5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n2 1 4 3 5 6 7 8 4\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n9 8 7 6 5 4 3 2 1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n2 5 9 6 9 3 8 9 7 1\n",
+      "output_text": "9\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 4 6 3 2 6 5\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 2 2 2 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 3 4 5\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n4 3 1 4 2\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n7 7 7 7 7 7 7 7\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n8 7 6 5 4 3 2 1 8\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n10 1 2 3 4 5 6 7 8 9 10\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 5 4 3 2 1 6\n",
+      "output_text": "6\n",
       "is_sample": false
     }
   ]

@@ -7,13 +7,18 @@
     "动态规划",
     "双指针"
   ],
-  "content": "给定只含 '(' 和 ')' 的字符串，求最长的合法括号连续子串长度。可用栈、双向扫描或 DP 维护。",
-  "input_description": "一行括号字符串 s，长度可为 0。",
-  "output_description": "输出一个整数，表示最长有效括号子串长度。",
-  "constraints": "$0 \\le |s| \\le 10^{5}$",
+  "content": "给定一个只包含字符 '(' 和 ')' 的字符串 s，要求找到其中最长的、括号匹配正确的连续子串，并输出该子串的长度。合法子串需要成对匹配且顺序正确，不允许跨越或遗漏字符。字符串可能为空，也可能包含多段合法与不合法片段混杂，需要正确识别最长的一段有效括号区间。",
+  "input_description": "输入为一行括号字符串 s，长度可以为 0，字符仅包含 '(' 或 ')'，行末以换行结束。",
+  "output_description": "输出一个整数，表示 s 中最长有效括号连续子串的长度，行尾输出换行符。",
+  "constraints": "$0 \\le |s| \\le 10^{5}$，仅包含 '(' 和 ')'。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
+    {
+      "input_text": "()\n",
+      "output_text": "2\n",
+      "is_sample": true
+    },
     {
       "input_text": "(()\n",
       "output_text": "2\n",
@@ -22,7 +27,7 @@
     {
       "input_text": ")()())\n",
       "output_text": "4\n",
-      "is_sample": true
+      "is_sample": false
     },
     {
       "input_text": "\n",
@@ -30,13 +35,28 @@
       "is_sample": false
     },
     {
-      "input_text": ")\n",
+      "input_text": "((((\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "()()()\n",
+      "input_text": "()()\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(()())\n",
       "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "())(())\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(()(()\n",
+      "output_text": "2\n",
       "is_sample": false
     },
     {
@@ -45,13 +65,53 @@
       "is_sample": false
     },
     {
-      "input_text": "())((())\n",
-      "output_text": "4\n",
+      "input_text": "())(()()))\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "()(()))))\n",
+      "output_text": "6\n",
       "is_sample": false
     },
     {
       "input_text": "((())())\n",
       "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "())())())\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(((())))\n",
+      "output_text": "8\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "()()(()()\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(()))(()\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "()((())())\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "())((()))(()\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "(()()()())\n",
+      "output_text": "10\n",
       "is_sample": false
     }
   ]

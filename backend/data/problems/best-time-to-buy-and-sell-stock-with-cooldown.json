@@ -5,17 +5,18 @@
   "tags": [
     "动态规划"
   ],
-  "content": "可多次交易股票，但卖出后次日必须冷冻不能买，求最大利润。",
-  "input_description": "第一行整数 n，第二行 n 个整数表示股价。",
-  "output_description": "输出最大利润整数。",
-  "constraints": "$1 \\le n \\le 10^{5}$。",
+  "content": "给定整数数组 prices，prices[i] 表示第 i 天的股价。你可以进行多次买卖，但每次卖出后必须经过 1 天冷冻期才能再次买入；同一天内不能同时买卖，也不能持有多股。求在不违反规则的情况下可获得的最大利润。",
+  "input_description": "第一行整数 n，表示价格数量；第二行 n 个整数为每天价格。",
+  "output_description": "输出一个整数，为在冷冻期规则下可以获得的最大利润，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，价格为非负整数且不超过 $10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "5\n1 2 3 0 2\n",
       "output_text": "3\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "买1卖3，冷冻1天后买0卖2"
     },
     {
       "input_text": "2\n1 2\n",
@@ -35,6 +36,81 @@
     {
       "input_text": "3\n5 4 3\n",
       "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 1 2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 4\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 4 2 3\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 0 2 3\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n6 1 6 4 3 0 2\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 1 1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n3 2 6 5 0 3\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n2 7 1 4\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 2 2\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 3 1 3 1 3\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n4 3 2 1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 6 2 8 4 9\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n3 8 5 1 7\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n2 5 7 1 4 3 1\n",
+      "output_text": "6\n",
       "is_sample": false
     }
   ]

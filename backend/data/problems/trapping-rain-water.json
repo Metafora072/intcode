@@ -6,10 +6,10 @@
     "单调栈",
     "双指针"
   ],
-  "content": "给定非负整数数组表示柱状图高度，计算下雨后能接多少水。",
-  "input_description": "第一行整数 n，第二行 n 个非负整数。",
-  "output_description": "输出总接水量，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5},\\ 0 \\le height[i] \\le 10^{9}$",
+  "content": "给定一个非负整数数组 height，表示每个柱子的高度，柱子宽度均为 1。下雨后能接的水量等于所有位置上方可存储的水柱高度之和。请计算并输出总接水量。数组长度可达 10^5，柱高可为 0。需要覆盖空数组、单元素、完全单调、局部凹陷等场景。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个非负整数，为柱状图高度 height[i]，行末换行。",
+  "output_description": "输出一个整数，为下雨后能接的总水量（单位宽度累加），行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，$0 \\le height[i] \\le 10^{9}$。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -19,13 +19,23 @@
       "is_sample": true
     },
     {
-      "input_text": "3\n0 1 0\n",
-      "output_text": "1\n",
+      "input_text": "6\n4 2 0 3 2 5\n",
+      "output_text": "9\n",
       "is_sample": true
     },
     {
-      "input_text": "5\n2 0 2 0 2\n",
-      "output_text": "4\n",
+      "input_text": "0\n\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "1\n1\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n",
+      "output_text": "0\n",
       "is_sample": false
     },
     {
@@ -34,32 +44,72 @@
       "is_sample": false
     },
     {
-      "input_text": "4\n4 2 0 3\n",
-      "output_text": "4\n",
+      "input_text": "4\n5 4 1 2\n",
+      "output_text": "1\n",
       "is_sample": false
     },
     {
-      "input_text": "1\n5\n",
+      "input_text": "3\n2 0 2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n4 2 3\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "10\n5 5 1 7 1 1 5 2 7 6\n",
+      "output_text": "23\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n0 0 0 0\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n0 0 0 0 0 0\n",
+      "input_text": "4\n1 2 3 4\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n5 4 3 2 1 0\n",
+      "input_text": "4\n4 3 2 1\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n0 2 0 2 0 2 0\n",
-      "output_text": "4\n",
+      "input_text": "4\n2 1 0 2\n",
+      "output_text": "3\n",
       "is_sample": false
     },
     {
-      "input_text": "8\n5 2 1 2 1 5 1 2\n",
+      "input_text": "5\n0 1 0 1 0\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 3 3 3\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "11\n1 0 2 1 0 1 3 2 1 2 1\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n2 2 2 2 2\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "9\n5 4 3 2 1 2 3 4 5\n",
+      "output_text": "16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n5 2 1 2 1 5\n",
       "output_text": "14\n",
       "is_sample": false
     }

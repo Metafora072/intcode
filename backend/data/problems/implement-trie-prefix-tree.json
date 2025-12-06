@@ -6,16 +6,16 @@
     "设计",
     "字典树"
   ],
-  "content": "实现字典树，支持插入单词、完整单词查找、前缀查找。输入操作序列，输出 search / startsWith 结果。",
-  "input_description": "第一行整数 q；之后 q 行操作：\"insert word\"、\"search word\"、\"startsWith prefix\"。",
-  "output_description": "对每个 search/startsWith 输出 true/false，按顺序每行输出。",
+  "content": "设计并实现一个前缀树（Trie），支持以下操作：insert(word) 插入字符串；search(word) 判断完整单词是否存在；startsWith(prefix) 判断是否存在以 prefix 为前缀的单词。输入为一系列操作，按序执行并输出查询结果。",
+  "input_description": "第一行整数 q，表示操作数量；接下来 q 行每行一个操作，格式为 \"insert word\"、\"search word\" 或 \"startsWith prefix\"。单词和前缀由小写字母组成，也允许空串。",
+  "output_description": "对每个 search 与 startsWith 操作输出一行 \"true\" 或 \"false\"，按输入顺序给出。",
   "constraints": "$1 \\le q \\le 10^{5}$，单词长度不超过 100。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "7\ninsert apple\nsearch apple\nsearch app\nstartsWith app\ninsert app\nsearch app\nstartsWith ap\n",
-      "output_text": "true\nfalse\ntrue\ntrue\n",
+      "output_text": "true\nfalse\ntrue\ntrue\ntrue\n",
       "is_sample": true
     },
     {
@@ -25,6 +25,91 @@
     },
     {
       "input_text": "4\ninsert hello\ninsert he\nsearch he\nstartsWith hel\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert word\ninsert world\nsearch word\nsearch wor\nstartsWith wor\n",
+      "output_text": "true\nfalse\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert abc\ninsert abd\nsearch abe\nstartsWith ab\n",
+      "output_text": "false\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert a\ninsert ab\ninsert abc\nsearch abc\nsearch abcd\n",
+      "output_text": "true\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert leetcode\nsearch leet\nstartsWith lee\nstartsWith leeto\n",
+      "output_text": "false\ntrue\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert x\nsearch x\nsearch xx\nstartsWith xx\n",
+      "output_text": "true\nfalse\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert aaa\ninsert aa\nsearch aa\nsearch aaa\nstartsWith aaaa\n",
+      "output_text": "true\ntrue\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert abc\ninsert def\nsearch ghi\nstartsWith g\n",
+      "output_text": "false\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert abc\ninsert abcd\ninsert abcde\nsearch abcde\nstartsWith ab\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert trie\nsearch trie\nsearch tri\nstartsWith tri\nstartsWith triee\n",
+      "output_text": "true\nfalse\ntrue\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert hello\ninsert helium\nsearch hel\nstartsWith hel\n",
+      "output_text": "false\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert apple\ninsert application\ninsert apt\nstartsWith appl\nsearch apt\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert cat\ninsert car\ninsert cart\nsearch car\nstartsWith ca\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert z\ninsert zy\ninsert zyx\nsearch zy\nstartsWith zx\n",
+      "output_text": "true\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert abc\ninsert abx\ninsert aby\nsearch abz\nstartsWith abz\n",
+      "output_text": "false\nfalse\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\ninsert prefix\ninsert pre\ninsert presentation\nsearch presentation\nstartsWith pres\n",
+      "output_text": "true\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\ninsert aaaa\nsearch aaaa\nsearch aaa\nstartsWith aa\n",
+      "output_text": "true\nfalse\ntrue\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\ninsert\nsearch\nstartsWith\n",
       "output_text": "true\ntrue\n",
       "is_sample": false
     }

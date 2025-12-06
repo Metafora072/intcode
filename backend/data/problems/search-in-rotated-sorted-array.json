@@ -6,10 +6,10 @@
     "数组",
     "二分查找"
   ],
-  "content": "给定经过旋转的升序数组 nums 和目标值 target（无重复），在 O(log n) 时间内返回 target 下标，未找到返回 -1。",
-  "input_description": "第一行整数 n，第二行 n 个整数（旋转后的升序数组），第三行整数 target。",
-  "output_description": "输出目标下标或 -1，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5}$，元素与 target 绝对值不超过 $10^{9}$。",
+  "content": "给定一个无重复元素的升序数组 nums 在某个未知下标进行了旋转，以及一个目标值 target。要求在 O(log n) 时间内找到 target 的下标，若不存在返回 -1。旋转后数组仍由两段有序部分组成，可能未旋转。需要处理单元素、全部在左/右段、以及目标不存在等情况。",
+  "input_description": "第一行输入整数 n，表示数组长度。第二行输入 n 个整数，为旋转后的升序数组（无重复）。第三行输入整数 target，表示要查找的值。",
+  "output_description": "输出一个整数，为 target 在数组中的下标（0 开始），不存在则输出 -1，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，数组元素与 target 为 32 位有符号整数，数组元素互不相同。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -29,28 +29,88 @@
       "is_sample": false
     },
     {
-      "input_text": "2\n5 1\n5\n",
+      "input_text": "1\n1\n1\n",
       "output_text": "0\n",
       "is_sample": false
     },
     {
-      "input_text": "2\n5 1\n1\n",
+      "input_text": "5\n5 6 7 8 1\n6\n",
       "output_text": "1\n",
       "is_sample": false
     },
     {
-      "input_text": "9\n9 10 11 12 1 2 3 4 5\n4\n",
-      "output_text": "7\n",
+      "input_text": "5\n5 6 7 8 1\n2\n",
+      "output_text": "-1\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n6 7 8 1 2 3\n8\n",
+      "input_text": "5\n1 3 5 7 9\n7\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 5 7 9\n2\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 7 1 2 3 4\n6\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 7 1 2 3 4\n4\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n6 7 1 2 3 4\n5\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n9 10 11 12 13 1 2 3\n10\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n9 10 11 12 13 1 2 3\n1\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n9 10 11 12 13 1 2 3\n14\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 4 1 2\n2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n3 4 1 2\n5\n",
+      "output_text": "-1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 3 1\n1\n",
       "output_text": "2\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n6 7 8 1 2 3\n5\n",
-      "output_text": "-1\n",
+      "input_text": "3\n2 3 1\n2\n",
+      "output_text": "0\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n2 1\n2\n",
+      "output_text": "0\n",
       "is_sample": false
     }
   ]

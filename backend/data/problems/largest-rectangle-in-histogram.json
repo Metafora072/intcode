@@ -6,10 +6,10 @@
     "单调栈",
     "数组"
   ],
-  "content": "给定非负整数数组表示柱状图高度，求能勾勒出的最大矩形面积。",
-  "input_description": "第一行整数 n，第二行 n 个非负整数表示高度。",
-  "output_description": "输出最大面积整数，行尾换行。",
-  "constraints": "$1 \\le n \\le 10^{5}$，高度不超过 $10^{9}$。",
+  "content": "给定非负整数数组 heights，表示柱状图中各柱子的高度，宽度均为 1。请找出能够勾勒出的最大矩形面积。",
+  "input_description": "第一行整数 n，表示柱子数量；第二行 n 个非负整数为高度。",
+  "output_description": "输出一个整数，为最大矩形面积，行尾换行。",
+  "constraints": "$1 \\le n \\le 10^{5}$，$0 \\le heights[i] \\le 10^{9}$，结果在 64 位有符号范围内。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
@@ -56,6 +56,61 @@
     {
       "input_text": "1\n100000\n",
       "output_text": "100000\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 1 1 1\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "7\n6 2 5 4 5 1 6\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n2 1 2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 0 1 0 1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n3 6 5 7 4 8 1 0\n",
+      "output_text": "20\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 3 2 1 2\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n4 4 4 4\n",
+      "output_text": "16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 1 5 1 5\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n2 2 2 3 3 3\n",
+      "output_text": "12\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "8\n1 2 3 4 5 3 3 2\n",
+      "output_text": "15\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n10 9 8 7 6 5\n",
+      "output_text": "30\n",
       "is_sample": false
     }
   ]

@@ -6,22 +6,24 @@
     "链表",
     "双指针"
   ],
-  "content": "给定两单链表，找出它们的第一个相交节点的值；若不相交输出 \"null\"。输入给出两个链表的节点序列和相交起点位置。",
-  "input_description": "第一行整数 n1，第二行 n1 个整数表示链表 A；第三行整数 n2，第四行 n2 个整数表示链表 B；第五行整数 skipA，第六行整数 skipB，表示 A 的第 skipA 节点与 B 的第 skipB 节点起开始共享后续节点（0-based）。若为 -1 表示不相交。",
-  "output_description": "输出相交节点的值，或 \"null\"。",
-  "constraints": "$0 \\le n1,n2 \\le 10^{5}$。",
+  "content": "给定两个单向链表 headA 和 headB，判断它们是否相交，并返回第一个相交节点的值；若不相交返回 \"null\"。输入以两条独立链表的节点值序列给出，并指定它们开始共享节点的位置。链表可能为空。",
+  "input_description": "第一行整数 n1，第二行 n1 个整数为链表 A 的节点值；第三行整数 n2，第四行 n2 个整数为链表 B 的节点值；第五行整数 skipA，第六行整数 skipB，表示 A 中下标为 skipA 的节点与 B 中下标为 skipB 的节点开始重合（0-based）。若为 -1 表示不相交。",
+  "output_description": "输出相交节点的值；若不相交输出字符串 \"null\"，行尾换行。",
+  "constraints": "$0 \\le n1,n2 \\le 10^{5}$，节点值为整数，skipA/skipB 合法或为 -1。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
       "input_text": "3\n4 1 8\n3\n5 6 1\n1\n2\n",
-      "output_text": "8\n",
-      "is_sample": true
+      "output_text": "1\n",
+      "is_sample": true,
+      "sample_explanation": "示例相交值 8"
     },
     {
       "input_text": "3\n2 6 4\n3\n1 5 3\n-1\n-1\n",
       "output_text": "null\n",
-      "is_sample": true
+      "is_sample": true,
+      "sample_explanation": "不相交"
     },
     {
       "input_text": "1\n1\n1\n1\n0\n0\n",
@@ -31,6 +33,86 @@
     {
       "input_text": "4\n9 8 7 6\n3\n1 2 3\n2\n1\n",
       "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 3 5\n3\n2 4 5\n2\n2\n",
+      "output_text": "5\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n0 9 1 2 4\n3\n3 2 4\n3\n1\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n1 2 3 4 5\n2\n6 7\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "5\n5 4 3 2 1\n3\n9 8 1\n4\n2\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n3\n1 2 3\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n10 20 30\n4\n5 15 25 35\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "2\n1 2\n3\n3 4 2\n1\n2\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n7 1 5\n3\n9 1 5\n1\n1\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n1\n4\n3\n0\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n4\n0 0 3 4\n2\n2\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "6\n1 2 3 4 5 6\n5\n7 8 9 10 6\n5\n4\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "0\n\n3\n1 2 3\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n0\n\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 2 3\n3\n4 5 6\n-1\n-1\n",
+      "output_text": "null\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "4\n1 2 3 4\n4\n2 3 4 5\n1\n0\n",
+      "output_text": "2\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "3\n1 1 1\n3\n2 2 2\n-1\n-1\n",
+      "output_text": "null\n",
       "is_sample": false
     }
   ]

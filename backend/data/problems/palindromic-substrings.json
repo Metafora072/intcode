@@ -6,9 +6,9 @@
     "动态规划",
     "中心扩展"
   ],
-  "content": "计算字符串中回文子串的数量（不同位置视为不同子串）。可用中心扩展或 DP 统计所有回文中心。",
-  "input_description": "一行字符串 s。",
-  "output_description": "输出回文子串总数，行尾换行。",
+  "content": "统计字符串 s 中回文子串的数量。回文子串定义为正序与逆序相同的连续子串，不同位置视为不同子串。",
+  "input_description": "一行字符串 s，可为空，字符范围为可见 ASCII。",
+  "output_description": "输出一个整数，为 s 中回文子串的总数，行尾换行。",
   "constraints": "$0 \\le |s| \\le 2000$。",
   "is_spj": false,
   "spj_code": null,
@@ -36,6 +36,81 @@
     {
       "input_text": "abca\n",
       "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "a\n",
+      "output_text": "1\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abba\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcd\n",
+      "output_text": "4\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaa\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "racecar\n",
+      "output_text": "10\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abacdfgdcaba\n",
+      "output_text": "14\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aabbaa\n",
+      "output_text": "11\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcba\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "xyz\n",
+      "output_text": "3\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "noon\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abcabc\n",
+      "output_text": "6\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "aaaaa\n",
+      "output_text": "15\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "abababa\n",
+      "output_text": "16\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "civic\n",
+      "output_text": "7\n",
+      "is_sample": false
+    },
+    {
+      "input_text": "palindrome\n",
+      "output_text": "10\n",
       "is_sample": false
     }
   ]
