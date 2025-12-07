@@ -20,7 +20,7 @@ class Submission(Base):
     runtime_ms = Column(Float, default=0.0)
     created_at = Column(DateTime, default=datetime.utcnow)
     detail_json = Column(Text, nullable=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=True, index=True)
 
     problem: Mapped["Problem"] = relationship("Problem", back_populates="submissions")
     user = relationship("User", back_populates="submissions")

@@ -33,7 +33,11 @@ async def send_code(payload: SendCodePayload, db: Session = Depends(get_db)):
     email_service.verification_store.set_code(payload.email, code)
     try:
         await email_service.send_verification_code(payload.email, code)
-    except Exception:
+    except Exception as exc:
+        # 记录具体异常便于排查 SMTP 连接/认证问题
+        from app.utils.logger import logger
+
+        logger.error("发送验证码失败: %s", exc, exc_info=True)
         raise HTTPException(status_code=500, detail="邮件发送失败，请检查邮箱地址或稍后重试")
     return {"message": "验证码已发送"}
 

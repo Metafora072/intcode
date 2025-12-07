@@ -91,4 +91,5 @@ export interface UserSummary {
   created_at: string;
   avatar_url?: string | null;
   solved_count: number;
+  submission_count: number;
 }

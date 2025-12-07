@@ -10,3 +10,4 @@ passlib[bcrypt]==1.7.4
 bcrypt==3.2.2
 fastapi-mail==1.4.1
 pillow==10.3.0
+python-dotenv==1.0.1

@@ -1,11 +1,19 @@
-from datetime import datetime, timedelta
+import asyncio
+import os
 import random
+import smtplib
+import ssl
 import string
+from datetime import datetime, timedelta
+from email.message import EmailMessage
 from typing import Dict, Tuple
 
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
-
 from app.config import settings
+from app.utils.logger import logger
+
+# 禁用代理，避免 SMTP 走 HTTP 代理导致握手异常
+for key in ["http_proxy", "https_proxy", "all_proxy", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"]:
+    os.environ.pop(key, None)
 
 
 class VerificationStore:
@@ -35,19 +43,6 @@ class VerificationStore:
 
 verification_store = VerificationStore()
 
-mail_conf = ConnectionConfig(
-    MAIL_USERNAME=settings.mail_username,
-    MAIL_PASSWORD=settings.mail_password,
-    MAIL_FROM=settings.mail_from,
-    MAIL_PORT=settings.mail_port,
-    MAIL_SERVER=settings.mail_server,
-    MAIL_FROM_NAME=settings.mail_from_name,
-    MAIL_STARTTLS=settings.mail_starttls,
-    MAIL_SSL_TLS=settings.mail_ssl_tls,
-    USE_CREDENTIALS=settings.use_credentials,
-    VALIDATE_CERTS=settings.validate_certs,
-)
-
 
 def generate_code(length: int = 6) -> str:
     """生成指定长度的数字验证码。"""
@@ -56,6 +51,8 @@ def generate_code(length: int = 6) -> str:
 
 async def send_verification_code(email: str, code: str) -> None:
     """发送验证码邮件，开发模式下仅打印。"""
+    # 调试输出，确认 SSL/端口配置（生产可移除）
+    print(f"Mail Config: Port={settings.mail_port}, SSL={settings.mail_ssl_tls}, StartTLS={settings.mail_starttls}")
     html_body = f"""
     <div style="background-color:#f8fafc; padding:20px; font-family: sans-serif;">
       <div style="max-width:600px; margin:0 auto; background:white; padding:30px; border-radius:10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -66,14 +63,29 @@ async def send_verification_code(email: str, code: str) -> None:
       </div>
     </div>
     """
-    message = MessageSchema(
-        subject="intcode 验证码",
-        recipients=[email],
-        body=html_body,
-        subtype=MessageType.html,
-    )
     if settings.mail_use_mock:
         print(f"[mock email] send code {code} to {email}")
         return
-    fm = FastMail(mail_conf)
-    await fm.send_message(message)
+    loop = asyncio.get_event_loop()
+    try:
+        await loop.run_in_executor(None, _send_via_smtplib, email, html_body)
+        logger.info("邮件发送成功，收件人: %s", email)
+    except Exception as exc:
+        logger.error("邮件发送失败: %s", exc, exc_info=True)
+        raise
+
+
+def _send_via_smtplib(email: str, html_body: str) -> None:
+    """使用 smtplib 直接发送，避免代理或 aiosmtplib 兼容性问题。"""
+    msg = EmailMessage()
+    msg["Subject"] = "intcode 验证码"
+    msg["From"] = settings.mail_from
+    msg["To"] = email
+    msg.set_content("验证码", subtype="plain")
+    msg.add_alternative(html_body, subtype="html")
+
+    context = ssl.create_default_context()
+    # 直接使用 SMTP_SSL，端口固定 465，避免 STARTTLS/代理干扰
+    with smtplib.SMTP_SSL(settings.mail_server, 465, context=context, timeout=10) as server:
+        server.login(settings.mail_username, settings.mail_password)
+        server.send_message(msg)

@@ -221,16 +221,23 @@ def list_users_with_stats(db: Session) -> List[dict]:
         .group_by(Submission.user_id)
         .subquery()
     )
+    submission_count_subq = (
+        db.query(Submission.user_id, func.count(Submission.id).label("submission_count"))
+        .group_by(Submission.user_id)
+        .subquery()
+    )
     query = (
         db.query(
             User,
             func.coalesce(solved_subq.c.solved_count, 0).label("solved_count"),
+            func.coalesce(submission_count_subq.c.submission_count, 0).label("submission_count"),
         )
         .outerjoin(solved_subq, User.id == solved_subq.c.user_id)
+        .outerjoin(submission_count_subq, User.id == submission_count_subq.c.user_id)
         .order_by(User.created_at.desc())
     )
     results = []
-    for user, solved_count in query.all():
+    for user, solved_count, submission_count in query.all():
         results.append(
             {
                 "id": user.id,
@@ -240,6 +247,7 @@ def list_users_with_stats(db: Session) -> List[dict]:
                 "created_at": user.created_at,
                 "avatar_url": user.avatar_url,
                 "solved_count": solved_count or 0,
+                "submission_count": submission_count or 0,
             }
         )
     return results

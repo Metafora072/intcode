@@ -117,6 +117,11 @@ export const fetchUsers = async () => {
   return res.data;
 };
 
+export const deleteUser = async (userId: number) => {
+  const res = await api.delete<{ message: string }>(`/admin/users/${userId}`);
+  return res.data;
+};
+
 export const uploadAvatarApi = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);

@@ -18,4 +18,9 @@ class User(Base):
     avatar_url = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    submissions = relationship("Submission", back_populates="user")
+    submissions = relationship(
+        "Submission",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

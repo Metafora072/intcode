@@ -15,20 +15,21 @@ class Settings(BaseSettings):
     secret_key: str = "dev_secret_key_fixed_for_stability_12345"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
-    mail_username: str = "your_email@example.com"
-    mail_password: str = "your_password"
-    mail_from: str = "your_email@example.com"
-    mail_port: int = 587
-    mail_server: str = "smtp.gmail.com"
+    mail_username: str = "2430093500@qq.com"
+    mail_password: str = "bivthumactxrebfg"
+    mail_from: str = "2430093500@qq.com"
+    mail_port: int = 465
+    mail_server: str = "smtp.qq.com"
     mail_from_name: str = "intcode OJ"
-    mail_starttls: bool = True
-    mail_ssl_tls: bool = False
+    mail_starttls: bool = False
+    mail_ssl_tls: bool = True
     use_credentials: bool = True
     validate_certs: bool = True
     mail_use_mock: bool = True
 
     class Config:
         env_prefix = "INTCODE_"
+        env_file = ".env"
 
 
 settings = Settings()

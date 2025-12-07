@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { addTestcase, createProblem, fetchProblems, fetchUsers } from "../api";
+import { toast } from "react-hot-toast";
+import { Trash2 } from "lucide-react";
+import { addTestcase, createProblem, deleteUser, fetchProblems, fetchUsers } from "../api";
 import CodeEditor from "../components/CodeEditor";
 import { Problem, UserSummary } from "../types";
 import { useAuth } from "../context/AuthContext";
@@ -36,7 +38,7 @@ type FormState = {
 
 const AdminPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
-  const [mainTab, setMainTab] = useState<"problems" | "users">("problems");
+  const [mainTab, setMainTab] = useState<"problems" | "dev">("problems");
   const [activeTab, setActiveTab] = useState<"create" | "cases">("create");
   const [problemId, setProblemId] = useState<number | null>(null);
   const [form, setForm] = useState<FormState>({
@@ -55,6 +57,7 @@ const AdminPage = () => {
   const [msg, setMsg] = useState("");
   const { user } = useAuth();
   const [users, setUsers] = useState<UserSummary[]>([]);
+  const [usersLoading, setUsersLoading] = useState(false);
 
   const loadProblems = async () => {
     const data = await fetchProblems({ limit: 100, offset: 0 });
@@ -62,8 +65,13 @@ const AdminPage = () => {
   };
 
   const loadUsers = async () => {
-    const data = await fetchUsers();
-    setUsers(data);
+    setUsersLoading(true);
+    try {
+      const data = await fetchUsers();
+      setUsers(data);
+    } finally {
+      setUsersLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -134,10 +142,12 @@ const AdminPage = () => {
           题目管理
         </button>
         <button
-          className={`px-4 py-2 rounded-lg ${mainTab === "users" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"}`}
-          onClick={() => setMainTab("users")}
+          className={`px-4 py-2 rounded-lg ${
+            mainTab === "dev" ? "bg-indigo-600 text-white" : "text-slate-700 dark:text-slate-200"
+          }`}
+          onClick={() => setMainTab("dev")}
         >
-          用户管理
+          Developer Console
         </button>
       </div>
 
@@ -158,10 +168,10 @@ const AdminPage = () => {
         </div>
       )}
 
-      {mainTab === "users" ? (
+      {mainTab === "dev" ? (
         <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">用户列表</h3>
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Developer Console · 用户硬删除</h3>
             <span className="px-3 py-1 rounded-full text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
               共 {users.length} 人
             </span>
@@ -175,40 +185,73 @@ const AdminPage = () => {
                   <th className="py-2 pr-2">用户名</th>
                   <th className="py-2 pr-2">邮箱</th>
                   <th className="py-2 pr-2">角色</th>
+                  <th className="py-2 pr-2">提交数</th>
                   <th className="py-2 pr-2">已解</th>
                   <th className="py-2 pr-2">加入时间</th>
+                  <th className="py-2 pr-2 text-right">操作</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-                {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/60">
-                    <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.id}</td>
-                    <td className="py-2 pr-2">
-                      {u.avatar_url ? (
-                        <img src={u.avatar_url} alt={u.username} className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700" />
-                      ) : (
-                        <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
-                          {u.username[0]?.toUpperCase()}
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-2 pr-2 text-slate-800 dark:text-slate-100">{u.username}</td>
-                    <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">{u.email}</td>
-                    <td className="py-2 pr-2">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          u.is_admin ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"
-                        }`}
-                      >
-                        {u.is_admin ? "管理员" : "用户"}
-                      </span>
-                    </td>
-                    <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.solved_count}</td>
-                    <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">
-                      {new Date(u.created_at).toLocaleDateString()}
+                {usersLoading ? (
+                  <tr>
+                    <td colSpan={9} className="py-4 text-center text-slate-500">
+                      加载中...
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  users.map((u) => (
+                    <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                      <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.id}</td>
+                      <td className="py-2 pr-2">
+                        {u.avatar_url ? (
+                          <img src={u.avatar_url} alt={u.username} className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700" />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                            {u.username[0]?.toUpperCase()}
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-2 pr-2 text-slate-800 dark:text-slate-100">{u.username}</td>
+                      <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">{u.email}</td>
+                      <td className="py-2 pr-2">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${
+                            u.is_admin ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"
+                          }`}
+                        >
+                          {u.is_admin ? "管理员" : "用户"}
+                        </span>
+                      </td>
+                      <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.submission_count}</td>
+                      <td className="py-2 pr-2 text-slate-700 dark:text-slate-200">{u.solved_count}</td>
+                      <td className="py-2 pr-2 text-slate-500 dark:text-slate-400">
+                        {new Date(u.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="py-2 pr-2 text-right">
+                        <button
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-red-50 text-red-600 hover:bg-red-100 border border-red-200"
+                          onClick={async () => {
+                            const ok = window.confirm(
+                              `警告：此操作不可逆！\\n\\n将从数据库中永久删除：\\n1. 用户名：${u.username}\\n2. 注册邮箱：${u.email}\\n3. 该用户的所有提交记录\\n\\n确定要继续吗？`
+                            );
+                            if (!ok) return;
+                            try {
+                              await deleteUser(u.id);
+                              toast.success("删除成功");
+                              loadUsers();
+                            } catch (err: any) {
+                              const msg = err?.response?.data?.detail || "删除失败";
+                              toast.error(msg);
+                            }
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          删除
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

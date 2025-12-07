@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.models.base import get_db
+from app.models.user import User
 from app.schemas.problem import ProblemCreate, ProblemUpdate
 from app.schemas.testcase import TestCaseCreate
 from app.services import problem_service
@@ -51,3 +52,13 @@ def sync_problem(payload: ProblemCreate, db: Session = Depends(get_db)):
 @router.get("/users")
 def list_users(db: Session = Depends(get_db)):
     return problem_service.list_users_with_stats(db)
+
+
+@router.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="用户不存在")
+    db.delete(user)
+    db.commit()
+    return {"message": "User and associated data deleted"}
