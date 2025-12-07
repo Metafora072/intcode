@@ -24,3 +24,9 @@ class User(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    user_codes = relationship(
+        "UserCode",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

@@ -12,6 +12,7 @@ from app.models.base import get_db
 from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
+oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl="/api/auth/token", auto_error=False)
 
 
 def authenticate_user(db: Session, username: str, password: str) -> Optional[User]:
@@ -48,3 +49,22 @@ def get_current_admin(current_user: User = Depends(get_current_user)) -> User:
     if not current_user.is_admin:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="需要管理员权限")
     return current_user
+
+
+def get_current_user_optional(
+    token: Optional[str] = Depends(oauth2_scheme_optional), db: Session = Depends(get_db)
+) -> Optional[User]:
+    if not token:
+        return None
+    try:
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        sub_val = payload.get("sub")
+        user_id: Optional[int] = int(sub_val) if sub_val is not None else None
+        exp: Optional[int] = payload.get("exp")
+        if user_id is None or exp is None:
+            return None
+        if datetime.utcfromtimestamp(exp) < datetime.utcnow():
+            return None
+    except JWTError:
+        return None
+    return db.query(User).filter(User.id == user_id).first()

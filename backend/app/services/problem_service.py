@@ -26,6 +26,7 @@ def list_problems(
     tag: Optional[str] = None,
     limit: int = 20,
     offset: int = 0,
+    user_id: Optional[int] = None,
 ) -> Tuple[List[Problem], int]:
     sub_submit = (
         db.query(Submission.problem_id, func.count(Submission.id).label("submit_total"))
@@ -56,11 +57,21 @@ def list_problems(
         query = query.filter(Problem.tags.ilike(f"%{tag}%"))
     total = query.count()
     rows = query.order_by(Problem.id.asc()).offset(offset).limit(limit).all()
+    solved_ids: set[int] = set()
+    if user_id:
+        solved_ids = {
+            pid
+            for (pid,) in db.query(Submission.problem_id)
+            .filter(Submission.user_id == user_id, Submission.status == "AC")
+            .distinct()
+            .all()
+        }
     items: List[Problem] = []
     for problem, submit_total, ac_total in rows:
         problem.submit_total = submit_total or 0
         problem.ac_total = ac_total or 0
         problem.acceptance_rate = (ac_total / submit_total) if submit_total else 0.0
+        problem.solved = problem.id in solved_ids
         items.append(problem)
     return items, total
 
@@ -190,6 +201,7 @@ def serialize_problem(problem: Problem):
         "submit_total": submit_total,
         "ac_total": ac_total,
         "acceptance_rate": acceptance_rate,
+        "solved": getattr(problem, "solved", False),
         "testcases": [
             {
                 "id": tc.id,

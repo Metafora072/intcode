@@ -22,9 +22,10 @@ export interface Problem {
   created_at: string;
   updated_at: string;
   testcases: TestCase[];
-   acceptance_rate: number;
-   submit_total: number;
-   ac_total: number;
+  acceptance_rate: number;
+  submit_total: number;
+  ac_total: number;
+  solved?: boolean;
 }
 
 export interface SubmissionSummary {

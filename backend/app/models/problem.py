@@ -40,3 +40,6 @@ class Problem(Base):
     submissions: Mapped[List["Submission"]] = relationship(
         "Submission", back_populates="problem", cascade="all, delete-orphan"
     )
+    user_codes: Mapped[List["UserCode"]] = relationship(
+        "UserCode", back_populates="problem", cascade="all, delete-orphan"
+    )

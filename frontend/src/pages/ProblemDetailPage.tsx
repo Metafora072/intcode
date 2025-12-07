@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import { fetchProblem, submitCode } from "../api";
+import { fetchProblem, fetchUserCode, saveUserCode, submitCode } from "../api";
 import { Problem, SubmissionResult } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
 import CodeEditor from "../components/CodeEditor";
@@ -48,9 +48,15 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [viewMode, setViewMode] = useState<"problem" | "result">("problem");
   const [runMode, setRunMode] = useState<"run_sample" | "submit" | "custom">("run_sample");
   const { user } = useAuth();
+  const [codeLoaded, setCodeLoaded] = useState(false);
+  const [lastSaved, setLastSaved] = useState("");
 
   useEffect(() => {
     if (id) {
+      setCodeLoaded(false);
+      setLastSaved("");
+      setLanguage("cpp17");
+      setCode(templates.cpp17);
       fetchProblem(Number(id)).then((data) => {
         setProblem(data);
       });
@@ -58,8 +64,45 @@ const ProblemDetailPage = ({ theme }: Props) => {
   }, [id]);
 
   useEffect(() => {
-    setCode(templates[language]);
-  }, [language]);
+    const loadSaved = async () => {
+      if (!problem || !user) {
+        setCodeLoaded(true);
+        return;
+      }
+      try {
+        const saved = await fetchUserCode(problem.id);
+        if (saved.code) {
+          const lang = saved.language === "python3" ? "python3" : "cpp17";
+          setLanguage(lang);
+          setCode(saved.code);
+          setLastSaved(saved.code);
+        } else {
+          setLastSaved(templates[language]);
+        }
+      } catch {
+        // ignore load error, keep defaults
+      } finally {
+        setCodeLoaded(true);
+      }
+    };
+    loadSaved();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [problem?.id, user]);
+
+  useEffect(() => {
+    if (!user || !problem || !codeLoaded) return;
+    if (code === lastSaved) return;
+    const timer = setTimeout(async () => {
+      try {
+        await saveUserCode(problem.id, { code, language });
+        setLastSaved(code);
+      } catch {
+        // ignore auto-save errors
+      }
+    }, 1200);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code, language, codeLoaded, user, problem?.id]);
 
   const sampleCases = useMemo(() => problem?.testcases.filter((t) => t.is_sample) ?? [], [problem]);
 
@@ -84,6 +127,10 @@ const ProblemDetailPage = ({ theme }: Props) => {
     }
     setLoading(true);
     try {
+      if (user) {
+        await saveUserCode(problem.id, { code, language });
+        setLastSaved(code);
+      }
       const res = await submitCode({
         problem_id: problem.id,
         language,
@@ -108,6 +155,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
       setLoading(false);
     }
   };
+
 
   if (!problem) {
     return <p className="text-sm text-slate-500">加载中...</p>;
@@ -237,7 +285,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
                 <option value="cpp17">C++17</option>
                 <option value="python3">Python 3</option>
               </select>
-              <div className="text-sm text-slate-500 dark:text-slate-300">Ctrl/Cmd+Enter 运行样例</div>
+              <div className="text-sm text-slate-500 dark:text-slate-300">Ctrl/Cmd+Enter 运行样例（自动保存草稿）</div>
               <div className="ml-auto flex gap-2">
                 <button
                   className="btn bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50"

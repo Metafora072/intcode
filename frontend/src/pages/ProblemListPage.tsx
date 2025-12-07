@@ -154,7 +154,11 @@ const ProblemListPage = () => {
                     } hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors`}
                   >
                     <div className="flex items-center gap-4 min-w-0">
-                      <div className="text-slate-400 group-hover:text-indigo-500 transition-colors">
+                      <div
+                        className={`transition-colors ${
+                          p.solved ? "text-emerald-500" : "text-slate-300 group-hover:text-indigo-500"
+                        }`}
+                      >
                         <CheckCircle2 size={18} />
                       </div>
                       <span className="w-8 text-sm font-mono text-slate-400 dark:text-slate-500 text-right shrink-0">

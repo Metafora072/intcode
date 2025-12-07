@@ -122,6 +122,18 @@ export const deleteUser = async (userId: number) => {
   return res.data;
 };
 
+export const fetchUserCode = async (problemId: number) => {
+  const res = await api.get<{ code: string; language: string; updated_at: string | null }>(
+    `/problems/${problemId}/code`
+  );
+  return res.data;
+};
+
+export const saveUserCode = async (problemId: number, payload: { code: string; language: string }) => {
+  const res = await api.put<{ message: string }>(`/problems/${problemId}/code`, payload);
+  return res.data;
+};
+
 export const uploadAvatarApi = async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);

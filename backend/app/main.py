@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.api import admin, auth, problems, submissions, users
-from app.models import base, problem, submission, testcase, user  # noqa: F401
+from app.models import base, problem, submission, testcase, user, user_code  # noqa: F401
 from app.utils.logger import init_logging, logger
 
 app = FastAPI(title="intcode OJ")
