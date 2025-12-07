@@ -10,11 +10,21 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ username?: string; password?: string }>({});
   const [loading, setLoading] = useState(false);
+
+  const validate = () => {
+    const errs: { username?: string; password?: string } = {};
+    if (!username.trim()) errs.username = "请输入用户名";
+    if (!password.trim()) errs.password = "请输入密码";
+    setFieldErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
+    if (!validate()) return;
     setLoading(true);
     try {
       await login(username, password);
@@ -34,34 +44,42 @@ const LoginPage = () => {
       <div className="w-full max-w-md p-8 rounded-2xl bg-white/80 dark:bg-slate-900/80 shadow-lg border border-white/60 dark:border-slate-700/60 backdrop-blur animate-fade-in">
         <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2 text-center">登录</h2>
         <p className="text-sm text-slate-500 dark:text-slate-300 text-center mb-6">欢迎回到 intcode，继续刷题旅程</p>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="relative">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+        <form className="mt-6" onSubmit={handleSubmit}>
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <User className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               placeholder="用户名"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                if (fieldErrors.username) setFieldErrors((prev) => ({ ...prev, username: undefined }));
+              }}
             />
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{fieldErrors.username || ""}</p>
           </div>
-          <div className="relative">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <Lock className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               type="password"
               placeholder="密码"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: undefined }));
+              }}
             />
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{fieldErrors.password || ""}</p>
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
           <button
             type="submit"
-            className="btn w-full bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 rounded-xl py-3"
+            className="btn w-full bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 rounded-xl py-3 mt-2"
             disabled={loading}
           >
             {loading ? "登录中..." : "登录"}

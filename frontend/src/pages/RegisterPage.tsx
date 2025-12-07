@@ -102,63 +102,65 @@ const RegisterPage = () => {
       <div className="w-full max-w-md p-8 rounded-2xl bg-white/80 dark:bg-slate-900/80 shadow-lg border border-white/60 dark:border-slate-700/60 backdrop-blur animate-fade-in">
         <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2 text-center">注册</h2>
         <p className="text-sm text-slate-500 dark:text-slate-300 text-center mb-6">创建账号，解锁你的刷题历程</p>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="relative pb-5">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+        <form className="mt-6" onSubmit={handleSubmit}>
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <User className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               placeholder="用户名"
               value={form.username}
               onChange={(e) => setForm({ ...form, username: e.target.value })}
             />
-            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.username || ""}</p>
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{errors.username || ""}</p>
           </div>
-          <div className="relative pb-5">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <Mail className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               placeholder="邮箱"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
-            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.email || ""}</p>
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{errors.email || ""}</p>
           </div>
-          <div className="relative pb-5">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <Lock className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               type="password"
               placeholder="密码（至少 8 位）"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
-            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.password || ""}</p>
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{errors.password || ""}</p>
           </div>
-          <div className="relative pb-5">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+          <div className="relative mb-10">
+            <span className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center justify-center h-full text-slate-400">
               <Hash className="w-4 h-4" />
             </span>
             <input
-              className="input w-full !pl-12 pr-28 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              className="input w-full !pl-12 pr-28 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80 leading-normal"
               placeholder="验证码"
               value={form.verification_code}
               onChange={(e) => setForm({ ...form, verification_code: e.target.value })}
             />
-            <button
-              type="button"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-9 px-3 text-xs rounded-lg bg-indigo-600 text-white disabled:opacity-60 flex items-center justify-center leading-none"
-              onClick={handleSendCode}
-              disabled={sendingCode || countdown > 0}
-            >
-              {countdown > 0 ? `${countdown}s` : sendingCode ? "发送中..." : "获取验证码"}
-            </button>
-            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.code || ""}</p>
+            <div className="absolute inset-y-0 right-1 flex items-center h-full">
+              <button
+                type="button"
+                className="btn px-3 py-1.5 text-xs rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-60 flex items-center justify-center leading-none"
+                onClick={handleSendCode}
+                disabled={sendingCode || countdown > 0}
+              >
+                {countdown > 0 ? `${countdown}s` : sendingCode ? "发送中..." : "获取验证码"}
+              </button>
+            </div>
+            <p className="absolute -bottom-6 left-0 text-xs text-red-600 leading-none">{errors.code || ""}</p>
           </div>
           <button
             type="submit"
