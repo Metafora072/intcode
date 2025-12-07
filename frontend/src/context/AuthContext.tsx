@@ -7,7 +7,8 @@ interface AuthContextValue {
   token: string | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  register: (payload: { username: string; email: string; password: string }) => Promise<void>;
+  register: (payload: { username: string; email: string; password: string; verification_code: string }) => Promise<void>;
+  refreshProfile: () => Promise<void>;
   logout: () => void;
 }
 
@@ -20,12 +21,14 @@ const AuthContext = createContext<AuthContextValue>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   register: async () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
+  refreshProfile: async () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   logout: () => {}
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(() => window.localStorage.getItem("intcode_token"));
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   const logout = () => {
@@ -64,13 +67,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(res.access_token);
   };
 
-  const register = async (payload: { username: string; email: string; password: string }) => {
+  const register = async (payload: {
+    username: string;
+    email: string;
+    password: string;
+    verification_code: string;
+  }) => {
     await registerApi(payload);
     await login(payload.username, payload.password);
   };
 
+  const refreshProfile = async () => {
+    await loadProfile(token);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, token, loading, login, register, refreshProfile, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

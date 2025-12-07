@@ -92,8 +92,18 @@ export const loginApi = async (username: string, password: string) => {
   return res.data;
 };
 
-export const registerApi = async (payload: { username: string; email: string; password: string }) => {
+export const registerApi = async (payload: {
+  username: string;
+  email: string;
+  password: string;
+  verification_code: string;
+}) => {
   const res = await api.post<User>("/auth/register", payload);
+  return res.data;
+};
+
+export const sendVerificationCode = async (email: string, type: "register" | "reset") => {
+  const res = await api.post<{ message: string }>("/auth/send-code", { email, type });
   return res.data;
 };
 
@@ -104,6 +114,20 @@ export const fetchMe = async () => {
 
 export const fetchUsers = async () => {
   const res = await api.get<UserSummary[]>("/admin/users");
+  return res.data;
+};
+
+export const uploadAvatarApi = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await api.post<{ avatar_url: string }>("/users/avatar", formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return res.data;
+};
+
+export const resetPasswordApi = async (payload: { email: string; code: string; new_password: string }) => {
+  const res = await api.post<{ message: string }>("/users/reset-password", payload);
   return res.data;
 };
 

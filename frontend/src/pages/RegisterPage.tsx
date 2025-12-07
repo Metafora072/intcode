@@ -1,19 +1,70 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import isEmail from "validator/lib/isEmail";
 import { toast } from "react-hot-toast";
-import { User, Lock, Mail } from "lucide-react";
+import { User, Lock, Mail, Hash } from "lucide-react";
+
+import { sendVerificationCode } from "../api";
+import { useAuth } from "../context/AuthContext";
+
+const usernameRegex = /^[a-zA-Z0-9_]+$/;
 
 const RegisterPage = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: "", email: "", password: "" });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({ username: "", email: "", password: "", verification_code: "" });
+  const [errors, setErrors] = useState<{ username?: string; email?: string; password?: string; code?: string }>({});
   const [loading, setLoading] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    if (!countdown) return;
+    const timer = setTimeout(() => setCountdown((v) => v - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  const validateUsername = (val: string) => {
+    if (!val.trim()) return "请输入用户名";
+    if (!usernameRegex.test(val)) return "用户名只能包含字母、数字或下划线";
+    return "";
+  };
+
+  const validateEmail = (val: string) => {
+    if (!val.trim()) return "请输入邮箱";
+    if (!isEmail(val)) return "请输入合法的邮箱地址";
+    return "";
+  };
+
+  const validatePassword = (val: string) => {
+    if (!val.trim()) return "请输入密码";
+    if (val.length < 8) return "密码长度至少 8 位";
+    return "";
+  };
+
+  const validateCode = (val: string) => {
+    if (!val.trim()) return "请输入验证码";
+    if (!/^[0-9]{6}$/.test(val)) return "验证码为 6 位数字";
+    return "";
+  };
+
+  const validateAll = () => {
+    const usernameError = validateUsername(form.username);
+    const emailError = validateEmail(form.email);
+    const passwordError = validatePassword(form.password);
+    const codeError = validateCode(form.verification_code);
+    setErrors({
+      username: usernameError || undefined,
+      email: emailError || undefined,
+      password: passwordError || undefined,
+      code: codeError || undefined
+    });
+    return !(usernameError || emailError || passwordError || codeError);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
+    if (!validateAll()) return;
     setLoading(true);
     try {
       await register(form);
@@ -21,10 +72,28 @@ const RegisterPage = () => {
       setTimeout(() => navigate("/"), 800);
     } catch (err: any) {
       const msg = err?.response?.data?.detail || "注册失败";
-      setError(msg);
       toast.error(msg);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSendCode = async () => {
+    const emailError = validateEmail(form.email);
+    if (emailError) {
+      setErrors((prev) => ({ ...prev, email: emailError }));
+      return;
+    }
+    setSendingCode(true);
+    try {
+      await sendVerificationCode(form.email, "register");
+      toast.success("验证码已发送，请查看邮箱或控制台");
+      setCountdown(60);
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || "发送验证码失败";
+      toast.error(msg);
+    } finally {
+      setSendingCode(false);
     }
   };
 
@@ -34,7 +103,7 @@ const RegisterPage = () => {
         <h2 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2 text-center">注册</h2>
         <p className="text-sm text-slate-500 dark:text-slate-300 text-center mb-6">创建账号，解锁你的刷题历程</p>
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="relative">
+          <div className="relative pb-5">
             <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
               <User className="w-4 h-4" />
             </span>
@@ -44,8 +113,9 @@ const RegisterPage = () => {
               value={form.username}
               onChange={(e) => setForm({ ...form, username: e.target.value })}
             />
+            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.username || ""}</p>
           </div>
-          <div className="relative">
+          <div className="relative pb-5">
             <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
               <Mail className="w-4 h-4" />
             </span>
@@ -55,20 +125,41 @@ const RegisterPage = () => {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
+            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.email || ""}</p>
           </div>
-          <div className="relative">
+          <div className="relative pb-5">
             <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
               <Lock className="w-4 h-4" />
             </span>
             <input
               className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
               type="password"
-              placeholder="密码"
+              placeholder="密码（至少 8 位）"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
+            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.password || ""}</p>
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          <div className="relative pb-5">
+            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+              <Hash className="w-4 h-4" />
+            </span>
+            <input
+              className="input w-full !pl-12 pr-28 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+              placeholder="验证码"
+              value={form.verification_code}
+              onChange={(e) => setForm({ ...form, verification_code: e.target.value })}
+            />
+            <button
+              type="button"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-9 px-3 text-xs rounded-lg bg-indigo-600 text-white disabled:opacity-60 flex items-center justify-center leading-none"
+              onClick={handleSendCode}
+              disabled={sendingCode || countdown > 0}
+            >
+              {countdown > 0 ? `${countdown}s` : sendingCode ? "发送中..." : "获取验证码"}
+            </button>
+            <p className="text-xs text-red-600 mt-1 absolute left-0 -bottom-1 leading-none">{errors.code || ""}</p>
+          </div>
           <button
             type="submit"
             className="btn w-full bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 rounded-xl py-3"

@@ -1,7 +1,9 @@
 from datetime import timedelta
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
 
 from app.api import deps
@@ -10,20 +12,43 @@ from app.core.security import create_access_token, get_password_hash
 from app.models.base import get_db
 from app.models.user import User
 from app.schemas.user import Token, UserCreate, UserOut
+from app.services import email_service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+class SendCodePayload(BaseModel):
+    email: EmailStr
+    type: Literal["register", "reset"]
+
+
+@router.post("/send-code")
+async def send_code(payload: SendCodePayload, db: Session = Depends(get_db)):
+    existing_user = db.query(User).filter(User.email == payload.email).first()
+    if payload.type == "register" and existing_user:
+        raise HTTPException(status_code=400, detail="该邮箱已被注册")
+    if payload.type == "reset" and not existing_user:
+        raise HTTPException(status_code=404, detail="用户不存在")
+    code = email_service.generate_code()
+    email_service.verification_store.set_code(payload.email, code)
+    try:
+        await email_service.send_verification_code(payload.email, code)
+    except Exception:
+        raise HTTPException(status_code=500, detail="邮件发送失败，请检查邮箱地址或稍后重试")
+    return {"message": "验证码已发送"}
 
 
 @router.post("/register", response_model=UserOut)
 def register_user(payload: UserCreate, db: Session = Depends(get_db)):
     if db.query(User).filter(User.username == payload.username).first():
-        raise HTTPException(status_code=400, detail="用户名已存在")
-    email_to_use = payload.email or f"{payload.username}@example.com"
-    if db.query(User).filter(User.email == email_to_use).first():
-        raise HTTPException(status_code=400, detail="邮箱已注册")
+        raise HTTPException(status_code=400, detail="该用户名已被占用")
+    if db.query(User).filter(User.email == payload.email).first():
+        raise HTTPException(status_code=400, detail="该邮箱已被注册")
+    if not email_service.verification_store.verify_code(payload.email, payload.verification_code):
+        raise HTTPException(status_code=400, detail="验证码错误或已过期")
     user = User(
         username=payload.username,
-        email=email_to_use,
+        email=payload.email,
         hashed_password=get_password_hash(payload.password),
         is_admin=False,
     )

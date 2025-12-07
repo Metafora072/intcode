@@ -1,17 +1,27 @@
 from datetime import datetime
 from typing import Optional, List
+import re
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 class UserBase(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     avatar_url: Optional[str] = None
 
 
 class UserCreate(UserBase):
-    password: str
+    password: str = Field(min_length=8)
+    verification_code: str
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value: str) -> str:
+        """用户名仅允许字母、数字与下划线."""
+        if not re.match(r"^[a-zA-Z0-9_]+$", value):
+            raise ValueError("用户名只能包含字母、数字或下划线")
+        return value
 
 
 class UserLogin(BaseModel):

@@ -1,7 +1,11 @@
-import { useMemo } from "react";
-import { useAuth } from "../context/AuthContext";
-import { BarChart3, Award, CheckCircle, Activity } from "lucide-react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import { format } from "date-fns";
+import { BarChart3, Award, CheckCircle, Activity, Edit3, Upload, Lock, Hash } from "lucide-react";
+
+import { resetPasswordApi, sendVerificationCode, uploadAvatarApi } from "../api";
+import AvatarCropModal from "../components/AvatarCropModal";
+import { useAuth } from "../context/AuthContext";
 
 const getAvatar = (avatarUrl?: string | null, username?: string) => {
   if (avatarUrl) return avatarUrl;
@@ -11,19 +15,122 @@ const getAvatar = (avatarUrl?: string | null, username?: string) => {
 };
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+  const { user, refreshProfile } = useAuth();
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [resetForm, setResetForm] = useState({ code: "", newPassword: "" });
+  const [resetErrors, setResetErrors] = useState<{ code?: string; password?: string }>({});
+  const [resetSending, setResetSending] = useState(false);
+  const [resetCountdown, setResetCountdown] = useState(0);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const avatar = useMemo(() => getAvatar(user?.avatar_url, user?.username), [user]);
   const acceptance = user ? Math.round(user.acceptance_rate * 100) : 0;
+
+  useEffect(() => {
+    if (!resetCountdown) return;
+    const timer = setTimeout(() => setResetCountdown((v) => v - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [resetCountdown]);
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   if (!user) {
     return <p className="text-sm text-slate-600">请登录后查看个人主页。</p>;
   }
 
+  const handlePickAvatar = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setAvatarFile(file);
+    setPreview(url);
+  };
+
+  const handleAvatarConfirm = async (blob: Blob) => {
+    if (!blob) return;
+    setAvatarUploading(true);
+    try {
+      const uploadFile = new File([blob], avatarFile?.name || "avatar.png", {
+        type: blob.type || avatarFile?.type || "image/png"
+      });
+      await uploadAvatarApi(uploadFile);
+      toast.success("头像已更新");
+      await refreshProfile();
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || "上传头像失败";
+      toast.error(msg);
+    } finally {
+      setAvatarUploading(false);
+      setPreview(null);
+      setAvatarFile(null);
+    }
+  };
+
+  const validateReset = () => {
+    const errors: { code?: string; password?: string } = {};
+    if (!resetForm.code.trim()) errors.code = "请输入验证码";
+    if (resetForm.code && !/^[0-9]{6}$/.test(resetForm.code)) errors.code = "验证码应为 6 位数字";
+    if (!resetForm.newPassword.trim()) errors.password = "请输入新密码";
+    if (resetForm.newPassword.length > 0 && resetForm.newPassword.length < 8) errors.password = "密码长度至少 8 位";
+    setResetErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSendResetCode = async () => {
+    setResetSending(true);
+    try {
+      await sendVerificationCode(user.email, "reset");
+      toast.success("验证码已发送到邮箱");
+      setResetCountdown(60);
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || "发送验证码失败";
+      toast.error(msg);
+    } finally {
+      setResetSending(false);
+    }
+  };
+
+  const handleResetPassword = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!validateReset()) return;
+    try {
+      await resetPasswordApi({ email: user.email, code: resetForm.code, new_password: resetForm.newPassword });
+      toast.success("密码已重置，请使用新密码登录");
+      setResetForm({ code: "", newPassword: "" });
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || "重置密码失败";
+      toast.error(msg);
+    }
+  };
+
   return (
     <div className="space-y-4 animate-fade-in">
       <div className="card p-5 flex flex-col md:flex-row md:items-center gap-4">
-        <img src={avatar} alt="avatar" className="w-20 h-20 rounded-2xl border border-slate-200 dark:border-slate-700" />
+        <div className="relative w-20 h-20">
+          <img
+            src={avatar}
+            alt="avatar"
+            className="w-20 h-20 rounded-2xl border border-slate-200 dark:border-slate-700 object-cover"
+          />
+          <button
+            type="button"
+            onClick={handlePickAvatar}
+            className="absolute inset-0 bg-black/50 text-white text-xs opacity-0 hover:opacity-100 rounded-2xl flex items-center justify-center gap-1 transition"
+          >
+            <Edit3 className="w-4 h-4" /> 编辑
+          </button>
+          <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+        </div>
         <div className="flex-1">
           <h2 className="text-2xl font-semibold text-slate-800 dark:text-white">{user.username}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-300">{user.email}</p>
@@ -95,16 +202,76 @@ const ProfilePage = () => {
             )}
           </div>
         </div>
-        <div className="card p-4">
-          <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-3">设置</h3>
-          <div className="space-y-2 text-sm text-slate-600 dark:text-slate-200">
-            <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <p className="font-semibold mb-1">修改密码</p>
-              <p className="text-xs text-slate-500">暂未开放，敬请期待</p>
+        <form className="card p-4 space-y-3" onSubmit={handleResetPassword}>
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-1">修改密码</h3>
+          <div className="text-xs text-slate-500 dark:text-slate-400">邮箱验证码验证后可重置密码</div>
+          <div className="space-y-2">
+            <label className="text-xs text-slate-500 dark:text-slate-400">邮箱</label>
+            <div className="relative">
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+                <Upload className="w-4 h-4" />
+              </span>
+              <input
+                disabled
+                value={user.email}
+                className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 text-slate-500"
+              />
             </div>
           </div>
-        </div>
+          <div className="space-y-2">
+            <label className="text-xs text-slate-500 dark:text-slate-400">验证码</label>
+            <div className="relative">
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+                <Hash className="w-4 h-4" />
+              </span>
+              <input
+                className="input w-full !pl-12 pr-28 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+                placeholder="邮箱验证码"
+                value={resetForm.code}
+                onChange={(e) => setResetForm((prev) => ({ ...prev, code: e.target.value }))}
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-2 text-xs rounded-lg bg-indigo-600 text-white disabled:opacity-60"
+                onClick={handleSendResetCode}
+                disabled={resetSending || resetCountdown > 0}
+              >
+                {resetCountdown > 0 ? `${resetCountdown}s` : resetSending ? "发送中..." : "获取验证码"}
+              </button>
+            </div>
+            {resetErrors.code && <p className="text-xs text-red-600">{resetErrors.code}</p>}
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs text-slate-500 dark:text-slate-400">新密码</label>
+            <div className="relative">
+              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+                <Lock className="w-4 h-4" />
+              </span>
+              <input
+                className="input w-full !pl-12 pr-3 py-3 rounded-xl bg-white/70 dark:bg-slate-800/80"
+                type="password"
+                placeholder="至少 8 位"
+                value={resetForm.newPassword}
+                onChange={(e) => setResetForm((prev) => ({ ...prev, newPassword: e.target.value }))}
+              />
+            </div>
+            {resetErrors.password && <p className="text-xs text-red-600">{resetErrors.password}</p>}
+          </div>
+          <button type="submit" className="btn w-full bg-indigo-600 text-white hover:bg-indigo-500 rounded-xl py-3">
+            保存密码
+          </button>
+        </form>
       </div>
+      <AvatarCropModal
+        isOpen={!!preview}
+        imageSrc={preview}
+        loading={avatarUploading}
+        onClose={() => {
+          setPreview(null);
+          setAvatarFile(null);
+        }}
+        onConfirm={handleAvatarConfirm}
+      />
     </div>
   );
 };

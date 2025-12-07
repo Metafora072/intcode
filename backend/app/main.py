@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
+from app.config import settings
 from app.api import admin, auth, problems, submissions, users
 from app.models import base, problem, submission, testcase, user  # noqa: F401
 from app.utils.logger import init_logging, logger
@@ -15,11 +17,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+settings.uploads_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(settings.uploads_dir)), name="uploads")
+
 
 @app.on_event("startup")
 def on_startup():
     init_logging()
     logger.info("启动服务，初始化数据库...")
+    settings.uploads_dir.mkdir(parents=True, exist_ok=True)
     base.Base.metadata.create_all(bind=base.engine)
 
 
