@@ -6,16 +6,16 @@
     "设计",
     "树"
   ],
-  "content": "需要设计算法将二叉树序列化为字符串，并能从字符串还原回原树。为方便评测，本题输入给出一棵树的层序表示，要求你输出该树在经过「序列化→反序列化」后的层序序列，以验证功能正确性。层序中使用 \"null\" 表示缺失子节点，末尾多余的 null 可以省略；空树用空序列表示。",
-  "input_description": "第一行输入整数 m，表示层序序列长度（包含 null 占位）。第二行输入 m 个以空格分隔的字符串，为节点值或 \"null\"。若 m=0，则第二行可以为空行。",
-  "output_description": "输出反序列化后得到的二叉树的层序遍历，节点值与 \"null\" 之间以空格分隔，末尾可去除多余连续的 null，行尾换行。空树输出空行。",
+  "content": "需要设计算法将二叉树序列化为字符串，并能从字符串还原回原树。为方便评测，本题输入给出一棵树的层序表示，要求你输出该树在经过「序列化→反序列化」后的层序序列，以验证功能正确性。层序中使用 -1 表示缺失子节点，末尾多余的 -1 可以省略；空树用空序列表示。",
+  "input_description": "第一行输入整数 m，表示层序序列长度（包含 -1 占位）。第二行输入 m 个以空格分隔的字符串，为节点值或 -1。若 m=0，则第二行可以为空行。",
+  "output_description": "输出反序列化后得到的二叉树的层序遍历，节点值与 -1 之间以空格分隔，末尾可去除多余连续的 -1，行尾换行。空树输出空行。",
   "constraints": "$0 \\le m \\le 2000$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "7\n1 2 3 null null 4 5\n",
-      "output_text": "1 2 3 null null 4 5\n",
+      "input_text": "7\n1 2 3 -1 -1 4 5\n",
+      "output_text": "1 2 3 -1 -1 4 5\n",
       "is_sample": true
     },
     {
@@ -34,8 +34,8 @@
       "is_sample": false
     },
     {
-      "input_text": "3\n1 null 2\n",
-      "output_text": "1 null 2\n",
+      "input_text": "3\n1 -1 2\n",
+      "output_text": "1 -1 2\n",
       "is_sample": false
     },
     {
@@ -44,72 +44,72 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 null 4\n",
-      "output_text": "1 2 3 null 4\n",
+      "input_text": "5\n1 2 3 -1 4\n",
+      "output_text": "1 2 3 -1 4\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 null 2 null 3\n",
-      "output_text": "1 null 2 null 3\n",
+      "input_text": "5\n1 -1 2 -1 3\n",
+      "output_text": "1 -1 2 -1 3\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n-1 -2 -3 null -4 -5\n",
-      "output_text": "-1 -2 -3 null -4 -5\n",
+      "input_text": "6\n2 3 4 -1 5 6\n",
+      "output_text": "2 3 4 -1 5 6\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n5 4 8 11 null 13 4\n",
-      "output_text": "5 4 8 11 null 13 4\n",
+      "input_text": "7\n5 4 8 11 -1 13 4\n",
+      "output_text": "5 4 8 11 -1 13 4\n",
       "is_sample": false
     },
     {
-      "input_text": "4\n1 null null 2\n",
-      "output_text": "1 null null 2\n",
+      "input_text": "4\n1 -1 -1 2\n",
+      "output_text": "1 -1 -1 2\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n-2147483648 null 2147483647\n",
-      "output_text": "-2147483648 null 2147483647\n",
+      "input_text": "3\n2147483649 -1 2147483647\n",
+      "output_text": "2147483649 -1 2147483647\n",
       "is_sample": false
     },
     {
-      "input_text": "2\n1 null\n",
-      "output_text": "1 null\n",
+      "input_text": "2\n1 -1\n",
+      "output_text": "1 -1\n",
       "is_sample": false
     },
     {
-      "input_text": "2\nnull 1\n",
+      "input_text": "2\n-1 1\n",
       "output_text": "\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n1 2 3 4 null null 5\n",
-      "output_text": "1 2 3 4 null null 5\n",
+      "input_text": "7\n1 2 3 4 -1 -1 5\n",
+      "output_text": "1 2 3 4 -1 -1 5\n",
       "is_sample": false
     },
     {
-      "input_text": "6\n1 null 2 3 null 4\n",
-      "output_text": "1 null 2 3 null 4\n",
+      "input_text": "6\n1 -1 2 3 -1 4\n",
+      "output_text": "1 -1 2 3 -1 4\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n3 9 20 null null 15 7\n",
-      "output_text": "3 9 20 null null 15 7\n",
+      "input_text": "7\n3 9 20 -1 -1 15 7\n",
+      "output_text": "3 9 20 -1 -1 15 7\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n1 2 null\n",
-      "output_text": "1 2 null\n",
+      "input_text": "3\n1 2 -1\n",
+      "output_text": "1 2 -1\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n1 null null\n",
+      "input_text": "3\n1 -1 -1\n",
       "output_text": "1\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 null null\n",
+      "input_text": "5\n1 2 3 -1 -1\n",
       "output_text": "1 2 3\n",
       "is_sample": false
     }

@@ -7,8 +7,8 @@
     "DFS"
   ],
   "content": "给定一棵二叉搜索树（BST），将其中每个节点的值替换为原树中所有大于等于该节点值的节点值之和，得到一棵新的累加树。返回转换后树的层序表示。空树直接输出空行。",
-  "input_description": "第一行整数 m，表示层序数组长度；第二行 m 个字符串为层序序列，元素为整数或 \"null\"，\"null\" 表示该位置为空。",
-  "output_description": "输出转换后的树的层序序列，节点间空格分隔，空指针用 \"null\" 表示；行尾换行。空树输出空行。",
+  "input_description": "第一行整数 m，表示层序数组长度；第二行 m 个字符串为层序序列，元素为整数或 -1，-1 表示该位置为空。",
+  "output_description": "输出转换后的树的层序序列，节点间空格分隔，空指针用 -1 表示；行尾换行。空树输出空行。",
   "constraints": "$0 \\le m \\le 2000$，节点值绝对值不超过 $10^{9}$，输入保证满足 BST 性质。",
   "is_spj": false,
   "spj_code": null,
@@ -19,8 +19,8 @@
       "is_sample": true
     },
     {
-      "input_text": "7\n5 2 13 1 3 null 15\n",
-      "output_text": "33 38 28 39 36 null 15\n",
+      "input_text": "7\n5 2 13 1 3 -1 15\n",
+      "output_text": "33 38 28 39 36 -1 15\n",
       "is_sample": true
     },
     {
@@ -34,18 +34,18 @@
       "is_sample": false
     },
     {
-      "input_text": "15\n4 1 6 0 2 5 7 null null null 3 null null 6 8\n",
-      "output_text": "36 42 27 42 41 32 15 null null null 39 null null 21 8\n",
+      "input_text": "15\n4 1 6 1 2 5 7 -1 -1 -1 3 -1 -1 6 8\n",
+      "output_text": "36 42 27 43 41 32 15 -1 -1 -1 39 -1 -1 21 8\n",
       "is_sample": false
     },
     {
-      "input_text": "3\n0 null 1\n",
-      "output_text": "1 null 1\n",
+      "input_text": "3\n1 -1 1\n",
+      "output_text": "2 -1 1\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 null 2 null 3\n",
-      "output_text": "3 null 2\n",
+      "input_text": "5\n1 -1 2 -1 3\n",
+      "output_text": "6 -1 5 -1 3\n",
       "is_sample": false
     },
     {
@@ -54,8 +54,8 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n2 0 3 -4 1\n",
-      "output_text": "5 6 3 2 6\n",
+      "input_text": "5\n2 1 3 5 1\n",
+      "output_text": "5 7 3 12 6\n",
       "is_sample": false
     },
     {
@@ -64,18 +64,18 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n5 3 6 2 4 null 7\n",
-      "output_text": "18 25 13 27 22 null 7\n",
+      "input_text": "7\n5 3 6 2 4 -1 7\n",
+      "output_text": "18 25 13 27 22 -1 7\n",
       "is_sample": false
     },
     {
-      "input_text": "11\n3 1 6 0 2 5 7 null null null 3\n",
-      "output_text": "21 27 13 27 26 18 7 null null null 24\n",
+      "input_text": "11\n3 1 6 1 2 5 7 -1 -1 -1 3\n",
+      "output_text": "21 27 13 28 26 18 7 -1 -1 -1 24\n",
       "is_sample": false
     },
     {
-      "input_text": "12\n8 3 10 1 6 null 14 null null 4 7 13\n",
-      "output_text": "32 52 24 53 45 null 14 null null 49 39\n",
+      "input_text": "12\n8 3 10 1 6 -1 14 -1 -1 4 7 13\n",
+      "output_text": "45 65 37 66 58 -1 14 -1 -1 62 52 27\n",
       "is_sample": false
     },
     {
@@ -89,13 +89,13 @@
       "is_sample": false
     },
     {
-      "input_text": "11\n6 2 8 0 4 7 9 null null 3 5\n",
-      "output_text": "30 44 17 44 39 24 9 null null 42 35\n",
+      "input_text": "11\n6 2 8 1 4 7 9 -1 -1 3 5\n",
+      "output_text": "30 44 17 45 39 24 9 -1 -1 42 35\n",
       "is_sample": false
     },
     {
-      "input_text": "4\n1 null 2 3\n",
-      "output_text": "3 null 2\n",
+      "input_text": "4\n1 -1 2 3\n",
+      "output_text": "6 -1 2 5\n",
       "is_sample": false
     },
     {

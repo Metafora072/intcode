@@ -6,8 +6,8 @@
     "树",
     "递归"
   ],
-  "content": "给定一棵二叉树，判断它是否是合法的二叉搜索树（BST）：左子树所有节点值均严格小于根节点，右子树所有节点值均严格大于根节点，且左右子树本身也必须是 BST。输入为层序序列，使用 \"null\" 表示空子节点，节点值可能为负数或极值。空树视为合法 BST。",
-  "input_description": "第一行输入整数 m，表示层序序列长度（包含 null 占位）。第二行输入 m 个以空格分隔的字符串，依次为节点值或 \"null\"。若 m=0，可为空树。",
+  "content": "给定一棵二叉树，判断它是否是合法的二叉搜索树（BST）：左子树所有节点值均严格小于根节点，右子树所有节点值均严格大于根节点，且左右子树本身也必须是 BST。输入为层序序列，使用 -1 表示空子节点，节点值为正整数或极值。空树视为合法 BST。",
+  "input_description": "第一行输入整数 m，表示层序序列长度（包含 -1 占位）。第二行输入 m 个以空格分隔的字符串，依次为节点值或 -1。若 m=0，可为空树。",
   "output_description": "若为合法 BST 输出 \"true\"，否则输出 \"false\"，行尾换行。",
   "constraints": "$0 \\le m \\le 2000$，节点值为 32 位有符号整数。",
   "is_spj": false,
@@ -19,7 +19,7 @@
       "is_sample": true
     },
     {
-      "input_text": "7\n5 1 4 null null 3 6\n",
+      "input_text": "7\n5 1 4 -1 -1 3 6\n",
       "output_text": "false\n",
       "is_sample": true
     },
@@ -34,12 +34,12 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n10 5 15 null null 6 20\n",
+      "input_text": "7\n10 5 15 -1 -1 6 20\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n10 5 15 null null 10 20\n",
+      "input_text": "7\n10 5 15 -1 -1 10 20\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -54,17 +54,17 @@
       "is_sample": false
     },
     {
-      "input_text": "2\n2147483646 null 2147483647\n",
+      "input_text": "3\n2147483646 -1 2147483647\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n3 1 5 0 2 4 6\n",
-      "output_text": "true\n",
+      "input_text": "7\n3 1 5 1 2 4 6\n",
+      "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n3 1 5 0 4 2 6\n",
+      "input_text": "7\n3 1 5 1 4 2 6\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -79,33 +79,33 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n5 4 6 null null 3 7\n",
+      "input_text": "7\n5 4 6 -1 -1 3 7\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n5 4 6 null null 5 7\n",
+      "input_text": "7\n5 4 6 -1 -1 5 7\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "13\n8 3 10 1 6 null 14 null null 4 7 13\n",
+      "input_text": "12\n8 3 10 1 6 -1 14 -1 -1 4 7 13\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "13\n8 3 10 1 6 null 14 null null 4 7 15\n",
+      "input_text": "12\n8 3 10 1 6 -1 14 -1 -1 4 7 15\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "2\n0 -1\n",
-      "output_text": "true\n",
+      "input_text": "2\n1 2\n",
+      "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "2\n0 null 1\n",
-      "output_text": "true\n",
+      "input_text": "3\n1 -1 1\n",
+      "output_text": "false\n",
       "is_sample": false
     },
     {

@@ -6,20 +6,20 @@
     "树",
     "DFS"
   ],
-  "content": "给定两棵二叉树 s 和 t，判断 t 是否为 s 的子树。要求 s 中存在某个节点，其子树结构与节点值与 t 完全一致。树以层序方式给出，使用 \"null\" 表示缺失子节点，节点值可能为负数，空树允许存在。",
-  "input_description": "第一行输入整数 m1，第二行输入 m1 个以空格分隔的字符串表示树 s 的层序遍历（节点值或 \"null\"）。第三行输入整数 m2，第四行输入 m2 个字符串表示树 t 的层序遍历。若某棵树为空，可令长度为 0 并使用空行表示序列。",
+  "content": "给定两棵二叉树 s 和 t，判断 t 是否为 s 的子树。要求 s 中存在某个节点，其子树结构与节点值与 t 完全一致。树以层序方式给出，使用 -1 表示缺失子节点，节点值为正整数，空树允许存在。",
+  "input_description": "第一行输入整数 m1，第二行输入 m1 个以空格分隔的字符串表示树 s 的层序遍历（节点值或 -1）。第三行输入整数 m2，第四行输入 m2 个字符串表示树 t 的层序遍历。若某棵树为空，可令长度为 0 并使用空行表示序列。",
   "output_description": "若 t 是 s 的子树输出 \"true\"，否则输出 \"false\"，行尾换行。",
   "constraints": "$0 \\le m1,m2 \\le 2000$，节点值为 32 位有符号整数。",
   "is_spj": false,
   "spj_code": null,
   "testcases": [
     {
-      "input_text": "7\n3 4 5 1 2 null null\n3\n4 1 2\n",
+      "input_text": "7\n3 4 5 1 2 -1 -1\n3\n4 1 2\n",
       "output_text": "true\n",
       "is_sample": true
     },
     {
-      "input_text": "7\n3 4 5 1 2 null null null null 0\n3\n4 1 2\n",
+      "input_text": "10\n3 4 5 1 2 -1 -1 -1 -1 1\n3\n4 1 2\n",
       "output_text": "false\n",
       "is_sample": true
     },
@@ -54,12 +54,12 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n-1 -2 -3 -4 -5 -6 -7\n3\n-2 -4 -5\n",
+      "input_text": "7\n2 3 4 5 6 7 8\n3\n3 5 6\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n-1 -2 -3 -4 -5 -6 -7\n3\n-2 -4 -6\n",
+      "input_text": "7\n2 3 4 5 6 7 8\n3\n3 5 7\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -79,12 +79,12 @@
       "is_sample": false
     },
     {
-      "input_text": "5\n4 5 6 null null 1 2\n3\n1 2\n",
+      "input_text": "7\n4 5 6 -1 -1 1 2\n2\n1 2\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n4 5 6 null null 1 2\n3\n1 3\n",
+      "input_text": "7\n4 5 6 -1 -1 1 2\n2\n1 3\n",
       "output_text": "false\n",
       "is_sample": false
     },
@@ -94,22 +94,22 @@
       "is_sample": false
     },
     {
-      "input_text": "7\n3 3 3 3 3 3 3\n3\n3 3 null\n",
+      "input_text": "7\n3 3 3 3 3 3 3\n3\n3 3 -1\n",
       "output_text": "false\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 4 5\n3\n4 5 null\n",
+      "input_text": "5\n1 2 3 4 5\n3\n4 5 -1\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "5\n1 2 3 4 5\n3\n5 null null\n",
+      "input_text": "5\n1 2 3 4 5\n3\n5 -1 -1\n",
       "output_text": "true\n",
       "is_sample": false
     },
     {
-      "input_text": "7\n1 2 3 4 5 6 7\n3\n7 null null\n",
+      "input_text": "7\n1 2 3 4 5 6 7\n3\n7 -1 -1\n",
       "output_text": "true\n",
       "is_sample": false
     }
