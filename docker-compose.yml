@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend/data:/app/data
     ports:
-      - "8000:8000"
+      - "18000:8000"
 
   frontend:
     build: ./frontend
@@ -17,4 +17,4 @@ services:
     depends_on:
       - backend
     ports:
-      - "80:80"
+      - "3716:80"
