@@ -31,9 +31,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     try:
         payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
         sub_val = payload.get("sub")
+        token_type = payload.get("token_type")
         user_id: Optional[int] = int(sub_val) if sub_val is not None else None
         exp: Optional[int] = payload.get("exp")
-        if user_id is None or exp is None:
+        if user_id is None or exp is None or token_type != "access":
             raise credentials_exception
         if datetime.utcfromtimestamp(exp) < datetime.utcnow():
             raise credentials_exception
@@ -59,9 +60,10 @@ def get_current_user_optional(
     try:
         payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
         sub_val = payload.get("sub")
+        token_type = payload.get("token_type")
         user_id: Optional[int] = int(sub_val) if sub_val is not None else None
         exp: Optional[int] = payload.get("exp")
-        if user_id is None or exp is None:
+        if user_id is None or exp is None or token_type != "access":
             return None
         if datetime.utcfromtimestamp(exp) < datetime.utcnow():
             return None

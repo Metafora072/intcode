@@ -1,12 +1,64 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { Problem, SubmissionResult, SubmissionSummary, UserProfile, User, UserSummary } from "../types";
 
+type RetriableRequestConfig = AxiosRequestConfig & { _retry?: boolean };
+
+let accessToken: string | null = window.localStorage.getItem("intcode_token");
+const tokenListeners: Array<(token: string | null) => void> = [];
+
+export const getAccessToken = () => accessToken;
+
+export const setAccessToken = (token: string | null) => {
+  accessToken = token;
+  if (token) {
+    window.localStorage.setItem("intcode_token", token);
+  } else {
+    window.localStorage.removeItem("intcode_token");
+  }
+  tokenListeners.forEach((listener) => listener(token));
+};
+
+export const onTokenChange = (listener: (token: string | null) => void) => {
+  tokenListeners.push(listener);
+  return () => {
+    const idx = tokenListeners.indexOf(listener);
+    if (idx >= 0) {
+      tokenListeners.splice(idx, 1);
+    }
+  };
+};
+
 const api = axios.create({
-  baseURL: "/api"
+  baseURL: "/api",
+  withCredentials: true
 });
 
+const shouldSkipRefresh = (url?: string) =>
+  url?.includes("/auth/token") ||
+  url?.includes("/auth/refresh") ||
+  url?.includes("/auth/send-code") ||
+  url?.includes("/auth/logout");
+
+const forceLogout = () => {
+  setAccessToken(null);
+  window.dispatchEvent(new CustomEvent("intcode_logout", { detail: { reason: "expired" } }));
+};
+
+let refreshPromise: Promise<string> | null = null;
+
+const refreshAccessToken = async () => {
+  try {
+    const res = await api.post<{ access_token: string; token_type: string }>("/auth/refresh");
+    setAccessToken(res.data.access_token);
+    return res.data.access_token;
+  } catch (err) {
+    forceLogout();
+    throw err;
+  }
+};
+
 api.interceptors.request.use((config) => {
-  const token = window.localStorage.getItem("intcode_token");
+  const token = getAccessToken();
   if (token) {
     config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
@@ -15,11 +67,25 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (resp) => resp,
-  (error) => {
-    if (error.response?.status === 401) {
-      window.localStorage.removeItem("intcode_token");
-      window.dispatchEvent(new Event("intcode_logout"));
+  (resp: AxiosResponse) => resp,
+  async (error: AxiosError) => {
+    const status = error.response?.status;
+    const originalRequest = error.config as RetriableRequestConfig;
+    if (status === 401 && originalRequest && !originalRequest._retry && !shouldSkipRefresh(originalRequest.url)) {
+      if (!refreshPromise) {
+        refreshPromise = refreshAccessToken();
+      }
+      try {
+        const newToken = await refreshPromise;
+        originalRequest._retry = true;
+        originalRequest.headers = originalRequest.headers || {};
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
+      } catch (refreshErr) {
+        return Promise.reject(refreshErr);
+      } finally {
+        refreshPromise = null;
+      }
     }
     return Promise.reject(error);
   }
@@ -99,6 +165,11 @@ export const registerApi = async (payload: {
   verification_code: string;
 }) => {
   const res = await api.post<User>("/auth/register", payload);
+  return res.data;
+};
+
+export const logoutApi = async () => {
+  const res = await api.post<{ message: string }>("/auth/logout");
   return res.data;
 };
 

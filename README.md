@@ -53,7 +53,7 @@ docs/               # 架构与 API 文档
 - 在线编辑器（Monaco）：支持 C++17 / Python 3 模板，运行样例与提交评测。
 - 评测反馈：编译/运行错误提示、逐用例结果、耗时统计。
 - 提交记录：登录后按用户查看个人提交，管理员可查看全部。
-- 用户体系：注册/登录（JWT），管理员权限控制后台路由。
+- 用户体系：注册/登录（JWT），管理员权限控制后台路由；access token + refresh token 自动续期与登出失效。
 - 题目管理：创建题目、添加/管理测试用例（管理员）。
 
 ## 后端说明
@@ -75,6 +75,21 @@ docs/               # 架构与 API 文档
 
 - `scripts/init_db.py`：创建表并插入 Two Sum 示例题目与用例。
 - `scripts/dev_start.sh`：示例一键启动脚本（含依赖安装），可按需使用。
+
+## 认证与登录态
+
+- Access Token：默认 60 分钟过期，可通过环境变量 `INTCODE_ACCESS_TOKEN_EXPIRE_MINUTES` 配置，JWT `sub`/`token_type=access`。
+- Refresh Token：默认 14 天过期，可通过 `INTCODE_REFRESH_TOKEN_EXPIRE_DAYS` 配置；HttpOnly Cookie `refresh_token` 下发，默认 SameSite=Lax，`INTCODE_COOKIE_SECURE` 控制是否仅限 HTTPS。
+- 服务端 `refresh_tokens` 表只保存 refresh token 的 SHA256 摘要，刷新会轮换：`/auth/refresh` 校验签名 + 摘要 + 过期 + revoked 状态，通过后生成新 access/refresh，旧 token 标记 revoked。
+- 登出：`/auth/logout` 会清理 Cookie 并将当前 refresh token 标记失效。
+- CORS/凭证：如前后端不同源，需设置 `INTCODE_CORS_ORIGINS`（逗号分隔）并保持 `allow_credentials=True`，前端 axios 已默认 `withCredentials: true`。
+
+## 登录态验证建议
+
+1. 将 `INTCODE_ACCESS_TOKEN_EXPIRE_MINUTES=1`，`INTCODE_REFRESH_TOKEN_EXPIRE_DAYS=1` 启动后端并登录。
+2. 等待 access token 过期后继续调用需鉴权接口（如 `/api/users/me` 或提交代码），请求应自动刷新并返回 200。
+3. 在浏览器开发者工具手动清理或等待 refresh token 过期后，再访问接口应被重定向至登录（页面提示“登录已过期，请重新登录”）。
+4. 点击前端“退出登录”后再次访问接口，同样会触发登出逻辑且不再使用旧 refresh token。
 
 ## 文档
 

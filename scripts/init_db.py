@@ -6,6 +6,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1] / "backend"))
 
 from app.models.base import Base, SessionLocal, engine  # noqa: E402
 from app.models.user import User  # noqa: E402
+from app.models import refresh_token  # noqa: F401,E402
 from app.core.security import get_password_hash  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 

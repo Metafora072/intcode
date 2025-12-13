@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { fetchMe, loginApi, registerApi } from "../api";
+import { toast } from "react-hot-toast";
+import { fetchMe, loginApi, logoutApi, onTokenChange, registerApi, setAccessToken, getAccessToken } from "../api";
 import { UserProfile } from "../types";
 
 interface AuthContextValue {
@@ -9,7 +10,7 @@ interface AuthContextValue {
   login: (username: string, password: string) => Promise<void>;
   register: (payload: { username: string; email: string; password: string; verification_code: string }) => Promise<void>;
   refreshProfile: () => Promise<void>;
-  logout: () => void;
+  logout: (options?: { redirect?: boolean; message?: string }) => void;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -27,17 +28,24 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState<string | null>(() => window.localStorage.getItem("intcode_token"));
+  const [token, setToken] = useState<string | null>(() => getAccessToken());
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const logout = () => {
+  const clearSession = (options?: { redirect?: boolean; message?: string }) => {
     setToken(null);
     setUser(null);
-    window.localStorage.removeItem("intcode_token");
+    setAccessToken(null);
+    if (options?.message) {
+      toast.error(options.message);
+    }
+    if (options?.redirect) {
+      window.location.href = "/login";
+    }
   };
 
   const loadProfile = async (nextToken: string | null) => {
+    setLoading(true);
     if (!nextToken) {
       setUser(null);
       setLoading(false);
@@ -47,24 +55,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const me = await fetchMe();
       setUser(me);
     } catch {
-      logout();
+      clearSession();
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    const unsubscribe = onTokenChange((next) => setToken(next));
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
     loadProfile(token);
-    const onForceLogout = () => logout();
-    window.addEventListener("intcode_logout", onForceLogout);
-    return () => window.removeEventListener("intcode_logout", onForceLogout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const onForceLogout = (e: Event) => {
+      const reason = (e as CustomEvent<{ reason?: string }>).detail?.reason;
+      const message = reason === "expired" ? "登录已过期，请重新登录" : undefined;
+      logout({ redirect: true, message });
+    };
+    window.addEventListener("intcode_logout", onForceLogout as EventListener);
+    return () => window.removeEventListener("intcode_logout", onForceLogout as EventListener);
   }, [token]);
 
   const login = async (username: string, password: string) => {
     const res = await loginApi(username, password);
-    window.localStorage.setItem("intcode_token", res.access_token);
-    setToken(res.access_token);
+    setAccessToken(res.access_token);
   };
 
   const register = async (payload: {
@@ -79,6 +94,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshProfile = async () => {
     await loadProfile(token);
+  };
+
+  const logout = (options?: { redirect?: boolean; message?: string }) => {
+    logoutApi().catch(() => {});
+    clearSession(options);
   };
 
   return (
