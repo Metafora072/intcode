@@ -6,8 +6,10 @@ services:
     container_name: intcode-backend
     environment:
       - INTCODE_DATABASE_URL=sqlite:////app/data/intcode.db
+      - INTCODE_TESTCASE_ROOT=/app/storage/testcases
     volumes:
       - ./backend/data:/app/data
+      - ./backend/storage/testcases:/app/storage/testcases
     ports:
       - "18000:8000"
 

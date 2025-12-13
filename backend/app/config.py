@@ -11,9 +11,12 @@ class Settings(BaseSettings):
     database_url: str = f"sqlite:///{Path(__file__).resolve().parent.parent / 'intcode.db'}"
     work_dir: Path = Path(__file__).resolve().parent.parent / "runs"
     uploads_dir: Path = Path(__file__).resolve().parent.parent / "uploads"
+    testcase_root: Path = Path(__file__).resolve().parent.parent / "storage" / "testcases"
     compile_timeout: int = 15
     case_timeout: int = 2
     output_limit: int = 20000
+    max_output_bytes: int = 64 * 1024 * 1024
+    max_zip_extract_bytes: int = 1024 * 1024 * 1024  # 1GB
     memory_limit_mb: int = 256  # 评测内存限制
     secret_key: str = "dev_secret_key_fixed_for_stability_12345"
     algorithm: str = "HS256"

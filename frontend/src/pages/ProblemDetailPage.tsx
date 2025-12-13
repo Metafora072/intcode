@@ -4,7 +4,16 @@ import ReactMarkdown from "react-markdown";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import { fetchProblem, fetchUserCode, saveUserCode, submitCode } from "../api";
+import {
+  addTestcase,
+  downloadTestcaseUrl,
+  deleteTestcaseApi,
+  fetchProblem,
+  fetchUserCode,
+  saveUserCode,
+  submitCode,
+  updateTestcaseApi
+} from "../api";
 import { Problem, SubmissionResult } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
 import CodeEditor from "../components/CodeEditor";
@@ -48,6 +57,15 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [viewMode, setViewMode] = useState<"problem" | "result">("problem");
   const [runMode, setRunMode] = useState<"run_sample" | "submit" | "custom">("run_sample");
   const { user } = useAuth();
+  const [managing, setManaging] = useState(false);
+  const [newCaseForm, setNewCaseForm] = useState<{
+    case_no: string;
+    is_sample: boolean;
+    input_file: File | null;
+    output_file: File | null;
+  }>({ case_no: "", is_sample: false, input_file: null, output_file: null });
+  const [updatingCase, setUpdatingCase] = useState<{ [id: number]: { input_file: File | null; output_file: File | null } }>({});
+  const [managedCases, setManagedCases] = useState<TestCase[]>([]);
   const [codeLoaded, setCodeLoaded] = useState(false);
   const [lastSaved, setLastSaved] = useState("");
 
@@ -105,6 +123,16 @@ const ProblemDetailPage = ({ theme }: Props) => {
   }, [code, language, codeLoaded, user, problem?.id]);
 
   const sampleCases = useMemo(() => problem?.testcases.filter((t) => t.is_sample) ?? [], [problem]);
+  useEffect(() => {
+    if (problem) {
+      setManagedCases(problem.testcases);
+    }
+  }, [problem]);
+  const reloadProblem = async () => {
+    if (!id) return;
+    const data = await fetchProblem(Number(id));
+    setProblem(data);
+  };
 
   const handleRun = async (mode: "run_sample" | "submit" | "custom") => {
     if (!problem) return;
@@ -156,6 +184,33 @@ const ProblemDetailPage = ({ theme }: Props) => {
     }
   };
 
+  const handleUpdateCase = async (tc: TestCase) => {
+    const files = updatingCase[tc.id || -1] || { input_file: null, output_file: null };
+    await updateTestcaseApi(tc.id!, {
+      case_no: tc.case_no,
+      is_sample: tc.is_sample,
+      input_file: files.input_file || undefined,
+      output_file: files.output_file || undefined
+    });
+    setUpdatingCase((prev) => ({ ...prev, [tc.id!]: { input_file: null, output_file: null } }));
+    await reloadProblem();
+  };
+
+  const handleAddCase = async () => {
+    if (!problem) return;
+    if (!newCaseForm.input_file || !newCaseForm.output_file) {
+      return;
+    }
+    await addTestcase(problem.id, {
+      case_no: newCaseForm.case_no ? Number(newCaseForm.case_no) : undefined,
+      is_sample: newCaseForm.is_sample,
+      input_file: newCaseForm.input_file,
+      output_file: newCaseForm.output_file
+    });
+    setNewCaseForm({ case_no: "", is_sample: false, input_file: null, output_file: null });
+    await reloadProblem();
+  };
+
 
   if (!problem) {
     return <p className="text-sm text-slate-500">加载中...</p>;
@@ -176,7 +231,17 @@ const ProblemDetailPage = ({ theme }: Props) => {
                   <p className="text-xs text-slate-500">{problem.slug}</p>
                   <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{problem.title}</h1>
                 </div>
-                <DifficultyBadge level={problem.difficulty} />
+                <div className="flex items-center gap-2">
+                  <DifficultyBadge level={problem.difficulty} />
+                  {user?.is_admin && (
+                    <button
+                      className="btn border border-indigo-200 text-indigo-600 bg-indigo-50 dark:border-indigo-800 dark:text-indigo-200 dark:bg-indigo-900/20 text-xs"
+                      onClick={() => setManaging((v) => !v)}
+                    >
+                      {managing ? "收起用例管理" : "管理测试用例"}
+                    </button>
+                  )}
+                </div>
               </div>
             <div className="flex gap-2 flex-wrap text-xs">
               {problem.is_spj && (
@@ -217,13 +282,13 @@ const ProblemDetailPage = ({ theme }: Props) => {
                             <div className="flex gap-2">
                               <button
                                 className="btn border border-slate-200 dark:border-slate-600 text-xs hover:bg-slate-100 dark:hover:bg-slate-700"
-                                onClick={() => navigator.clipboard.writeText(tc.input_text)}
+                                onClick={() => navigator.clipboard.writeText(tc.input_text || "")}
                               >
                                 复制输入
                               </button>
                               <button
                                 className="btn border border-slate-200 dark:border-slate-600 text-xs hover:bg-slate-100 dark:hover:bg-slate-700"
-                                onClick={() => navigator.clipboard.writeText(tc.output_text)}
+                                onClick={() => navigator.clipboard.writeText(tc.output_text || "")}
                               >
                                 复制输出
                               </button>
@@ -233,13 +298,13 @@ const ProblemDetailPage = ({ theme }: Props) => {
                             <div>
                               <p className="text-xs text-slate-500 mb-1">输入</p>
                               <pre className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-mono font-medium p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
-                                {tc.input_text}
+                                {tc.input_text || ""}
                               </pre>
                             </div>
                             <div>
                               <p className="text-xs text-slate-500 mb-1">输出</p>
                               <pre className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50 font-mono font-medium p-2 rounded border border-slate-200 dark:border-slate-700 whitespace-pre-wrap text-sm leading-relaxed">
-                                {tc.output_text}
+                                {tc.output_text || ""}
                               </pre>
                             </div>
                           </div>
@@ -275,101 +340,225 @@ const ProblemDetailPage = ({ theme }: Props) => {
         </Panel>
         <PanelResizeHandle className="w-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors" />
         <Panel defaultSize={55} minSize={35} className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-          <div className="h-full flex flex-col bg-white dark:bg-slate-900">
-            <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-200 dark:border-slate-700">
-              <select
-                className="px-3 py-2 rounded-lg border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value as "cpp17" | "python3")}
-              >
-                <option value="cpp17">C++17</option>
-                <option value="python3">Python 3</option>
-              </select>
-              <div className="text-sm text-slate-500 dark:text-slate-300">Ctrl/Cmd+Enter 运行样例（自动保存草稿）</div>
-              <div className="ml-auto flex gap-2">
-                <button
-                  className="btn bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50"
-                  onClick={() => handleRun("run_sample")}
-                  disabled={loading}
-                >
-                  {loading ? "运行中..." : "运行样例"}
-                </button>
-                <button
-                  className="btn bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50"
-                  onClick={() => handleRun("submit")}
-                  disabled={loading}
-                >
-                  {loading ? "提交中..." : "提交评测"}
+          {managing && user?.is_admin ? (
+            <div className="h-full flex flex-col bg-white dark:bg-slate-900 p-4 gap-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">测试用例管理</h3>
+                <button className="btn text-xs border border-slate-200 dark:border-slate-700" onClick={() => setManaging(false)}>
+                  关闭
                 </button>
               </div>
-            </div>
-            <div className="flex-1 min-h-0 px-4 pb-2">
-              <CodeEditor
-                language={language === "cpp17" ? "cpp" : "python"}
-                value={code}
-                onChange={setCode}
-                theme={theme}
-                onRunShortcut={() => handleRun("run_sample")}
-                height="100%"
-              />
-            </div>
-            <div className="border-t border-slate-200 dark:border-slate-700">
-              {viewMode === "problem" ? (
-                <>
-                  <div className="flex items-center gap-4 px-4 py-2 text-sm">
-                    <button
-                      className={`px-2 py-1 rounded ${
-                        bottomTab === "result"
-                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-                      }`}
-                      onClick={() => setBottomTab("result")}
-                    >
-                      运行结果
-                    </button>
-                    <button
-                      className={`px-2 py-1 rounded ${
-                        bottomTab === "custom"
-                          ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-                      }`}
-                      onClick={() => setBottomTab("custom")}
-                    >
-                      自测输入
-                    </button>
-                  </div>
-                  <div className="h-64 px-4 pb-4 overflow-hidden">
-                    {bottomTab === "custom" ? (
-                      <div className="flex flex-col h-full gap-2">
-                        <textarea
-                          className="input flex-1 w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
-                          placeholder="在此粘贴你的测试输入..."
-                          value={customInput}
-                          onChange={(e) => setCustomInput(e.target.value)}
+              <div className="flex-1 min-h-0 overflow-y-auto space-y-2">
+                {managedCases.map((tc) => (
+                  <div key={tc.id} className="p-3 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-slate-800 dark:text-slate-100">Case #{tc.case_no}</div>
+                      <div className="flex gap-2">
+                        <a className="text-xs text-indigo-600 hover:underline" href={downloadTestcaseUrl(tc.id!, "in")} target="_blank" rel="noreferrer">
+                          下载输入
+                        </a>
+                        <a className="text-xs text-indigo-600 hover:underline" href={downloadTestcaseUrl(tc.id!, "out")} target="_blank" rel="noreferrer">
+                          下载输出
+                        </a>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                      <label className="text-xs text-slate-500">
+                        新输入
+                        <input
+                          type="file"
+                          accept=".in,.txt"
+                          className="input mt-1"
+                          onChange={(e) =>
+                            setUpdatingCase((prev) => ({
+                              ...prev,
+                              [tc.id!]: { ...(prev[tc.id!] || { output_file: null }), input_file: e.target.files?.[0] ?? null }
+                            }))
+                          }
                         />
-                        <div className="flex items-center gap-3">
-                          <button
-                            className="btn bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50"
-                            onClick={() => handleRun("custom")}
-                            disabled={loading || !customInput.trim()}
-                          >
-                            {loading ? "运行中..." : "自测运行"}
-                          </button>
-                          <p className="text-xs text-slate-500">仅编译并用上方输入运行，不计入提交记录</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="h-full overflow-auto">
-                        <RunResultCard result={result} loading={runMode === "submit" && loading} />
-                      </div>
-                    )}
+                      </label>
+                      <label className="text-xs text-slate-500">
+                        新输出
+                        <input
+                          type="file"
+                          accept=".out,.txt"
+                          className="input mt-1"
+                          onChange={(e) =>
+                            setUpdatingCase((prev) => ({
+                              ...prev,
+                              [tc.id!]: { ...(prev[tc.id!] || { input_file: null }), output_file: e.target.files?.[0] ?? null }
+                            }))
+                          }
+                        />
+                      </label>
+                    </div>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-slate-600 dark:text-slate-300">
+                      <label className="inline-flex items-center gap-1">
+                        <input
+                          type="checkbox"
+                          checked={tc.is_sample}
+                          onChange={(e) =>
+                            setManagedCases((prev) =>
+                              prev.map((item) => (item.id === tc.id ? { ...item, is_sample: e.target.checked } : item))
+                            )
+                          }
+                        />
+                        样例
+                      </label>
+                      <button className="btn text-xs bg-slate-900 text-white" onClick={() => handleUpdateCase(tc)}>
+                        保存
+                      </button>
+                      <button
+                        className="btn text-xs bg-red-600 text-white hover:bg-red-500"
+                        onClick={async () => {
+                          const ok = window.confirm("确定删除该用例吗？此操作不可撤销。");
+                          if (!ok) return;
+                          await deleteTestcaseApi(tc.id!);
+                          await reloadProblem();
+                        }}
+                      >
+                        删除
+                      </button>
+                    </div>
                   </div>
-                </>
-              ) : (
-                <div className="p-4 text-sm text-slate-500">结果已在左侧展示，如需继续查看题面请点击“返回题面”。</div>
-              )}
+                ))}
+              </div>
+              <div className="border-t border-dashed border-slate-200 dark:border-slate-700 pt-3">
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">新增用例</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <input
+                    className="input"
+                    placeholder="Case 编号(可选)"
+                    value={newCaseForm.case_no}
+                    onChange={(e) => setNewCaseForm((prev) => ({ ...prev, case_no: e.target.value }))}
+                  />
+                  <label className="text-xs text-slate-600 dark:text-slate-300 inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={newCaseForm.is_sample}
+                      onChange={(e) => setNewCaseForm((prev) => ({ ...prev, is_sample: e.target.checked }))}
+                    />
+                    设为样例
+                  </label>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                  <input
+                    type="file"
+                    accept=".in,.txt"
+                    className="input"
+                    onChange={(e) => setNewCaseForm((prev) => ({ ...prev, input_file: e.target.files?.[0] ?? null }))}
+                  />
+                  <input
+                    type="file"
+                    accept=".out,.txt"
+                    className="input"
+                    onChange={(e) => setNewCaseForm((prev) => ({ ...prev, output_file: e.target.files?.[0] ?? null }))}
+                  />
+                </div>
+                <div className="mt-2">
+                  <button className="btn bg-indigo-600 text-white text-xs" onClick={handleAddCase}>
+                    上传新增用例
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="h-full flex flex-col bg-white dark:bg-slate-900">
+              <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-200 dark:border-slate-700">
+                <select
+                  className="px-3 py-2 rounded-lg border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value as "cpp17" | "python3")}
+                >
+                  <option value="cpp17">C++17</option>
+                  <option value="python3">Python 3</option>
+                </select>
+                <div className="text-sm text-slate-500 dark:text-slate-300">Ctrl/Cmd+Enter 运行样例（自动保存草稿）</div>
+                <div className="ml-auto flex gap-2">
+                  <button
+                    className="btn bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50"
+                    onClick={() => handleRun("run_sample")}
+                    disabled={loading}
+                  >
+                    {loading ? "运行中..." : "运行样例"}
+                  </button>
+                  <button
+                    className="btn bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50"
+                    onClick={() => handleRun("submit")}
+                    disabled={loading}
+                  >
+                    {loading ? "提交中..." : "提交评测"}
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 min-h-0 px-4 pb-2">
+                <CodeEditor
+                  language={language === "cpp17" ? "cpp" : "python"}
+                  value={code}
+                  onChange={setCode}
+                  theme={theme}
+                  onRunShortcut={() => handleRun("run_sample")}
+                  height="100%"
+                />
+              </div>
+              <div className="border-t border-slate-200 dark:border-slate-700">
+                {viewMode === "problem" ? (
+                  <>
+                    <div className="flex items-center gap-4 px-4 py-2 text-sm">
+                      <button
+                        className={`px-2 py-1 rounded ${
+                          bottomTab === "result"
+                            ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                        }`}
+                        onClick={() => setBottomTab("result")}
+                      >
+                        运行结果
+                      </button>
+                      <button
+                        className={`px-2 py-1 rounded ${
+                          bottomTab === "custom"
+                            ? "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                        }`}
+                        onClick={() => setBottomTab("custom")}
+                      >
+                        自测输入
+                      </button>
+                    </div>
+                    <div className="h-64 px-4 pb-4 overflow-hidden">
+                      {bottomTab === "custom" ? (
+                        <div className="flex flex-col h-full gap-2">
+                          <textarea
+                            className="input flex-1 w-full bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
+                            placeholder="在此粘贴你的测试输入..."
+                            value={customInput}
+                            onChange={(e) => setCustomInput(e.target.value)}
+                          />
+                          <div className="flex items-center gap-3">
+                            <button
+                              className="btn bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50"
+                              onClick={() => handleRun("custom")}
+                              disabled={loading || !customInput.trim()}
+                            >
+                              {loading ? "运行中..." : "自测运行"}
+                            </button>
+                            <p className="text-xs text-slate-500">仅编译并用上方输入运行，不计入提交记录</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="h-full overflow-auto">
+                          <RunResultCard result={result} loading={runMode === "submit" && loading} />
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-4 text-sm text-slate-500">结果已在左侧展示，如需继续查看题面请点击“返回题面”。</div>
+                )}
+              </div>
+            </div>
+          )}
         </Panel>
       </PanelGroup>
     </div>

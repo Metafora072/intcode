@@ -18,6 +18,7 @@ app.add_middleware(
 )
 
 settings.uploads_dir.mkdir(parents=True, exist_ok=True)
+settings.testcase_root.mkdir(parents=True, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=str(settings.uploads_dir)), name="uploads")
 
 

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Trash2 } from "lucide-react";
-import { addTestcase, createProblem, deleteUser, fetchProblems, fetchUsers } from "../api";
+import { addTestcase, createProblem, deleteUser, fetchProblems, fetchUsers, importTestcasesZip } from "../api";
 import CodeEditor from "../components/CodeEditor";
 import { Problem, UserSummary } from "../types";
 import { useAuth } from "../context/AuthContext";
@@ -53,7 +53,14 @@ const AdminPage = () => {
     is_spj: false,
     spj_code: ""
   });
-  const [caseForm, setCaseForm] = useState({ input_text: "", output_text: "", is_sample: true });
+  const [caseForm, setCaseForm] = useState<{
+    case_no: string;
+    is_sample: boolean;
+    score_weight: string;
+    input_file: File | null;
+    output_file: File | null;
+  }>({ case_no: "", is_sample: true, score_weight: "", input_file: null, output_file: null });
+  const [zipFile, setZipFile] = useState<File | null>(null);
   const [msg, setMsg] = useState("");
   const { user } = useAuth();
   const [users, setUsers] = useState<UserSummary[]>([]);
@@ -111,9 +118,30 @@ const AdminPage = () => {
 
   const handleAddCase = async () => {
     if (!problemId) return;
-    await addTestcase(problemId, caseForm);
-    setCaseForm({ input_text: "", output_text: "", is_sample: true });
+    if (!caseForm.input_file || !caseForm.output_file) {
+      toast.error("请上传输入/输出文件");
+      return;
+    }
+    await addTestcase(problemId, {
+      case_no: caseForm.case_no ? Number(caseForm.case_no) : undefined,
+      is_sample: caseForm.is_sample,
+      score_weight: caseForm.score_weight ? Number(caseForm.score_weight) : undefined,
+      input_file: caseForm.input_file,
+      output_file: caseForm.output_file
+    });
+    setCaseForm({ case_no: "", is_sample: true, score_weight: "", input_file: null, output_file: null });
     setMsg("用例已添加");
+    loadProblems();
+  };
+
+  const handleImportZip = async () => {
+    if (!problemId || !zipFile) {
+      toast.error("请选择题目与 ZIP 包");
+      return;
+    }
+    await importTestcasesZip(problemId, { zip: zipFile, strategy: "overwrite" });
+    toast.success("ZIP 导入完成");
+    setZipFile(null);
     loadProblems();
   };
 
@@ -396,6 +424,24 @@ const AdminPage = () => {
                 <p className="text-xs text-slate-500 mt-1">当前：{selectedProblemTitle}</p>
               </div>
               <div className="flex items-center gap-3 mt-5 md:mt-0">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-slate-700 dark:text-slate-300">Case #</label>
+                  <input
+                    className="input w-24"
+                    placeholder="自动"
+                    value={caseForm.case_no}
+                    onChange={(e) => setCaseForm({ ...caseForm, case_no: e.target.value })}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-slate-700 dark:text-slate-300">权重</label>
+                  <input
+                    className="input w-20"
+                    placeholder="-"
+                    value={caseForm.score_weight}
+                    onChange={(e) => setCaseForm({ ...caseForm, score_weight: e.target.value })}
+                  />
+                </div>
                 <label className="text-sm text-slate-700 dark:text-slate-300 inline-flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -408,27 +454,43 @@ const AdminPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输入</label>
-                <textarea
-                  className="input h-28"
-                  placeholder="输入"
-                  value={caseForm.input_text}
-                  onChange={(e) => setCaseForm({ ...caseForm, input_text: e.target.value })}
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输入文件 (.in)</label>
+                <input
+                  type="file"
+                  accept=".in,.txt"
+                  onChange={(e) => setCaseForm({ ...caseForm, input_file: e.target.files?.[0] ?? null })}
+                  className="input"
                 />
+                {caseForm.input_file && <p className="text-xs text-slate-500 mt-1">{caseForm.input_file.name}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输出</label>
-                <textarea
-                  className="input h-28"
-                  placeholder="输出"
-                  value={caseForm.output_text}
-                  onChange={(e) => setCaseForm({ ...caseForm, output_text: e.target.value })}
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">输出文件 (.out)</label>
+                <input
+                  type="file"
+                  accept=".out,.txt"
+                  onChange={(e) => setCaseForm({ ...caseForm, output_file: e.target.files?.[0] ?? null })}
+                  className="input"
                 />
+                {caseForm.output_file && <p className="text-xs text-slate-500 mt-1">{caseForm.output_file.name}</p>}
               </div>
             </div>
             <button className="btn bg-slate-900 text-white hover:bg-slate-800" onClick={handleAddCase}>
               添加用例
             </button>
+            <div className="mt-4 border-t border-dashed border-slate-200 dark:border-slate-700 pt-4">
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept=".zip"
+                  onChange={(e) => setZipFile(e.target.files?.[0] ?? null)}
+                  className="input"
+                />
+                <button className="btn bg-indigo-600 text-white hover:bg-indigo-500" onClick={handleImportZip}>
+                  批量导入 ZIP
+                </button>
+              </div>
+              <p className="text-xs text-slate-500 mt-1">ZIP 内按 1.in/1.out 结构导入，默认覆盖同号用例。</p>
+            </div>
           </div>
 
           <div className="card bg-white/70 dark:bg-slate-800/70 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-sm p-6">

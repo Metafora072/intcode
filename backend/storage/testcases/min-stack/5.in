@@ -1,0 +1,9 @@
+8
+push 5
+push 5
+push 5
+getMin
+pop
+getMin
+pop
+getMin

@@ -1,0 +1,6 @@
+5
+insert abc
+insert abcd
+insert abcde
+search abcde
+startsWith ab

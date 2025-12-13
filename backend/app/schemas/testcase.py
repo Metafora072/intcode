@@ -7,8 +7,14 @@ from pydantic import BaseModel
 
 class TestCaseBase(BaseModel):
     id: Optional[int] = None
-    input_text: str
-    output_text: str
+    case_no: int
+    in_path: Optional[str] = None
+    out_path: Optional[str] = None
+    in_size_bytes: Optional[int] = None
+    out_size_bytes: Optional[int] = None
+    in_sha256: Optional[str] = None
+    out_sha256: Optional[str] = None
+    score_weight: Optional[int] = None
     is_sample: bool = False
 
     class Config:
@@ -16,6 +22,8 @@ class TestCaseBase(BaseModel):
 
 
 class TestCaseCreate(BaseModel):
-    input_text: str
-    output_text: str
+    case_no: Optional[int] = None
+    score_weight: Optional[int] = None
     is_sample: bool = False
+    input_text: Optional[str] = None
+    output_text: Optional[str] = None

@@ -7,6 +7,8 @@ sys.path.append(str(Path(__file__).resolve().parents[1] / "backend"))
 from app.models.base import Base, SessionLocal, engine  # noqa: E402
 from app.models.user import User  # noqa: E402
 from app.models import refresh_token  # noqa: F401,E402
+from app.config import settings  # noqa: E402
+from app.services import testcase_storage  # noqa: E402
 from app.core.security import get_password_hash  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
@@ -31,7 +33,9 @@ def seed_sample():
     db = SessionLocal()
     try:
         ensure_user_columns()
+        ensure_testcase_columns()
         ensure_admin(db)
+        settings.testcase_root.mkdir(parents=True, exist_ok=True)
         print("基础用户初始化完成（题目请通过同步脚本导入）")
     finally:
         db.close()
@@ -70,6 +74,35 @@ def ensure_user_columns() -> None:
         sub_cols = [row[1] for row in conn.execute(text("PRAGMA table_info(submissions);")).fetchall()]
         if "user_id" not in sub_cols:
             conn.execute(text("ALTER TABLE submissions ADD COLUMN user_id INTEGER;"))
+
+
+def ensure_testcase_columns() -> None:
+    """确保测试用例表的文件元数据列存在."""
+    with engine.begin() as conn:
+        cols = [row[1] for row in conn.execute(text("PRAGMA table_info(testcases);")).fetchall()]
+        alters = []
+        if "case_no" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN case_no INTEGER DEFAULT 1;")
+        if "in_path" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN in_path VARCHAR(255);")
+        if "out_path" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN out_path VARCHAR(255);")
+        if "in_size_bytes" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN in_size_bytes INTEGER;")
+        if "out_size_bytes" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN out_size_bytes INTEGER;")
+        if "in_sha256" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN in_sha256 VARCHAR(64);")
+        if "out_sha256" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN out_sha256 VARCHAR(64);")
+        if "score_weight" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN score_weight INTEGER;")
+        if "created_at" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN created_at DATETIME;")
+        if "updated_at" not in cols:
+            alters.append("ALTER TABLE testcases ADD COLUMN updated_at DATETIME;")
+        for stmt in alters:
+            conn.execute(text(stmt))
 
 
 def main():

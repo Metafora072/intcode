@@ -55,6 +55,7 @@ docs/               # 架构与 API 文档
 - 提交记录：登录后按用户查看个人提交，管理员可查看全部。
 - 用户体系：注册/登录（JWT），管理员权限控制后台路由；access token + refresh token 自动续期与登出失效。
 - 题目管理：创建题目、添加/管理测试用例（管理员）。
+- 测试数据：测试点以 `{problem_id}/{case_no}.in/.out` 落盘，数据库仅存元信息，评测与判题均为流式读写。
 
 ## 后端说明
 
@@ -75,6 +76,7 @@ docs/               # 架构与 API 文档
 
 - `scripts/init_db.py`：创建表并插入 Two Sum 示例题目与用例。
 - `scripts/dev_start.sh`：示例一键启动脚本（含依赖安装），可按需使用。
+- `scripts/migrate_testcases_to_files.py`：将旧版内联测试用例迁移为独立 .in/.out 文件并回写元数据。
 
 ## 认证与登录态
 
@@ -90,6 +92,28 @@ docs/               # 架构与 API 文档
 2. 等待 access token 过期后继续调用需鉴权接口（如 `/api/users/me` 或提交代码），请求应自动刷新并返回 200。
 3. 在浏览器开发者工具手动清理或等待 refresh token 过期后，再访问接口应被重定向至登录（页面提示“登录已过期，请重新登录”）。
 4. 点击前端“退出登录”后再次访问接口，同样会触发登出逻辑且不再使用旧 refresh token。
+
+## 测试数据存储与评测说明
+
+- 环境变量：
+  - `INTCODE_TESTCASE_ROOT`：测试数据根目录，默认 `backend/storage/testcases`。
+  - `INTCODE_MAX_OUTPUT_BYTES`：单用例 stdout 允许的最大体积（默认 64MB），超过判定 OLE。
+  - `INTCODE_MAX_ZIP_EXTRACT_BYTES`：ZIP 批量导入的解压上限（默认 1GB）。
+- 文件组织：`{TESTCASE_ROOT}/{problem_id}/{case_no}.in/.out`，DB 只存路径/大小/hash/样例标记/权重。
+- 导入：
+  - 单点上传：`POST /admin/problems/{id}/testcases`（form-data，input_file/output_file，支持 case_no/score_weight/is_sample）。
+  - ZIP 导入：`POST /admin/problems/{id}/testcases/import_zip`，支持 1.in/1.out…，默认覆盖同号。
+  - 删除：`DELETE /admin/testcases/{testcase_id}` 同时清理文件。
+- 评测：
+  - 子进程 stdin 直接绑定 .in 文件，stdout 写入临时文件；超时/内存限制沿用原逻辑，输出超限判 OLE。
+  - 判题使用流式字节对比（或 SPJ）；提供预览与 mismatch 位置摘要。
+- 迁移：老库含 input_text/output_text 时运行 `PYTHONPATH=backend python3 scripts/migrate_testcases_to_files.py`，将文本写入文件并更新元数据。
+
+## 大数据/性能验证建议
+
+1. 设置短超时与适中限制启动后端：如 `INTCODE_MAX_OUTPUT_BYTES=67108864`。
+2. 创建题目后通过 ZIP 上传 3 个大用例（1MB/50MB/200MB），提交能够逐点评测且服务内存稳定。
+3. 模拟输出超限（程序死循环输出）应得到 OLE；删除用例后对应文件应被移除。
 
 ## 文档
 

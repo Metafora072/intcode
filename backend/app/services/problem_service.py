@@ -1,3 +1,5 @@
+import tempfile
+from pathlib import Path
 from typing import List, Optional, Tuple
 
 from sqlalchemy import func, distinct
@@ -9,6 +11,8 @@ from app.models.testcase import TestCase
 from app.models.user import User
 from app.schemas.problem import ProblemCreate, ProblemUpdate
 from app.schemas.testcase import TestCaseCreate
+from app.services import testcase_storage
+from app.utils.logger import logger
 
 
 def _tags_to_str(tags: List[str]) -> str:
@@ -84,24 +88,6 @@ def get_problem_by_slug(db: Session, slug: str) -> Optional[Problem]:
     return db.query(Problem).filter(Problem.slug == slug).first()
 
 
-def _replace_testcases(db: Session, problem: Problem, testcases: List[TestCaseCreate]) -> None:
-    db.query(TestCase).filter(TestCase.problem_id == problem.id).delete()
-    db.flush()
-    objs = [
-        TestCase(
-            problem_id=problem.id,
-            input_text=tc.input_text,
-            output_text=tc.output_text,
-            is_sample=tc.is_sample,
-        )
-        for tc in testcases
-    ]
-    if objs:
-        db.add_all(objs)
-    db.commit()
-    db.refresh(problem)
-
-
 def create_problem(db: Session, payload: ProblemCreate) -> Problem:
     db_problem = Problem(
         slug=payload.slug,
@@ -118,8 +104,8 @@ def create_problem(db: Session, payload: ProblemCreate) -> Problem:
     db.add(db_problem)
     db.commit()
     db.refresh(db_problem)
-    if getattr(payload, "testcases", None) is not None:
-        _replace_testcases(db, db_problem, payload.testcases)
+    if getattr(payload, "testcases", None):
+        _hydrate_testcases_from_inline(db, db_problem, payload.testcases)
     return db_problem
 
 
@@ -153,7 +139,9 @@ def upsert_problem(db: Session, payload: ProblemCreate) -> Problem:
     db.refresh(problem)
 
     # 全量替换测试用例
-    _replace_testcases(db, problem, payload.testcases or [])
+    db.query(TestCase).filter(TestCase.problem_id == problem.id).delete()
+    db.commit()
+    _hydrate_testcases_from_inline(db, problem, payload.testcases or [])
     return problem
 
 
@@ -162,12 +150,83 @@ def delete_problem(db: Session, problem: Problem) -> None:
     db.commit()
 
 
+def list_testcases(db: Session, problem_id: int) -> List[TestCase]:
+    return (
+        db.query(TestCase)
+        .filter(TestCase.problem_id == problem_id)
+        .order_by(TestCase.case_no.asc(), TestCase.id.asc())
+        .all()
+    )
+
+
+def delete_testcase(db: Session, testcase: TestCase) -> None:
+    from app.services import testcase_storage
+
+    if testcase.in_path:
+        testcase_storage.safe_delete_files([testcase_storage.resolve_path(testcase.in_path)])
+    if testcase.out_path:
+        testcase_storage.safe_delete_files([testcase_storage.resolve_path(testcase.out_path)])
+    db.delete(testcase)
+    db.commit()
+
+
+def update_testcase(
+    db: Session,
+    testcase: TestCase,
+    problem: Problem,
+    case_no: Optional[int] = None,
+    is_sample: Optional[bool] = None,
+    score_weight: Optional[int] = None,
+    input_file=None,
+    output_file=None,
+) -> TestCase:
+    meta = testcase_storage.replace_testcase_files(
+        testcase,
+        case_no,
+        input_file,
+        output_file,
+        problem_slug=problem.slug,
+    )
+    for key, value in meta.items():
+        setattr(testcase, key, value)
+    if is_sample is not None:
+        testcase.is_sample = is_sample
+    if score_weight is not None:
+        testcase.score_weight = score_weight
+    if input_file is not None:
+        testcase.input_text = ""
+    if output_file is not None:
+        testcase.output_text = ""
+    db.add(testcase)
+    db.commit()
+    db.refresh(testcase)
+    return testcase
+
+
 def add_testcase(db: Session, problem: Problem, payload: TestCaseCreate) -> TestCase:
+    case_no = payload.case_no or (_max_case_no(db, problem.id) + 1)
+    temp_in = Path(tempfile.mktemp())
+    temp_out = Path(tempfile.mktemp())
+    try:
+        temp_in.write_text(getattr(payload, "input_text", "") or "", encoding="utf-8")
+        temp_out.write_text(getattr(payload, "output_text", "") or "", encoding="utf-8")
+        meta = testcase_storage.save_single_testcase(
+            problem.id,
+            case_no,
+            _string_to_upload(temp_in, filename=f"{case_no}.in"),
+            _string_to_upload(temp_out, filename=f"{case_no}.out"),
+            problem_slug=problem.slug,
+        )
+    finally:
+        temp_in.unlink(missing_ok=True)
+        temp_out.unlink(missing_ok=True)
     testcase = TestCase(
         problem_id=problem.id,
-        input_text=payload.input_text,
-        output_text=payload.output_text,
+        **meta,
         is_sample=payload.is_sample,
+        score_weight=payload.score_weight,
+        input_text=getattr(payload, "input_text", "") or "",
+        output_text=getattr(payload, "output_text", "") or "",
     )
     db.add(testcase)
     db.commit()
@@ -205,11 +264,16 @@ def serialize_problem(problem: Problem):
         "testcases": [
             {
                 "id": tc.id,
-                "input_text": tc.input_text,
-                "output_text": tc.output_text,
+                "case_no": tc.case_no,
+                "in_path": tc.in_path,
+                "out_path": tc.out_path,
+                "in_size_bytes": tc.in_size_bytes,
+                "out_size_bytes": tc.out_size_bytes,
                 "is_sample": tc.is_sample,
+                "input_text": _preview_file(tc.in_path) if tc.is_sample else None,
+                "output_text": _preview_file(tc.out_path) if tc.is_sample else None,
             }
-            for tc in problem.testcases
+            for tc in sorted(problem.testcases, key=lambda x: x.case_no or 0)
         ],
     }
     return data
@@ -263,3 +327,53 @@ def list_users_with_stats(db: Session) -> List[dict]:
             }
         )
     return results
+
+
+def _max_case_no(db: Session, problem_id: int) -> int:
+    val = db.query(func.coalesce(func.max(TestCase.case_no), 0)).filter(TestCase.problem_id == problem_id).scalar()
+    return int(val or 0)
+
+
+def get_next_case_no(db: Session, problem_id: int) -> int:
+    return _max_case_no(db, problem_id) + 1
+
+
+def _preview_file(path_str: Optional[str], limit: int = 500) -> Optional[str]:
+    if not path_str:
+        return None
+    path = testcase_storage.resolve_path(path_str)
+    if not path.exists():
+        return None
+    try:
+        with path.open("r", encoding="utf-8", errors="ignore") as f:
+            return f.read(limit)
+    except Exception:
+        return None
+
+
+def _string_to_upload(path: Path, filename: str):
+    """将临时文件包装成类似 UploadFile 的对象."""
+    from starlette.datastructures import UploadFile as StarletteUploadFile  # 避免循环引用
+
+    f = path.open("rb")
+    upload = StarletteUploadFile(filename=filename, file=f)
+    return upload
+
+
+def _hydrate_testcases_from_inline(db: Session, problem: Problem, testcases: List[TestCaseCreate]) -> None:
+    """兼容旧的内联用例，落盘到文件存储."""
+    for idx, tc in enumerate(testcases, start=1):
+        try:
+            add_testcase(
+                db,
+                problem,
+                TestCaseCreate(
+                    case_no=tc.case_no or idx,
+                    is_sample=tc.is_sample,
+                    input_text=getattr(tc, "input_text", None),
+                    output_text=getattr(tc, "output_text", None),
+                    score_weight=tc.score_weight if hasattr(tc, "score_weight") else None,
+                ),
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.error("迁移内联测试用例失败: %s", exc, exc_info=True)

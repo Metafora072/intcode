@@ -1,0 +1,5 @@
+4
+push 10
+push 9
+pop
+getMin

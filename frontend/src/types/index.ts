@@ -2,9 +2,15 @@ export type Difficulty = "EASY" | "MEDIUM" | "HARD";
 
 export interface TestCase {
   id?: number;
-  input_text: string;
-  output_text: string;
+  case_no: number;
+  in_path?: string | null;
+  out_path?: string | null;
+  in_size_bytes?: number | null;
+  out_size_bytes?: number | null;
+  input_text?: string | null;
+  output_text?: string | null;
   is_sample: boolean;
+  score_weight?: number | null;
 }
 
 export interface Problem {

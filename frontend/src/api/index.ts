@@ -122,8 +122,26 @@ export const updateProblem = async (id: number, payload: any) => {
   return res.data;
 };
 
-export const addTestcase = async (id: number, payload: any) => {
-  const res = await api.post(`/admin/problems/${id}/testcases`, payload);
+export const addTestcase = async (id: number, payload: { case_no?: number; is_sample?: boolean; score_weight?: number; input_file: File; output_file: File }) => {
+  const formData = new FormData();
+  if (payload.case_no) formData.append("case_no", String(payload.case_no));
+  if (payload.is_sample !== undefined) formData.append("is_sample", String(payload.is_sample));
+  if (payload.score_weight !== undefined) formData.append("score_weight", String(payload.score_weight));
+  formData.append("input_file", payload.input_file);
+  formData.append("output_file", payload.output_file);
+  const res = await api.post(`/admin/problems/${id}/testcases`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return res.data;
+};
+
+export const importTestcasesZip = async (id: number, payload: { strategy?: "overwrite" | "skip"; zip: File }) => {
+  const formData = new FormData();
+  formData.append("zip_file", payload.zip);
+  formData.append("strategy", payload.strategy || "overwrite");
+  const res = await api.post(`/admin/problems/${id}/testcases/import_zip`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
   return res.data;
 };
 
@@ -192,6 +210,29 @@ export const deleteUser = async (userId: number) => {
   const res = await api.delete<{ message: string }>(`/admin/users/${userId}`);
   return res.data;
 };
+
+export const deleteTestcaseApi = async (testcaseId: number) => {
+  const res = await api.delete<{ message: string }>(`/admin/testcases/${testcaseId}`);
+  return res.data;
+};
+
+export const updateTestcaseApi = async (
+  testcaseId: number,
+  payload: { case_no?: number; is_sample?: boolean; input_file?: File | null; output_file?: File | null }
+) => {
+  const formData = new FormData();
+  if (payload.case_no !== undefined) formData.append("case_no", String(payload.case_no));
+  if (payload.is_sample !== undefined) formData.append("is_sample", String(payload.is_sample));
+  if (payload.input_file) formData.append("input_file", payload.input_file);
+  if (payload.output_file) formData.append("output_file", payload.output_file);
+  const res = await api.put(`/admin/testcases/${testcaseId}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+  return res.data;
+};
+
+export const downloadTestcaseUrl = (testcaseId: number, kind: "in" | "out") =>
+  `/api/admin/testcases/${testcaseId}/download?kind=${kind}`;
 
 export const fetchUserCode = async (problemId: number) => {
   const res = await api.get<{ code: string; language: string; updated_at: string | null }>(
