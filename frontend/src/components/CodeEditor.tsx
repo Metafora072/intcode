@@ -1,5 +1,5 @@
 import Editor, { OnMount } from "@monaco-editor/react";
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 interface Props {
   language: string;
@@ -8,10 +8,12 @@ interface Props {
   theme: "vs-light" | "vs-dark";
   onRunShortcut?: () => void;
   height?: string;
+  fontSize?: number;
 }
 
-const CodeEditor = ({ language, value, onChange, theme, onRunShortcut, height = "100%" }: Props) => {
+const CodeEditor = ({ language, value, onChange, theme, onRunShortcut, height = "100%", fontSize = 14 }: Props) => {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const computedLineHeight = useMemo(() => Math.round(fontSize * 1.6), [fontSize]);
 
   const handleMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -23,6 +25,14 @@ const CodeEditor = ({ language, value, onChange, theme, onRunShortcut, height = 
     observer.observe(editor.getDomNode() as HTMLElement);
     editor.onDidDispose(() => observer.disconnect());
   };
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.updateOptions({ fontSize, lineHeight: computedLineHeight });
+      editorRef.current.layout();
+    }
+  }, [fontSize, computedLineHeight]);
+
   return (
     <div className="border border-slate-200 rounded-xl overflow-hidden shadow-inner h-full">
       <Editor
@@ -35,7 +45,8 @@ const CodeEditor = ({ language, value, onChange, theme, onRunShortcut, height = 
         onMount={handleMount}
         options={{
           minimap: { enabled: false },
-          fontSize: 14,
+          fontSize,
+          lineHeight: computedLineHeight,
           smoothScrolling: true,
           automaticLayout: true
         }}

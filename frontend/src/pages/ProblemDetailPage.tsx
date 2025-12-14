@@ -47,6 +47,10 @@ interface Props {
 
 const ProblemDetailPage = ({ theme }: Props) => {
   const { id } = useParams();
+  const FONT_SIZE_KEY = "intcode.editor.fontSize";
+  const DEFAULT_FONT_SIZE = 14;
+  const MIN_FONT_SIZE = 12;
+  const MAX_FONT_SIZE = 28;
   const [problem, setProblem] = useState<Problem | null>(null);
   const [language, setLanguage] = useState<"cpp17" | "python3">("cpp17");
   const [code, setCode] = useState<string>(templates.cpp17);
@@ -68,6 +72,15 @@ const ProblemDetailPage = ({ theme }: Props) => {
   const [managedCases, setManagedCases] = useState<TestCase[]>([]);
   const [codeLoaded, setCodeLoaded] = useState(false);
   const [lastSaved, setLastSaved] = useState("");
+  const [fontSize, setFontSize] = useState<number>(() => {
+    if (typeof window === "undefined") return DEFAULT_FONT_SIZE;
+    const stored = window.localStorage.getItem(FONT_SIZE_KEY);
+    const parsed = stored ? Number.parseInt(stored, 10) : NaN;
+    if (Number.isFinite(parsed) && parsed >= MIN_FONT_SIZE && parsed <= MAX_FONT_SIZE) {
+      return parsed;
+    }
+    return DEFAULT_FONT_SIZE;
+  });
 
   useEffect(() => {
     if (id) {
@@ -122,6 +135,12 @@ const ProblemDetailPage = ({ theme }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, language, codeLoaded, user, problem?.id]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(FONT_SIZE_KEY, String(fontSize));
+    }
+  }, [fontSize]);
+
   const sampleCases = useMemo(() => problem?.testcases.filter((t) => t.is_sample) ?? [], [problem]);
   useEffect(() => {
     if (problem) {
@@ -133,6 +152,11 @@ const ProblemDetailPage = ({ theme }: Props) => {
     const data = await fetchProblem(Number(id));
     setProblem(data);
   };
+  const clampFontSize = (val: number) => Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, val));
+  const handleFontSizeDelta = (delta: number) => {
+    setFontSize((prev) => clampFontSize(prev + delta));
+  };
+  const handleResetFontSize = () => setFontSize(DEFAULT_FONT_SIZE);
 
   const handleRun = async (mode: "run_sample" | "submit" | "custom") => {
     if (!problem) return;
@@ -489,14 +513,42 @@ const ProblemDetailPage = ({ theme }: Props) => {
           ) : (
             <div className="h-full flex flex-col bg-white dark:bg-slate-900">
               <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-200 dark:border-slate-700">
-                <select
-                  className="px-3 py-2 rounded-lg border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as "cpp17" | "python3")}
-                >
-                  <option value="cpp17">C++17</option>
-                  <option value="python3">Python 3</option>
-                </select>
+                <div className="flex items-center gap-2">
+                  <select
+                    className="px-3 py-2 rounded-lg border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value as "cpp17" | "python3")}
+                  >
+                    <option value="cpp17">C++17</option>
+                    <option value="python3">Python 3</option>
+                  </select>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500 dark:text-slate-300">字体</span>
+                    <div className="flex items-center gap-1 border border-slate-200 dark:border-slate-700 rounded-md overflow-hidden">
+                      <button
+                        className="px-2 py-1 text-xs text-slate-700 dark:text-slate-200 disabled:opacity-40"
+                        onClick={() => handleFontSizeDelta(-1)}
+                        disabled={fontSize <= MIN_FONT_SIZE}
+                      >
+                        A-
+                      </button>
+                      <span className="px-2 text-xs text-slate-600 dark:text-slate-200 whitespace-nowrap">{fontSize}px</span>
+                      <button
+                        className="px-2 py-1 text-xs text-slate-700 dark:text-slate-200 disabled:opacity-40"
+                        onClick={() => handleFontSizeDelta(1)}
+                        disabled={fontSize >= MAX_FONT_SIZE}
+                      >
+                        A+
+                      </button>
+                    </div>
+                    <button
+                      className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-300 dark:hover:text-slate-100"
+                      onClick={handleResetFontSize}
+                    >
+                      重置
+                    </button>
+                  </div>
+                </div>
                 <div className="text-sm text-slate-500 dark:text-slate-300">Ctrl/Cmd+Enter 运行样例（自动保存草稿）</div>
                 <div className="ml-auto flex gap-2">
                   <button
@@ -522,6 +574,7 @@ const ProblemDetailPage = ({ theme }: Props) => {
                   onChange={setCode}
                   theme={theme}
                   onRunShortcut={() => handleRun("run_sample")}
+                  fontSize={fontSize}
                   height="100%"
                 />
               </div>
