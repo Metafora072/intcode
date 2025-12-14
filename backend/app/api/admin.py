@@ -78,6 +78,9 @@ def add_testcase(
         db.add(testcase)
     for key, value in meta.items():
         setattr(testcase, key, value)
+    # 兼容旧表结构：input_text/output_text 可能非空约束，文件上传场景存空字符串
+    testcase.input_text = testcase.input_text or ""
+    testcase.output_text = testcase.output_text or ""
     testcase.is_sample = is_sample
     testcase.score_weight = score_weight
     db.commit()

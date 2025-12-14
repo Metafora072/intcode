@@ -231,8 +231,26 @@ export const updateTestcaseApi = async (
   return res.data;
 };
 
-export const downloadTestcaseUrl = (testcaseId: number, kind: "in" | "out") =>
-  `/api/admin/testcases/${testcaseId}/download?kind=${kind}`;
+export const downloadTestcaseFile = async (testcaseId: number, kind: "in" | "out") => {
+  const res = await api.get<Blob>(`/admin/testcases/${testcaseId}/download`, {
+    params: { kind },
+    responseType: "blob"
+  });
+  const disposition = res.headers["content-disposition"];
+  let filename = `case_${testcaseId}.${kind}`;
+  if (disposition) {
+    const matched = disposition.match(/filename\\*=UTF-8''([^;]+)|filename="?([^\";]+)"?/i);
+    const encodedName = matched?.[1] || matched?.[2];
+    if (encodedName) {
+      try {
+        filename = decodeURIComponent(encodedName);
+      } catch {
+        filename = encodedName;
+      }
+    }
+  }
+  return { blob: res.data, filename };
+};
 
 export const fetchUserCode = async (problemId: number) => {
   const res = await api.get<{ code: string; language: string; updated_at: string | null }>(

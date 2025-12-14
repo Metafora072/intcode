@@ -6,15 +6,15 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import {
   addTestcase,
-  downloadTestcaseUrl,
   deleteTestcaseApi,
   fetchProblem,
   fetchUserCode,
   saveUserCode,
   submitCode,
-  updateTestcaseApi
+  updateTestcaseApi,
+  downloadTestcaseFile
 } from "../api";
-import { Problem, SubmissionResult } from "../types";
+import { Problem, SubmissionResult, TestCase } from "../types";
 import DifficultyBadge from "../components/DifficultyBadge";
 import CodeEditor from "../components/CodeEditor";
 import RunResultCard from "../components/RunResultCard";
@@ -211,6 +211,22 @@ const ProblemDetailPage = ({ theme }: Props) => {
     await reloadProblem();
   };
 
+  const handleDownloadCase = async (testcaseId: number, kind: "in" | "out") => {
+    try {
+      const { blob, filename } = await downloadTestcaseFile(testcaseId, kind);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      window.alert("下载失败，请确认已登录并稍后再试");
+    }
+  };
+
 
   if (!problem) {
     return <p className="text-sm text-slate-500">加载中...</p>;
@@ -354,12 +370,20 @@ const ProblemDetailPage = ({ theme }: Props) => {
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-slate-800 dark:text-slate-100">Case #{tc.case_no}</div>
                       <div className="flex gap-2">
-                        <a className="text-xs text-indigo-600 hover:underline" href={downloadTestcaseUrl(tc.id!, "in")} target="_blank" rel="noreferrer">
+                        <button
+                          type="button"
+                          className="text-xs text-indigo-600 hover:underline"
+                          onClick={() => handleDownloadCase(tc.id!, "in")}
+                        >
                           下载输入
-                        </a>
-                        <a className="text-xs text-indigo-600 hover:underline" href={downloadTestcaseUrl(tc.id!, "out")} target="_blank" rel="noreferrer">
+                        </button>
+                        <button
+                          type="button"
+                          className="text-xs text-indigo-600 hover:underline"
+                          onClick={() => handleDownloadCase(tc.id!, "out")}
+                        >
                           下载输出
-                        </a>
+                        </button>
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
