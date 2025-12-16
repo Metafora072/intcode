@@ -10,6 +10,14 @@ services:
     volumes:
       - ./backend/data:/app/data
       - ./backend/storage/testcases:/app/storage/testcases
+      - ./scripts:/app/scripts
+    command: >
+      sh -c "
+      ln -sf /app /app/backend &&
+      PYTHONPATH=/app INTCODE_DATABASE_URL=sqlite:////app/data/intcode.db python /app/scripts/init_db.py &&
+      PYTHONPATH=/app INTCODE_DATABASE_URL=sqlite:////app/data/intcode.db python /app/scripts/import_fixtures_to_db.py &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000
+      "
     ports:
       - "18000:8000"
 
